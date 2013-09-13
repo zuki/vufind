@@ -82,6 +82,30 @@
         <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
       </analyzer>
     </fieldType>
+
+    <fieldType name="text_ja" class="solr.TextField" positionIncrementGap="100" autoGeneratePhraseQueries="false">
+      <analyzer>
+        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ja.txt,mapping-ISOLatin1Accent.txt,mapping-variants.txt"/>
+        <tokenizer class="solr.JapaneseTokenizerFactory"/>
+        <filter class="solr.JapaneseBaseFormFilterFactory"/>
+        <filter class="solr.JapanesePartOfSpeechStopFilterFactory" tags="stoptags-ja.txt" enablePositionIncrements="true"/>
+        <filter class="solr.CJKWidthFilterFactory"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords-ja.txt" enablePositionIncrements="true"/>
+        <filter class="solr.JapaneseKatakanaStemFilterFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+    </fieldType>
+    <fieldType name="text_ja_proper" class="solr.TextField" positionIncrementGap="100" autoGeneratePhraseQueries="false">
+      <analyzer>
+        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ja.txt,mapping-ISOLatin1Accent.txt,mapping-variants.txt"/>
+        <tokenizer class="solr.JapaneseTokenizerFactory"/>
+        <filter class="solr.JapaneseBaseFormFilterFactory"/>
+        <filter class="solr.CJKWidthFilterFactory"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords-ja.txt" enablePositionIncrements="true"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+    </fieldType>
+
     <!-- Text Field for Normalized ISBN/ISSN Numbers - take first chunk of text
          prior to whitespace, force to lowercase, strip non-ISBN/ISSN characters,
          omit results that are empty after stripping. -->
@@ -100,12 +124,15 @@
    <field name="_version_" type="long" indexed="true" stored="true"/>
    <!-- Core Fields  -->
    <field name="id" type="string" indexed="true" stored="true"/>
+   <field name="shelf" type="string" indexed="true" stored="true"/>
+   <field name="vol" type="string" indexed="false" stored="true"/>
+   <field name="year" type="string" indexed="false" stored="true"/>
    <field name="fullrecord" type="string" indexed="false" stored="true"/>
    <field name="marc_error" type="string" indexed="false" stored="true" multiValued="true"/>
-   <field name="allfields" type="text" indexed="true" stored="false" multiValued="true"/>
+   <field name="allfields" type="text_ja" indexed="true" stored="false" multiValued="true"/>
    <field name="allfields_unstemmed" type="textProper" indexed="true" stored="false" multiValued="true"/>
-   <field name="fulltext" type="text" indexed="true" stored="false"/>
-   <field name="fulltext_unstemmed" type="textProper" indexed="true" stored="false"/>
+   <field name="fulltext" type="text_ja" indexed="true" stored="false"/>
+   <field name="fulltext_unstemmed" type="text_ja_proper" indexed="true" stored="false"/>
    <field name="spelling" type="textSpell" indexed="true" stored="true" multiValued="true"/>
    <field name="spellingShingle" type="textSpellShingle" indexed="true" stored="true" multiValued="true"/>
    <!-- Institutional Fields -->
@@ -115,25 +142,25 @@
    <!-- Generic Fields -->
    <field name="language" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="format" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="author" type="textProper" indexed="true" stored="true" termVectors="true"/>
+   <field name="author" type="text_ja_proper" indexed="true" stored="true" termVectors="true"/>
    <field name="author-letter" type="string" indexed="true" stored="true"/>
    <field name="authorStr" type="textFacet" indexed="true" stored="false"/>
-   <field name="title" type="text" indexed="true" stored="true"/>
+   <field name="title" type="text_ja" indexed="true" stored="true"/>
    <field name="title_sort" type="string" indexed="true" stored="true"/>
-   <field name="title_sub" type="text" indexed="true" stored="true"/>
-   <field name="title_short" type="text" indexed="true" stored="true"/>
-   <field name="title_full" type="text" indexed="true" stored="true"/>
-   <field name="title_full_unstemmed" type="textProper" indexed="true" stored="true"/>
+   <field name="title_sub" type="text_ja" indexed="true" stored="true"/>
+   <field name="title_short" type="text_ja" indexed="true" stored="true"/>
+   <field name="title_full" type="text_ja" indexed="true" stored="true"/>
+   <field name="title_full_unstemmed" type="text_ja_proper" indexed="true" stored="true"/>
    <field name="title_fullStr" type="string" indexed="true" stored="true"/>
-   <field name="title_auth" type="text" indexed="true" stored="true"/>
+   <field name="title_auth" type="text_ja" indexed="true" stored="true"/>
    <field name="physical" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="publisher" type="textProper" indexed="true" stored="true" multiValued="true"/>
+   <field name="publisher" type="text_ja_proper" indexed="true" stored="true" multiValued="true"/>
    <field name="publisherStr" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="publishDate" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="publishDateSort" type="string" indexed="true" stored="false"/>
    <field name="edition" type="string" indexed="true" stored="true"/>
-   <field name="description" type="text" indexed="true" stored="true"/>
-   <field name="contents" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="description" type="text_ja" indexed="true" stored="true"/>
+   <field name="contents" type="text_ja" indexed="true" stored="true" multiValued="true"/>
    <field name="url" type="string" indexed="false" stored="true" multiValued="true"/>
    <field name="thumbnail" type="string" indexed="false" stored="true"/>
    <!-- Catalog Specific Fields -->
@@ -156,37 +183,40 @@
    <field name="dewey-sort" type="string" indexed="true" stored="true" />
    <field name="dewey-sort-browse" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="dewey-raw" type="string" indexed="true" stored="true" multiValued="true" />
-   <field name="author2" type="textProper" indexed="true" stored="true" multiValued="true"/>
+   <field name="author2" type="text_ja_proper" indexed="true" stored="true" multiValued="true"/>
+   <field name="author2_linked" type="text_ja_proper" indexed="true" stored="true" multiValued="true"/>
    <field name="author2Str" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="author2-role" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="author_fuller" type="textProper" indexed="true" stored="true" />
-   <field name="author_additional" type="textProper" indexed="true" stored="true" multiValued="true"/>
+   <field name="author_fuller" type="text_ja_proper" indexed="true" stored="true" />
+   <field name="author_additional" type="text_ja_proper" indexed="true" stored="true" multiValued="true"/>
    <field name="author_additionalStr" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="title_alt" type="text" indexed="true" stored="true" multiValued="true"/>
-   <field name="title_old" type="text" indexed="true" stored="true" multiValued="true"/>
-   <field name="title_new" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="title_alt" type="text_ja" indexed="true" stored="true" multiValued="true"/>
+   <field name="title_linked" type="text_ja" indexed="true" stored="true" multiValued="true"/>
+   <field name="title_old" type="text_ja" indexed="true" stored="true" multiValued="true"/>
+   <field name="title_new" type="text_ja" indexed="true" stored="true" multiValued="true"/>
    <field name="dateSpan" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="series" type="text" indexed="true" stored="true" multiValued="true"/>
-   <field name="series2" type="text" indexed="true" stored="true" multiValued="true"/>
-   <field name="topic" type="text" indexed="true" stored="true" multiValued="true"/>
-   <field name="topic_unstemmed" type="textProper" indexed="true" stored="false" multiValued="true"/>
+   <field name="series" type="text_ja" indexed="true" stored="true" multiValued="true"/>
+   <field name="series_linked" type="text_ja" indexed="true" stored="true" multiValued="true"/>   <field name="series2" type="text_ja" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic" type="text_ja" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_linked" type="text_ja" indexed="true" stored="true" multiValued="true"/>
+   <field name="topic_unstemmed" type="text_ja_proper" indexed="true" stored="false" multiValued="true"/>
    <field name="topic_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_browse" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="author_browse" type="string" indexed="true" stored="false" multiValued="true"/>
-   <field name="genre" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="genre" type="text_ja" indexed="true" stored="true" multiValued="true"/>
    <field name="genre_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
-   <field name="geographic" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="geographic" type="text_ja" indexed="true" stored="true" multiValued="true"/>
    <field name="geographic_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
-   <field name="era" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="era" type="text_ja" indexed="true" stored="true" multiValued="true"/>
    <field name="era_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
    <field name="illustrated" type="string" indexed="true" stored="true" multiValued="false"/>
    <field name="long_lat" type="textFacet" indexed="true" stored="true" multiValued="false"/>
    <!-- Container fields (i.e. for describing journal containing an article) -->
-   <field name="container_title" type="text" indexed="true" stored="true"/>
-   <field name="container_volume" type="text" indexed="true" stored="true"/>
-   <field name="container_issue" type="text" indexed="true" stored="true"/>
-   <field name="container_start_page" type="text" indexed="true" stored="true"/>
-   <field name="container_reference" type="text" indexed="true" stored="true"/>
+   <field name="container_title" type="text_ja" indexed="true" stored="true"/>
+   <field name="container_volume" type="text_ja" indexed="true" stored="true"/>
+   <field name="container_issue" type="text_ja" indexed="true" stored="true"/>
+   <field name="container_start_page" type="text_ja" indexed="true" stored="true"/>
+   <field name="container_reference" type="text_ja" indexed="true" stored="true"/>
    <!-- Hierarchy Fields -->
    <field name="hierarchytype" type="string" indexed="true" stored="true" multiValued="false"/>
    <field name="hierarchy_top_id" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -209,12 +239,12 @@
    <dynamicField name="*_isn_mv" type="isn" indexed="true" stored="true" multiValued="true"/>
    <dynamicField name="*_str" type="string" indexed="true" stored="true"/>
    <dynamicField name="*_str_mv" type="string" indexed="true" stored="true" multiValued="true"/>
-   <dynamicField name="*_txt" type="text" indexed="true" stored="true"/>
-   <dynamicField name="*_txt_mv" type="text" indexed="true" stored="true" multiValued="true"/>
+   <dynamicField name="*_txt" type="text_ja" indexed="true" stored="true"/>
+   <dynamicField name="*_txt_mv" type="text_ja" indexed="true" stored="true" multiValued="true"/>
    <dynamicField name="*_txtF" type="textFacet" indexed="true" stored="true"/>
    <dynamicField name="*_txtF_mv" type="textFacet" indexed="true" stored="true" multiValued="true"/>
-   <dynamicField name="*_txtP" type="textProper" indexed="true" stored="true"/>
-   <dynamicField name="*_txtP_mv" type="textProper" indexed="true" stored="true" multiValued="true"/>
+   <dynamicField name="*_txtP" type="text_ja_proper" indexed="true" stored="true"/>
+   <dynamicField name="*_txtP_mv" type="text_ja_proper" indexed="true" stored="true" multiValued="true"/>
  </fields>
  <uniqueKey>id</uniqueKey>
  <defaultSearchField>allfields</defaultSearchField>

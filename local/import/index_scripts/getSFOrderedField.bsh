@@ -1,0 +1,48 @@
+import org.marc4j.marc.Record;
+import org.marc4j.marc.DataField;
+import org.marc4j.marc.Subfield;
+
+/**
+ * Get Field value with the order of the specified subfields 
+ * @param Reocrd record
+ * @param String fieldSpec
+ * @return Set set of the field values
+ */
+public Set getFields(Record record, String fieldSpec) {
+    String[] specs = fieldSpec.split(":");
+    Set result = new LinkedHashSet();
+    for (String spec : specs) {
+        if (spec.length() < 4) {
+            continue;
+        }
+        StringBuffer sb = new StringBuffer();
+        String tag = spec.substring(0, 3);
+        DataField df = (DataField) record.getVariableField(tag);
+        if (df == null) {
+            continue;
+        }
+        for (int i=3, len=spec.length(); i < len; i++) {
+            char sfcode = spec.charAt(i);
+            Subfield sf = df.getSubfield(sfcode);
+            if (sf != null && !"".equals(sf.getData().trim())) {
+                sb.append(" ").append(sf.getData().trim());
+            }
+        }
+        if (sb.length() > 0) {
+            result.add(sb.toString().substring(1));
+        }
+    }
+   
+    return result;
+}
+
+public String getFirstField(Record record, String fieldSpec) {
+    Set result = getFields(record, fieldSpec);
+    if (result.isEmpty()) {
+        return "";
+    } else {
+        return result.iterator().next();
+    }
+}
+
+

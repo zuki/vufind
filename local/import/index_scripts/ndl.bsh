@@ -1,0 +1,72 @@
+/**
+ * Custom call number script.
+ *
+ * This can be used to override built-in SolrMarc custom functions.  If you change
+ * this script, you will need to activate it in import/marc_local.properties before
+ * it will be applied during indexing.
+ */
+import org.marc4j.marc.Record;
+import org.solrmarc.tools.CallNumUtils;
+import java.util.Iterator;
+import java.util.Set;
+
+/**
+ * Extract the subject component of the call number
+ *
+ * Can return null
+ *
+ * @param record
+ * @return Call number label
+ */
+public String getNDLSubject(Record record, String fieldSpec) {
+    return getNDLNumber(record, fieldSpec);
+}
+
+public String getNDLFirstNumber(Record record, String fieldSpec) {
+    String val = getNDLNumber(record, fieldSpec);
+    if (val != null && !"".equals(val)) {
+        val = val.substring(0, 1);
+    }
+    return val;
+}
+
+/**
+ * Extract NDL code.
+ *   Return the code not to start without 'V-Z' if possible. 
+ *
+ * @param record
+ * @return NDL code
+ */
+public String getNDLNumber(Record record, String fieldSpec) {
+
+    String first = null;
+    Set vals = indexer.getFieldList(record, fieldSpec);
+    Iterator iter = vals.iterator();
+    while(iter.hasNext()) {
+        String val = iter.next();
+        if (CallNumUtils.isValidDewey(val)) {
+            continue;
+        }
+        // For electronized materials: its callnumber starts with number or small char
+        char firstChar = val.charAt(0);
+        if ((firstChar >= '0' && firstChar <= '9') || (firstChar >= 'a' && firstChar <= 'z')) {
+            val = "YY-" + val;
+        }
+        String [] ndlValues = val.toUpperCase().split("[^A-Z]+");
+        if (ndlValues.length > 0)
+        {
+            if (ndlValues[0] == null || "".equals(ndlValues[0].trim())) {
+                first = "YY";
+            } else {
+                firstChar = ndlValues[0].charAt(0);
+                if (firstChar < 'V') {
+                    return ndlValues[0];
+                } else if (first == null) {
+                    first = ndlValues[0];
+                }
+            }
+        }
+    }
+    return (first == null ? "YY" : first);
+}
+

@@ -1,0 +1,23 @@
+import org.marc4j.marc.Record;
+import org.marc4j.marc.ControlField;
+
+/**
+ * Make id from 001 and 003
+ * @param Reocrd record
+ * @return ID
+ */
+public String getID(Record record) {
+    ControlField cnField = (ControlField) record.getVariableField("001");
+    ControlField cniField = (ControlField) record.getVariableField("003");
+    String cni = "LC";
+    if (cniField != null) {
+        String data = cniField.getData().toUpperCase();
+        if ("JTNDL".equals(data)) {
+            cni = "JP";
+        } else if ("ORIGINAL".equals(data)) {
+            cni = "OR";
+        }
+    }
+    
+    return cni + cnField.getData().toUpperCase();
+}

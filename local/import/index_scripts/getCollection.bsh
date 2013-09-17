@@ -1,0 +1,17 @@
+import org.marc4j.marc.Record;
+import org.marc4j.marc.DataField;
+
+/**
+ * Make collection from 852 field
+ * @param Reocrd record
+ * @return String collection
+ */
+public String getCollection(Record record) {
+    DataField field = (DataField) record.getVariableField("852");
+    if (field != null && field.getSubfield('a') != null) {
+        return field.getSubfield('a').getData().charAt(0) == 'H' ? 
+            "jako" : "zuki";
+    } else {
+        return "zuki";
+    }
+}

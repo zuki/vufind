@@ -1,0 +1,107 @@
+import org.marc4j.marc.Record;
+
+// Give ourselves the ability to import other BeanShell scripts
+String vufindHome = System.getenv("VUFIND_HOME");
+String vufindLocal = System.getenv("VUFIND_LOCAL_DIR");
+addClassPath(vufindHome + "/import");
+if (vufindLocal != null) {
+    addClassPath(vufindLocal + "/import");
+}
+importCommands("index_scripts");
+
+// define the base level indexer so that its methods can be called from the script.
+// note that the SolrIndexer code will set this value before the script methods are called.
+org.solrmarc.index.SolrIndexer indexer = null;
+
+public Set getNormalizedISBNs(org.solrmarc.index.SolrIndexer indexer, Record record, String fieldSpec) {
+    // Initialize return value:
+    Set result = new LinkedHashSet();
+    
+    // Loop through relevant fields and normalize everything:
+    Set isbns = indexer.getFieldList(record, fieldSpec);
+    Iterator isbnIter = isbns.iterator();
+    if (isbns != null) {
+        String current;
+        while(isbnIter.hasNext()) {
+            current = getNormalized(isbnIter.next());
+            if (current != null && current != false && current.length() == 10) {
+                result.add(current);
+                result.add(getISBN13(current));
+            }
+            else if (current != null && current != false && current.length() == 13) {
+                result.add(current);
+                result.add(getISBN10(current));
+            }
+        }
+    }
+
+    // Send back results:
+    return result;
+}
+
+public Set getNormalizedISBNs(Record record, String fieldSpec) {
+    return getNormalizedISBNs(indexer, record, fieldSpec);
+}
+
+public String getISBN13(String id) {
+    if (id.length() != 10) {
+        return null;
+    }
+    id = "978" + id.substring(0, 9);
+    return (id + checkDigit13(id));
+}
+
+public String getISBN10(String id) {
+    if (id.length() != 13) {
+        return null;
+    }
+    id = id.substring(3, 12);
+    return (id + checkDigit10(id));
+}
+
+	/** returns a isbn checkdigit for the first 9 digits in a string
+	*/
+	public String checkDigit10(String isbn){
+    String NUMVALUES = "0123456789X";
+		char[] theChars =isbn.toCharArray();
+		int checksum=0;
+		int weight=10;
+		//clean the string, compute checksum
+		int i; int val;
+		for ( i=0; (i<theChars.length) && (weight>1 ); i++){
+			val=NUMVALUES.indexOf(theChars[i]);
+			if (val >=0 ){
+				//valid character
+				if (val<10){ //not a dash
+					checksum=checksum+weight*val;
+					weight--;
+				}
+			} 
+		}
+		if (checksum%11==0) return "0";
+		return NUMVALUES.substring(11-checksum%11,12-checksum%11);
+	}
+	
+	/** returns a isbn checkdigit for the first 12 digits in a string
+	*/
+	public String checkDigit13(String isbn){
+    String NUMVALUES = "0123456789X";
+		char[] theChars =isbn.toCharArray();
+		int checksum13=0;
+		int weight13=1;
+		//clean the string, compute checksum
+		int i; int val;
+		for ( i=0; (i<theChars.length && i<12); i++){
+			val=NUMVALUES.indexOf(theChars[i]);
+			if (val >=0 ){
+				//valid character
+				if (val<10){ //not a dash
+					checksum13=checksum13+weight13*val;
+					weight13=(weight13+2)%4;
+				}
+			} 
+		}
+		if (checksum13%10==0) return "0";
+		return NUMVALUES.substring(10-checksum13%10,11-checksum13%10);
+	}
+

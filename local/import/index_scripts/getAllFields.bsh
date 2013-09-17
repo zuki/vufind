@@ -1,0 +1,40 @@
+import org.marc4j.marc.Record;
+import org.solrmarc.index.SolrIndexer;
+
+// Give ourselves the ability to import other BeanShell scripts
+String vufindHome = System.getenv("VUFIND_HOME");
+String vufindLocal = System.getenv("VUFIND_LOCAL_DIR");
+addClassPath(vufindHome + "/import");
+if (vufindLocal != null) {
+    addClassPath(vufindLocal + "/import");
+}
+importCommands("index_scripts");
+
+// define the base level indexer so that its methods can be called from the script.
+// note that the SolrIndexer code will set this value before the script methods are called.
+SolrIndexer indexer = null;
+
+/**
+ * Extract all searchable field, ISBN and ISSN
+ * @param record
+ * @param lowerBoundStr
+ * @param upperboundStr
+ * @return String of the all fields
+ */
+public String getAllFields(Record record, String lowerBoundStr, String upperBoundStr) {
+
+    SolrIndexer myindexer = indexer;
+    Set isbns = getNormalizedISBNs(myindexer, record, "020a");
+    Set issns = getNormalizedISSNs(myindexer, record, "022a:440x:490x:730x:776x:780x:785x");
+    String fields = myindexer.getAllSearchableFields(record, lowerBoundStr, upperBoundStr);
+
+    StringBuffer sb = new StringBuffer();
+    for (String isbn : isbns) {
+        sb.append(" ").append(isbn);
+    }
+    for (String issn : issns) {
+        sb.append(" ").append(issn);
+    }
+    return fields + sb.toString();
+}
+

@@ -1,0 +1,35 @@
+import org.marc4j.marc.Record;
+
+// Give ourselves the ability to import other BeanShell scripts
+String vufindHome = System.getenv("VUFIND_HOME");
+String vufindLocal = System.getenv("VUFIND_LOCAL_DIR");
+addClassPath(vufindHome + "/import");
+if (vufindLocal != null) {
+    addClassPath(vufindLocal + "/import");
+}
+importCommands("index_scripts");
+
+// define the base level indexer so that its methods can be called from the script.
+// note that the SolrIndexer code will set this value before the script methods are called.
+org.solrmarc.index.SolrIndexer indexer = null;
+
+
+/**
+ * Extract LCCNs from a record and return them in a normalized format
+ * @param record
+ * @return Set of normalized LCCNs
+ */
+public String getNormalized(String id) {
+    String NUMVALUES = "0123456789X";
+		char[] theChars =id.toUpperCase().toCharArray();
+    StringBuilder sb = new StringBuilder();
+		int i; int val;
+		for ( i=0; i<theChars.length; i++){
+			val=NUMVALUES.indexOf(theChars[i]);
+			if (val >=0 ){
+          sb.append(theChars[i]);
+      }
+    }
+    return sb.toString();
+}
+

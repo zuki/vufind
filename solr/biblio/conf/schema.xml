@@ -130,7 +130,7 @@
    <field name="fullrecord" type="string" indexed="false" stored="true"/>
    <field name="marc_error" type="string" indexed="false" stored="true" multiValued="true"/>
    <field name="allfields" type="text_ja" indexed="true" stored="false" multiValued="true"/>
-   <field name="allfields_unstemmed" type="textProper" indexed="true" stored="false" multiValued="true"/>
+   <field name="allfields_unstemmed" type="text_ja_proper" indexed="true" stored="false" multiValued="true"/>
    <field name="fulltext" type="text_ja" indexed="true" stored="false"/>
    <field name="fulltext_unstemmed" type="text_ja_proper" indexed="true" stored="false"/>
    <field name="spelling" type="textSpell" indexed="true" stored="true" multiValued="true"/>
@@ -153,8 +153,10 @@
    <field name="title_full_unstemmed" type="text_ja_proper" indexed="true" stored="true"/>
    <field name="title_fullStr" type="string" indexed="true" stored="true"/>
    <field name="title_auth" type="text_ja" indexed="true" stored="true"/>
+   <field name="title_vol" type="text_ja" indexed="true" stored="true" multiValued="true"/>
    <field name="physical" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="publisher" type="text_ja_proper" indexed="true" stored="true" multiValued="true"/>
+   <field name="publisher_linked" type="text_ja_proper" indexed="true" stored="true" multiValued="true"/>
    <field name="publisherStr" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="publishDate" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="publishDateSort" type="string" indexed="true" stored="false"/>
@@ -196,7 +198,8 @@
    <field name="title_new" type="text_ja" indexed="true" stored="true" multiValued="true"/>
    <field name="dateSpan" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="series" type="text_ja" indexed="true" stored="true" multiValued="true"/>
-   <field name="series_linked" type="text_ja" indexed="true" stored="true" multiValued="true"/>   <field name="series2" type="text_ja" indexed="true" stored="true" multiValued="true"/>
+   <field name="series_linked" type="text_ja" indexed="true" stored="true" multiValued="true"/>
+   <field name="series2" type="text_ja" indexed="true" stored="true" multiValued="true"/>
    <field name="topic" type="text_ja" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_linked" type="text_ja" indexed="true" stored="true" multiValued="true"/>
    <field name="topic_unstemmed" type="text_ja_proper" indexed="true" stored="false" multiValued="true"/>

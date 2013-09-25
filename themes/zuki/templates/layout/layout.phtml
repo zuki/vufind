@@ -90,7 +90,12 @@
       <? if ($this->layout()->breadcrumbs): ?>
       <div class="breadcrumbs">
         <div class="breadcrumbinner">
-          <a href="<?=$this->url('ndl-home')?>"><?=$this->transEsc('Home')?></a> <span>&gt;</span>
+          <? $homeUrl = 'home';
+             if (isset($this->layout()->homeUrl)) {
+                 $homeUrl = $this->layout()->homeUrl;
+             }
+          ?>
+          <a href="<?=$this->url($homeUrl)?>"><?=$this->transEsc('Home')?></a> <span>&gt;</span>
           <?=$this->layout()->breadcrumbs?>
         </div>
       </div>

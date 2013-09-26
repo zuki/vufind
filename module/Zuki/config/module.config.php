@@ -4,6 +4,15 @@ namespace Zuki\Module\Configuration;
 $config = array(
     'vufind' => array(
         'plugin_managers' => array(
+            'ils_driver' => array(
+                'factories' => array(
+                    'mylibrary' => function ($sm) {
+                        return new \Zuki\ILS\Driver\MyLibrary(
+                            $sm->getServiceLocator()->get('VuFind\Search')
+                        );
+                    },
+                ),
+            ),
             'search_backend' => array(
                 'factories' => array(
                     'Ndl' => 'Zuki\Search\Factory\NdlBackendFactory',
@@ -50,6 +59,19 @@ $config = array(
                             $sm->getServiceLocator()->get('VuFind\Config')->get('searches')
                         );
                     },
+                    'solrmarc' => function ($sm) {
+                        $driver = new \Zuki\RecordDriver\SolrMarc(
+                            $sm->getServiceLocator()->get('VuFind\Config')->get('config'),
+                            null,
+                            $sm->getServiceLocator()->get('VuFind\Config')->get('searches')
+                        );
+                        $driver->attachILS(
+                            $sm->getServiceLocator()->get('VuFind\ILSConnection'),
+                            $sm->getServiceLocator()->get('VuFind\ILSHoldLogic'),
+                            $sm->getServiceLocator()->get('VuFind\ILSTitleHoldLogic')
+                        );
+                        return $driver;
+                    },
                     'Ndl' => function ($sm) {
                         return new \Zuki\RecordDriver\Ndl(
                             $sm->getServiceLocator()->get('VuFind\Config')->get('config'),
@@ -60,6 +82,16 @@ $config = array(
             ),
         ),
         'recorddriver_tabs' => array(
+            'Zuki\RecordDriver\SolrDefault' => array(
+                'tabs' => array (
+                    'Holdings' => 'HoldingsILS', 'Description' => 'Description',
+                    'TOC' => 'TOC', 'UserComments' => 'UserComments',
+                    'Reviews' => 'Reviews', 'Excerpt' => 'Excerpt',
+                    'HierarchyTree' => 'HierarchyTree', 'Map' => 'Map',
+                    'Details' => 'StaffViewMARC',
+                ),
+                'defaultTab' => null,
+            ),
             'Zuki\RecordDriver\Ndl' => array(
                 'tabs' => array(
                     'Description' => 'Description', 

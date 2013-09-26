@@ -9,7 +9,9 @@
     }
 
     // Set up breadcrumbs:
-    $this->layout()->homeUrl = strtolower($this->driver->getResourceSource()).'-home';
+    if ('vufind' !== strtolower($this->driver->getResourceSource())) {
+        $this->layout()->homeUrl = strtolower($this->driver->getResourceSource()).'-home';
+    }
     $this->layout()->breadcrumbs = $this->getLastSearchLink($this->transEsc('Search'), '', '<span>&gt;</span>') .
         $this->recordLink()->getBreadcrumb($this->driver);
 ?>

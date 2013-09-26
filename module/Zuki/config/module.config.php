@@ -50,6 +50,11 @@ $config = array(
                     },
                 ),
             ),
+            'recordtab' => array(
+                'invokables' => array(
+                    'ndldescription' => 'Zuki\RecordTab\NdlDescription',
+                ),
+            ),
             'recorddriver' => array(
                 'factories' => array(
                     'solrdefault' => function ($sm) {
@@ -94,7 +99,7 @@ $config = array(
             ),
             'Zuki\RecordDriver\Ndl' => array(
                 'tabs' => array(
-                    'Description' => 'Description', 
+                    'Description' => 'NdlDescription', 
                     'Details' => 'StaffViewArray',
                 ),
                 'defaultTab' => null,

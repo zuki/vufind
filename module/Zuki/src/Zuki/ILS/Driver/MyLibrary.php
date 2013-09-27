@@ -103,7 +103,7 @@ class MyLibrary extends \VuFind\ILS\Driver\AbstractBase
         $callnumber = $volyear = '';
         $location = 'Unknown';
         
-        if (null !== reocrd) {
+        if (null !== $record) {
             $cln = $record->getCallnumber();
             if (null !== $cln) {
                 $callnumber = $cln;

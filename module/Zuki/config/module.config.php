@@ -50,11 +50,6 @@ $config = array(
                     },
                 ),
             ),
-            'recordtab' => array(
-                'invokables' => array(
-                    'ndldescription' => 'Zuki\RecordTab\NdlDescription',
-                ),
-            ),
             'recorddriver' => array(
                 'factories' => array(
                     'solrdefault' => function ($sm) {
@@ -80,7 +75,7 @@ $config = array(
                     'Ndl' => function ($sm) {
                         return new \Zuki\RecordDriver\Ndl(
                             $sm->getServiceLocator()->get('VuFind\Config')->get('config'),
-                            $sm->getServiceLocator()->get('VuFind\Config')->get('Zuki')
+                            $sm->getServiceLocator()->get('VuFind\Config')->get('Ndl')
                         );
                     },
                 ),
@@ -99,7 +94,7 @@ $config = array(
             ),
             'Zuki\RecordDriver\Ndl' => array(
                 'tabs' => array(
-                    'Description' => 'NdlDescription', 
+                    'Description' => 'Description', 
                     'Details' => 'StaffViewArray',
                 ),
                 'defaultTab' => null,

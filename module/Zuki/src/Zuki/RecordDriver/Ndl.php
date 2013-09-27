@@ -39,6 +39,31 @@ namespace Zuki\RecordDriver;
 class Ndl extends \Zuki\RecordDriver\SolrDefault
 {
     /**
+     * Map table of repository number to prover ID
+     *
+     * @var Array
+     */
+
+    protected $providers = array();
+
+    /**
+     * Constructor
+     *
+     * @param \Zend\Config $mainConfig VuFind main configuration
+     * @param \Zend\Config $recordConfig Record-sepcific configuration file
+     */
+    public function __construct($mainConfig = null, $recordConfig = null)
+    {
+        if (isset($recordConfig->Providers_Code)) {
+            foreach ($recordConfig->Providers_Code as $key => $value) {
+                $this->providers[$key] = $value;
+            }
+        }
+
+        parent::__construct($mainConfig, $recordConfig);
+    }
+
+    /**
      * Set raw data to initialize the object.
      *
      * @param mixed $data Raw data representing the record; Record Model

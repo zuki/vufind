@@ -179,7 +179,8 @@
     </tr>
   <? endif; ?>
 
-  <? $ndlUri = $this->driver->getNDLSearchURI(); if (!empty($ndlUri)): ?>
+  <? if (method_exists($this->driver, 'getNDLSearchURI')): ?>
+    <? $ndlUri = $this->driver->getNDLSearchURI(); if (!empty($ndlUri)): ?>
     <? $contentDisplayed = true; ?>
     <tr valign="top">
       <th><?=$this->transEsc('NDL Search Page')?>: </th>
@@ -193,9 +194,11 @@
         <? endforeach; ?>
       </td>
     </tr>
+    <? endif; ?>
   <? endif; ?>
 
-  <? $providers = $this->driver->getProviders(); if (!empty($providers)): ?>
+  <? if (method_exists($this->driver, 'getProviders')): ?>
+    <? $providers = $this->driver->getProviders(); if (!empty($providers)): ?>
     <? $contentDisplayed = true; ?>
     <tr valign="top">
       <th><?=$this->transEsc('Data Provider')?>: </th>
@@ -209,6 +212,7 @@
         <? endforeach; ?>
       </td>
     </tr>
+    <? endif; ?>
   <? endif; ?>
 
   <? $access = $this->driver->getAccessRestrictions(); if (!empty($access)): ?>

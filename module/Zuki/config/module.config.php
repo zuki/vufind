@@ -103,6 +103,7 @@ $config = array(
     ),
     'controllers' => array(
         'invokables' => array(
+            'admin' => 'Zuki\Controller\AdminController',
             'ndl' => 'Zuki\Controller\NdlController',
             'ndlrecord' => 'Zuki\Controller\NdlrecordController',
         ),
@@ -114,7 +115,9 @@ $recordRoutes = array(
 );
 
 $staticRoutes = array(
-    'Ndl/Advanced', 'Ndl/Home', 'Ndl/Search'
+    'Ndl/Advanced', 'Ndl/Home', 'Ndl/Search', 'Admin/Records',
+    'Admin/AddRecord', 'Admin/NewRecord', 'Admin/EditRecord',
+    'Admin/ViewRecord'
 );
 
 $nonTabRecordActions = array(

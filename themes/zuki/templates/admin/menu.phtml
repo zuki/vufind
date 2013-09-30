@@ -1,6 +1,16 @@
+<?
+    // Set up standard admin scripts:
+    $this->headScript()->appendFile("admin.js");
+?>
+
 <ul id="list1">
   <li<?=strtolower($this->layout()->templateName) == "home" ? ' class="active"' : ''?>><a href="<?=$this->url('admin-home')?>"><?=$this->transEsc('Home')?></a></li>
-  <li<?=strtolower($this->layout()->templateName) == "records" ? ' class="active"' : ''?>><a href="<?=$this->url('admin-records')?>"><?=$this->transEsc('Admin Records')?></a></li>
+  <li class="adminRecordMenu<?=strtolower($this->layout()->templateName) == "records" ? ' active"' : '"'?>><a href="<?=$this->url('admin-records')?>"><?=$this->transEsc('Admin Records')?></a>
+    <ul class="menu offscreen" id="adminRecordMenu">
+      <li><a href="<?=$this->url('admin-addrecord')?>"><?=$this->transEsc('Add Record')?></a></li>
+      <li><a href="<?=$this->url('admin-newrecord')?>"><?=$this->transEsc('New Record')?></a></li>
+    </ul>
+  </li>
   <li<?=strtolower($this->layout()->templateName) == "socialstats" ? ' class="active"' : ''?>><a href="<?=$this->url('admin-socialstats')?>"><?=$this->transEsc('Social Statistics')?></a></li>
   <li<?=strtolower($this->layout()->templateName) == "statistics" ? ' class="active"' : ''?>><a href="<?=$this->url('admin-statistics')?>"><?=$this->transEsc('Statistics')?></a></li>
   <li<?=strtolower($this->layout()->templateName) == "config" ? ' class="active"' : ''?>><a href="<?=$this->url('admin-config')?>"><?=$this->transEsc('Configuration')?></a>

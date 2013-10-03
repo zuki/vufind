@@ -30,8 +30,8 @@ function getLightbox(module, action, id, lookfor, message, followupModule, follo
                 autoOpen: false,
                 closeOnEscape: true,
                 title: message,
-                width: 600,
-                height: 350,
+                width: 800,
+                height: 750,
                 close: function () {
                     // check if the dialog was successful, if so, load the followup action
                     if (__dialogHandle.processFollowup && __dialogHandle.followupModule

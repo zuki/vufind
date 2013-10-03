@@ -1,12 +1,13 @@
 <?
     // Set up standard admin scripts:
-    $this->headScript()->appendFile("admin.js");
+    //$this->headScript()->appendFile("admin.js");
 ?>
 
 <ul id="list1">
   <li<?=strtolower($this->layout()->templateName) == "home" ? ' class="active"' : ''?>><a href="<?=$this->url('admin-home')?>"><?=$this->transEsc('Home')?></a></li>
-  <li class="adminRecordMenu<?=strtolower($this->layout()->templateName) == "records" ? ' active"' : '"'?>><a href="<?=$this->url('admin-records')?>"><?=$this->transEsc('Admin Records')?></a>
-    <ul class="menu offscreen" id="adminRecordMenu">
+  <li<?=strtolower($this->layout()->templateName) == "records" ? ' class="active"' : ''?>><?=$this->transEsc('Admin Records')?>
+    <ul class="menu" id="adminRecordMenu">
+      <li><a href="<?=$this->url('admin-records')?>"><?=$this->transEsc('Admin Records')?></a></li>
       <li><a href="<?=$this->url('admin-addrecord')?>"><?=$this->transEsc('Add Record')?></a></li>
       <li><a href="<?=$this->url('admin-newrecord')?>"><?=$this->transEsc('New Record')?></a></li>
     </ul>

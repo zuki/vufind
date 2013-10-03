@@ -1,0 +1,2036 @@
+<?
+    $this->inlineScript(\Zend\View\Helper\HeadScript::FILE, "field-common.js");
+    $this->inlineScript(\Zend\View\Helper\HeadScript::FILE, "field007.js");
+    echo $this->inlineScript();
+?>
+
+<h3>007 - 物理的属性コード化情報</h3>
+
+<h4>資料種別選択</h4>
+<form id="f_F007" name="f_F007" action="">
+<input id="result007" type="hidden" name="result" value="<?=$this->field_val?>" />
+
+<div id="F007_TYPE">
+  <div id="F007_TYPE_SELECT">
+    <label for="F007_TYPE_SELECT_VAL" title="資料種別を入力">資料種別</label>
+    <select id="F007_TYPE_SELECT_VAL" size="1">
+         <option value="  ">資料種別を選択してください</option>
+         <option value="TXT">文字資料</option>
+         <option value="CMP">電子資料</option>
+         <option value="MAP">地図資料</option>
+         <option value="TAC">点字資料</option>
+         <option value="MIC">マイクロ資料</option>
+         <option value="GLB">球儀</option>
+         <option value="NOM">楽譜</option>
+         <option value="REC">録音資料</option>
+         <option value="MOP">映画</option>
+         <option value="VDO">映像資料</option>
+         <option value="PRG">映像資料（静止画）</option>
+         <option value="GRF">静止画資料</option>
+         <option value="RSI">リモートセンシング画像</option>
+         <option value="KIT">キット</option>
+         <option value="UNS">指定なし</option>
+    </select>
+  </div>
+</div>
+
+<br/><hr/><br/>
+
+<table id="F007" class="build-field" border="1">
+</table>
+
+
+<table id="F007_MAP" style="display: none;">
+  <tr class="variable" id="F007_MAP_P00">
+    <td class="label">00 資料種別</td>
+    <td class="data">
+      <select id="F007_MAP_P00_VAL" size="1">
+         <option value=" ">資料種別を選択してください</option>
+         <option value="t">文字資料</option>
+         <option value="c">電子資料</option>
+         <option value="e" selected="selected">地図資料</option>
+         <option value="f">点字資料</option>
+         <option value="h">マイクロ資料</option>
+         <option value="d">球儀</option>
+         <option value="q">楽譜</option>
+         <option value="s">録音資料</option>
+         <option value="m">映画</option>
+         <option value="v">映像資料</option>
+         <option value="g">映像資料（静止画）</option>
+         <option value="k">静止画資料</option>
+         <option value="r">リモートセンシング画像</option>
+         <option value="o">キット</option>
+         <option value="z">指定なし</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MAP_P01">
+    <td class="label">01 特定資料種別</td>
+    <td class="data">
+      <select id="F007_MAP_P01_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="d">d - Atlas</option>
+         <option value="g">g - Diagram</option>
+         <option value="j">j - 地図</option>
+         <option value="k">k - Profile</option>
+         <option value="q">q - Model</option>
+         <option value="r">r - Remote-sensing image</option>
+         <option value="s">s - Section</option>
+         <option value="u">u - Unspecified</option>
+         <option value="y">y - View</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MAP_P02">
+    <td class="label">02 未定義</td>
+    <td class="data">
+      <input id="F007_MAP_P02_VAL" size="10" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MAP_P03">
+    <td class="label">03 色彩</td>
+    <td class="data">
+      <select id="F007_MAP_P03_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - One color</option>
+         <option value="c">c - Multicolored</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MAP_P04">
+    <td class="label">04 材質</td>
+    <td class="data">
+      <select id="F007_MAP_P04_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - 紙</option>
+         <option value="b">b - Wood</option>
+         <option value="c">c - Stone</option>
+         <option value="d">d - Metal</option>
+         <option value="e">e - Synthetic</option>
+         <option value="f">f - Skin</option>
+         <option value="g">g - Textiles</option>
+         <option value="j">j - Glass</option>
+         <option value="p">p - Plaster</option>
+         <option value="q">q - Flexible base photographic, positive</option>
+         <option value="r">r - Flexible base photographic, negative</option>
+         <option value="s">s - Non-flexible base photographic, positive</option>
+         <option value="t">t - Non-flexible base photographic, negative</option>
+         <option value="u">u - Unknown</option>
+         <option value="y">y - Other photographic medium</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MAP_P05">
+    <td class="label">05 複製方法</td>
+    <td class="data">
+      <select id="F007_MAP_P05_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="f">f - Facsimile</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MAP_P06">
+    <td class="label">06 製造・複製の詳細情報</td>
+    <td class="data">
+      <select id="F007_MAP_P06_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Photocopy, blueline print</option>
+         <option value="b">b - Photocopy</option>
+         <option value="c">c - Pre-production</option>
+         <option value="d">d - Film</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MAP_P07">
+    <td class="label">07 極性</td>
+    <td class="data">
+      <select id="F007_MAP_P07_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Positive</option>
+         <option value="b">b - Negative</option>
+         <option value="m">m - Mixed polarity</option>
+         <option value="n">n - Not applicable</option>
+         <option value="|">| - コード不使用e</option>
+      </select>
+    </td>
+  </tr>
+</table>
+
+<table id="F007_CMP" style="display: none;">
+  <tr class="variable" id="F007_CMP_P00">
+    <td class="label">00 資料種別</td>
+    <td class="data">
+      <select id="F007_CMP_P00_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="t">文字資料</option>
+         <option value="c" selected="selected">電子資料</option>
+         <option value="e">地図資料</option>
+         <option value="f">点字資料</option>
+         <option value="h">マイクロ資料</option>
+         <option value="d">球儀</option>
+         <option value="q">楽譜</option>
+         <option value="s">録音資料</option>
+         <option value="m">映画</option>
+         <option value="v">映像資料</option>
+         <option value="g">映像資料（静止画）</option>
+         <option value="k">静止画資料</option>
+         <option value="r">リモートセンシング画像</option>
+         <option value="o">キット</option>
+         <option value="z">指定なし</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_CMP_P01">
+    <td class="label">01 特定資料種別</td>
+    <td class="data">
+      <select id="F007_CMP_P01_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Tape cartridge</option>
+         <option value="b">b - ICカード、半導体メモリ</option>
+         <option value="c">c - Computer optical disc cartridge</option>
+         <option value="f">f - Tape cassette</option>
+         <option value="h">h - Tape reel</option>
+         <option value="j">j - 磁気ディスク</option>
+         <option value="m">m - 光磁気ディスク</option>
+         <option value="o">o - 光学ディスク</option>
+         <option value="r">r - オンライン資料</option>
+         <option value="u">u - Unspecified</option>
+         <option value="z">z - その他</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_CMP_P02">
+    <td class="label">02 未定義</td>
+    <td class="data">
+      <input id="F007_CMP_P02_VAL" size="10" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_CMP_P03">
+    <td class="label">03 色</td>
+    <td class="data">
+      <select id="F007_CMP_P03_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - One color</option>
+         <option value="b">b - Black-and-white</option>
+         <option value="c">c - Multicolored</option>
+         <option value="g">g - Gray scale</option>
+         <option value="m">m - Mixed</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_CMP_P04">
+    <td class="label">04 大きさ</td>
+    <td class="data">
+      <select id="F007_CMP_P04_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - 3 1/2 in.</option>
+         <option value="e">e - 12 in.</option>
+         <option value="g">g - 4 3/4 in. or 12 cm.</option>
+         <option value="i">i - 1 1/8 x 2 3/8 in.</option>
+         <option value="j">j - 3 7/8 x 2 1/2 in.</option>
+         <option value="n">n - 適用しない</option>
+         <option value="o">o - 5 1/4 in.</option>
+         <option value="u">u - Unknown</option>
+         <option value="v">v - 8 in.</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_CMP_P05">
+    <td class="label">05 音声の有無</td>
+    <td class="data">
+      <select id="F007_CMP_P05_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="#"># - No sound (silent)</option>
+         <option value="a">a - Sound</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_CMP_P06_08">
+    <td class="label">06-08 画像のビット数</td>
+    <td class="data">
+      <input id="F007_CMP_P06_08_VAL" size="10" maxlength="3" value="|||"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_CMP_P09">
+    <td class="label">09 ファイル形式</td>
+    <td class="data">
+      <select id="F007_CMP_P09_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - One file format</option>
+         <option value="m">m - Multiple file formats</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_CMP_P10">
+    <td class="label">10 品質保証対象</td>
+    <td class="data">
+      <select id="F007_CMP_P10_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Absent</option>
+         <option value="n">n - Not applicable</option>
+         <option value="p">p - Present</option>
+         <option value="u">u - 不明</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_CMP_P11">
+    <td class="label">11 由来情報</td>
+    <td class="data">
+      <select id="F007_CMP_P11_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - File reproduced from original</option>
+         <option value="b">b - File reproduced from microform</option>
+         <option value="c">c - File reproduced from an electronic resource</option>
+         <option value="d">d - File reproduced from an intermediate (not microform)</option>
+         <option value="m">m - Mixed</option>
+         <option value="n">n - 適用しない</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_CMP_P12">
+    <td class="label">12 圧縮レベル</td>
+    <td class="data">
+      <select id="F007_CMP_P12_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Uncompressed</option>
+         <option value="b">b - Lossless</option>
+         <option value="d">d - Lossy</option>
+         <option value="m">m - Mixed</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_CMP_P13">
+    <td class="label">13 再変換レベル</td>
+    <td class="data">
+      <select id="F007_CMP_P13_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Access</option>
+         <option value="n">n - Not applicable</option>
+         <option value="p">p - Preservation</option>
+         <option value="r">r - Replacement</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+</table>
+   
+<table id="F007_GLB" style="display: none;">
+  <tr class="variable" id="F007_GLB_P00">
+    <td class="label">00 資料種別</td>
+    <td class="data">
+      <select id="F007_GLB_P00_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="t">文字資料</option>
+         <option value="c">電子資料</option>
+         <option value="e">地図資料</option>
+         <option value="f">点字資料</option>
+         <option value="h">マイクロ資料</option>
+         <option value="d" selected="selected">球儀</option>
+         <option value="q">楽譜</option>
+         <option value="s">録音資料</option>
+         <option value="m">映画</option>
+         <option value="v">映像資料</option>
+         <option value="g">映像資料（静止画）</option>
+         <option value="k">静止画資料</option>
+         <option value="r">リモートセンシング画像</option>
+         <option value="o">キット</option>
+         <option value="z">指定なし</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_GLB_P01">
+    <td class="label">01 Specific material designation</td>
+    <td class="data">
+      <select id="F007_GLB_P01_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Celestial globe</option>
+         <option value="b">b - Planetary or lunar globe</option>
+         <option value="c">c - Terrestrial globe</option>
+         <option value="e">e - Earth moon globe</option>
+         <option value="u">u - Unspecified</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_GLB_P02">
+    <td class="label">02 Undefined</td>
+    <td class="data">
+      <input id="F007_GLB_P02_VAL" size="1" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_GLB_P03">
+    <td class="label">03 Color</td>
+    <td class="data">
+      <select id="F007_GLB_P03_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - One color</option>
+         <option value="c">c - Multicolored</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_GLB_P04">
+    <td class="label">04 Physical medium</td>
+    <td class="data">
+      <select id="F007_GLB_P04_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Paper</option>
+         <option value="b">b - Wood</option>
+         <option value="c">c - Stone</option>
+         <option value="d">d - Metal</option>
+         <option value="e">e - Synthetic</option>
+         <option value="f">f - Skin</option>
+         <option value="g">g - Textile</option>
+         <option value="p">p - Plaster</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_GLB_P05">
+    <td class="label">05 Type of reproduction</td>
+    <td class="data">
+      <select id="F007_GLB_P05_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="f">f - Facsimile</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+</table>
+   
+
+<table id="F007_TAC" style="display: none;">
+  <tr class="variable" id="F007_TAC_P00">
+    <td class="label">00 資料種別</td>
+    <td class="data">
+      <select id="F007_TAC_P00_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="t">文字資料</option>
+         <option value="c">電子資料</option>
+         <option value="e">地図資料</option>
+         <option value="f" selected="selected">点字資料</option>
+         <option value="h">マイクロ資料</option>
+         <option value="d">球儀</option>
+         <option value="q">楽譜</option>
+         <option value="s">録音資料</option>
+         <option value="m">映画</option>
+         <option value="v">映像資料</option>
+         <option value="g">映像資料（静止画）</option>
+         <option value="k">静止画資料</option>
+         <option value="r">リモートセンシング画像</option>
+         <option value="o">キット</option>
+         <option value="z">指定なし</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_TAC_P01">
+    <td class="label">01 特定資料種別</td>
+    <td class="data">
+      <select id="F007_TAC_P01_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Moon</option>
+         <option value="b">b - 点字資料</option>
+         <option value="c">c - Combination</option>
+         <option value="d">d - Tactile, with no writing system</option>
+         <option value="u">u - Unspecified</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_TAC_P02">
+    <td class="label">02 未定義</td>
+    <td class="data">
+      <input id="F007_TAC_P02_VAL" size="1" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_TAC_P03_04">
+    <td class="label">03-04 記述対象属性</td>
+    <td class="data">
+      <input id="F007_TAC_P03_04_VAL" size="10" maxlength="2" value="||"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_TAC_P05">
+    <td class="label">05 縮約レベル</td>
+    <td class="data">
+      <select id="F007_TAC_P05_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Uncontracted</option>
+         <option value="b">b - Contracted</option>
+         <option value="m">m - Combination</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_TAC_P06_08">
+    <td class="label">06-08 点字音楽フォーマット</td>
+    <td class="data">
+      <input id="F007_TAC_P06_08_VAL" size="10" maxlength="3" value="|||"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_TAC_P09">
+    <td class="label">09 物理的属性</td>
+    <td class="data">
+      <select id="F007_TAC_P09_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Print/braille</option>
+         <option value="b">b - Jumbo or enlarged braille</option>
+         <option value="n">n - 適用しない</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+</table>
+
+
+<table id="F007_PRG" style="display: none;">
+  <tr class="variable" id="F007_PRG_P00">
+    <td class="label">00 資料種別</td>
+    <td class="data">
+      <select id="F007_PRG_P00_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="t">文字資料</option>
+         <option value="c">電子資料</option>
+         <option value="e">地図資料</option>
+         <option value="f">点字資料</option>
+         <option value="h">マイクロ資料</option>
+         <option value="d">球儀</option>
+         <option value="q">楽譜</option>
+         <option value="s">録音資料</option>
+         <option value="m">映画</option>
+         <option value="v">映像資料</option>
+         <option value="g" selected="selected">映像資料（静止画）</option>
+         <option value="k">静止画資料</option>
+         <option value="r">リモートセンシング画像</option>
+         <option value="o">キット</option>
+         <option value="z">指定なし</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_PRG_P01">
+    <td class="label">01 特定資料種別</td>
+    <td class="data">
+      <select id="F007_PRG_P01_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="c">c - フィルムストリップ（カートリッジ）</option>
+         <option value="d">d - シートフィルム</option>
+         <option value="f">f - Other type of filmstrip</option>
+         <option value="o">o - フィルムストリップ（ロール）</option>
+         <option value="s">s - スライド</option>
+         <option value="t">t - トランスペアレンシー</option>
+         <option value="u">u - Unspecified</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_PRG_P02">
+    <td class="label">02 未定義</td>
+    <td class="data">
+      <input id="F007_PRG_P02_VAL" size="1" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_PRG_P03">
+    <td class="label">03 色彩</td>
+    <td class="data">
+      <select id="F007_PRG_P03_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - One color</option>
+         <option value="b">b - Black-and-white</option>
+         <option value="c">c - Multicolored</option>
+         <option value="h">h - Hand colored</option>
+         <option value="m">m - Mixed</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - フィルムストリップ</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_PRG_P04">
+    <td class="label">04 ベース（支持体）</td>
+    <td class="data">
+      <select id="F007_PRG_P04_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="d">d - Glass</option>
+         <option value="e">e - Synthetic</option>
+         <option value="j">j - Safety film</option>
+         <option value="k">k - Film base, other than safety film</option>
+         <option value="m">m - Mixed collection</option>
+         <option value="o">o - Paper</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - フィルムストリップ</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_PRG_P05">
+    <td class="label">05 音声の形態</td>
+    <td class="data">
+      <select id="F007_PRG_P05_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="#"># - No sound (silent)</option>
+         <option value="a">a - Sound on medium</option>
+         <option value="b">b - Sound separate from medium</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - フィルムストリップ</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_PRG_P06">
+    <td class="label">06 音声用の媒体</td>
+    <td class="data">
+      <select id="F007_PRG_P06_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="#"># - No sound (silent)</option>
+         <option value="a">a - Optical sound track on motion picture film</option>
+         <option value="b">b - Magnetic sound track on motion picture film</option>
+         <option value="c">c - Magnetic audio tape in cartridge</option>
+         <option value="d">d - Sound disc</option>
+         <option value="e">e - Magnetic audio tape on reel</option>
+         <option value="f">f - Magnetic audio tape in cassette</option>
+         <option value="g">g - Optical and magnetic sound track on motion picture film</option>
+         <option value="h">h - Videotape</option>
+         <option value="i">i - Videodisc</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - フィルムストリップ</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_PRG_P07">
+    <td class="label">07 大きさ</td>
+    <td class="data">
+      <select id="F007_PRG_P07_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Standard 8 mm. film width</option>
+         <option value="b">b - Super 8 mm./single 8 mm. film width</option>
+         <option value="c">c - 9.5 mm. film width</option>
+         <option value="d">d - 16 mm. film width</option>
+         <option value="e">e - 28 mm. film width</option>
+         <option value="f">f - 35 mm. film width</option>
+         <option value="g">g - 70 mm. film width</option>
+         <option value="j">j - 2x2 in. or 5x5 cm. slide</option>
+         <option value="k">k - 2 1/4 x 2 1/4 in. or 6x6 cm. slide</option>
+         <option value="s">s - 4x5 in. or 10x13 cm. transparency</option>
+         <option value="t">t - 5x7 in. or 13x18 cm. transparency</option>
+         <option value="v">v - 8x10 in. or 21x26 cm. transparency</option>
+         <option value="w">w - 9x9 in. or 23x23 cm. transparency</option>
+         <option value="x">x - 10x10 in. or 26x26 cm. transparency</option>
+         <option value="y">y - 7x7 in. or 18x18 cm. transparency</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - フィルムストリップ</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_PRG_P08">
+    <td class="label">08 副次的材料</td>
+    <td class="data">
+      <select id="F007_PRG_P08_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="#"># - No secondary support</option>
+         <option value="c">c - Cardboard</option>
+         <option value="d">d - Glass</option>
+         <option value="e">e - Synthetic</option>
+         <option value="h">h - Metal</option>
+         <option value="j">j - Metal and glass</option>
+         <option value="k">k - Synthetic and glass</option>
+         <option value="m">m - Mixed collection</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - フィルムストリップ</option>
+      </select>
+    </td>
+  </tr>
+</table>
+   
+<table id="F007_MIC" style="display: none;">
+  <tr class="variable" id="F007_MIC_P00">
+    <td class="label">00 資料種別</td>
+    <td class="data">
+      <select id="F007_MIC_P00_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="t">文字資料</option>
+         <option value="c">電子資料</option>
+         <option value="e">地図資料</option>
+         <option value="f">点字資料</option>
+         <option value="h" selected="selected">マイクロ資料</option>
+         <option value="d">球儀</option>
+         <option value="q">楽譜</option>
+         <option value="s">録音資料</option>
+         <option value="m">映画</option>
+         <option value="v">映像資料</option>
+         <option value="g">映像資料（静止画）</option>
+         <option value="k">静止画資料</option>
+         <option value="r">リモートセンシング画像</option>
+         <option value="o">キット</option>
+         <option value="z">指定なし</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MIC_P01">
+    <td class="label">01 特定資料種別</td>
+    <td class="data">
+      <select id="F007_MIC_P01_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Aperture card</option>
+         <option value="b">b - Microfilm cartridge</option>
+         <option value="c">c - Microfilm cassette</option>
+         <option value="d">d - マイクロフィルム</option>
+         <option value="e">e - マイクロフィッシュ</option>
+         <option value="f">f - Microfiche cassette</option>
+         <option value="g">g - マイクロオペーク</option>
+         <option value="u">u - Unspecified</option>
+         <option value="z">z - その他</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MIC_P02">
+    <td class="label">02 未定義</td>
+    <td class="data">
+      <input id="F007_MIC_P02_VAL" size="1" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MIC_P03">
+    <td class="label">03 極性</td>
+    <td class="data">
+      <select id="F007_MIC_P03_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Positive</option>
+         <option value="b">b - Negative</option>
+         <option value="m">m - Mixed polarity</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MIC_P04">
+    <td class="label">04 大きさ</td>
+    <td class="data">
+      <select id="F007_MIC_P04_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - 8 mm.</option>
+         <option value="d">d - 16 mm.</option>
+         <option value="f">f - 35 mm.</option>
+         <option value="g">g - 70 mm.</option>
+         <option value="h">h - 105 mm.</option>
+         <option value="l">l - 3x5 in. or 8x13 cm.</option>
+         <option value="m">m - 4x6 in. or 11x15 cm.</option>
+         <option value="o">o - 6x9 in. or 16x23 cm.</option>
+         <option value="p">p - 3 1/4 x 7 3/8 in. or 9x19 cm.</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - その他</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MIC_P05">
+    <td class="label">05 縮率の範囲</td>
+    <td class="data">
+      <select id="F007_MIC_P05_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Low reduction ratio</option>
+         <option value="b">b - Normal reduction</option>
+         <option value="c">c - High reduction</option>
+         <option value="d">d - Very high reduction</option>
+         <option value="e">e - Ultra high reduction</option>
+         <option value="u">u - Unknown</option>
+         <option value="v">v - Reduction rate varies</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MIC_P06_08">
+    <td class="label">06-08 縮率</td>
+    <td class="data"><input id="F007_MIC_P06_08_VAL" size="10" maxlength="3" value="|||"/></td>
+  </tr>
+  <tr class="variable" id="F007_MIC_P09">
+    <td class="label">09 色彩</td>
+    <td class="data">
+      <select id="F007_MIC_P09_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="b">b - Black-and-white</option>
+         <option value="c">c - Multicolored</option>
+         <option value="m">m - Mixed</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MIC_P10">
+    <td class="label">10 フィルム感光乳剤</td>
+    <td class="data">
+      <select id="F007_MIC_P10_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Silver halide</option>
+         <option value="b">b - Diazo</option>
+         <option value="c">c - Vesicular</option>
+         <option value="m">m - Mixed emulsion</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MIC_P11">
+    <td class="label">11 世代</td>
+    <td class="data">
+      <select id="F007_MIC_P11_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - First generation (master)</option>
+         <option value="b">b - Printing master</option>
+         <option value="c">c - Service copy</option>
+         <option value="m">m - Mixed generation</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MIC_P12">
+    <td class="label">12 フィルム地</td>
+    <td class="data">
+      <select id="F007_MIC_P12_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Safety base, undetermined</option>
+         <option value="c">c - Safety base, acetate undetermined</option>
+         <option value="d">d - Safety base, diacetate</option>
+         <option value="i">i - Nitrate base</option>
+         <option value="m">m - Mixed base (nitrate and safety)</option>
+         <option value="n">n - Not applicable</option>
+         <option value="p">p - Safety base, polyester</option>
+         <option value="r">r - Safety base, mixed</option>
+         <option value="t">t - Safety base, triacetate</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+</table>
+
+
+<table id="F007_GRF" style="display: none;">
+  <tr class="variable" id="F007_GRF_P00">
+    <td class="label">00 資料種別</td>
+    <td class="data">
+      <select id="F007_GRF_P00_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="t">文字資料</option>
+         <option value="c">電子資料</option>
+         <option value="e">地図資料</option>
+         <option value="f">点字資料</option>
+         <option value="h">マイクロ資料</option>
+         <option value="d">球儀</option>
+         <option value="q">楽譜</option>
+         <option value="s">録音資料</option>
+         <option value="m">映画</option>
+         <option value="v">映像資料</option>
+         <option value="g">映像資料（静止画）</option>
+         <option value="k" selected="selected">静止画資料</option>
+         <option value="r">リモートセンシング画像</option>
+         <option value="o">キット</option>
+         <option value="z">指定なし</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_GRF_P01">
+    <td class="label">01 特定資料種別</td>
+    <td class="data">
+      <select id="F007_GRF_P01_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="c">c - かるた等</option>
+         <option value="d">d - Drawing</option>
+         <option value="e">e - Painting</option>
+         <option value="f">f - Photomechanical print</option>
+         <option value="g">g - Photonegative</option>
+         <option value="h">h - 写真</option>
+         <option value="i">i - 静止画</option>
+         <option value="j">j - Print</option>
+         <option value="k">k - ポスター</option>
+         <option value="l">l - 設計図</option>
+         <option value="n">n - Chart</option>
+         <option value="o">o - カード</option>
+         <option value="p">p - 絵葉書</option>
+         <option value="u">u - Unspecified</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_GRF_P02">
+    <td class="label">02 未定義</td>
+    <td class="data">
+      <input id="F007_GRF_P02_VAL" size="1" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_GRF_P03">
+    <td class="label">03 色彩</td>
+    <td class="data">
+      <select id="F007_GRF_P03_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - One color</option>
+         <option value="b">b - Black-and-white</option>
+         <option value="c">c - Multicolored</option>
+         <option value="h">h - Hand colored</option>
+         <option value="m">m - Mixed</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_GRF_P04">
+    <td class="label">04 主要な基盤体</td>
+    <td class="data">
+      <select id="F007_GRF_P04_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Canvas</option>
+         <option value="b">b - Bristol board</option>
+         <option value="c">c - Cardboard/illustration board</option>
+         <option value="d">d - Glass</option>
+         <option value="e">e - Synthetic</option>
+         <option value="f">f - Skin</option>
+         <option value="g">g - Textile</option>
+         <option value="h">h - Metal</option>
+         <option value="m">m - Mixed collection</option>
+         <option value="o">o - Paper</option>
+         <option value="p">p - Plaster</option>
+         <option value="q">q - Hardboard</option>
+         <option value="r">r - Porcelain</option>
+         <option value="s">s - Stone</option>
+         <option value="t">t - Wood</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_GRF_P05">
+    <td class="label">05 副次的基盤体</td>
+    <td class="data">
+      <select id="F007_GRF_P05_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="#"># - No secondary support</option>
+         <option value="a">a - Canvas</option>
+         <option value="b">b - Bristol board</option>
+         <option value="c">c - Cardboard/illustration board</option>
+         <option value="d">d - Glass</option>
+         <option value="e">e - Synthetic</option>
+         <option value="f">f - Skin</option>
+         <option value="g">g - Textile</option>
+         <option value="h">h - Metal</option>
+         <option value="m">m - Mixed collection</option>
+         <option value="o">o - Paper</option>
+         <option value="p">p - Plaster</option>
+         <option value="q">q - Hardboard</option>
+         <option value="r">r - Porcelain</option>
+         <option value="s">s - Stone</option>
+         <option value="t">t - Wood</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+</table>
+   
+<table id="F007_MOP" style="display: none;">
+  <tr class="variable" id="F007_MOP_P00">
+    <td class="label">00 資料種別</td>
+    <td class="data">
+      <select id="F007_MOP_P00_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="t">文字資料</option>
+         <option value="c">電子資料</option>
+         <option value="e">地図資料</option>
+         <option value="f">点字資料</option>
+         <option value="h">マイクロ資料</option>
+         <option value="d">球儀</option>
+         <option value="q">楽譜</option>
+         <option value="s">録音資料</option>
+         <option value="m" selected="selected">映画</option>
+         <option value="v">映像資料</option>
+         <option value="g">映像資料（静止画）</option>
+         <option value="k">静止画資料</option>
+         <option value="r">リモートセンシング画像</option>
+         <option value="o">キット</option>
+         <option value="z">指定なし</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P01">
+    <td class="label">01 Specific material designation</td>
+    <td class="data">
+      <select id="F007_MOP_P01_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="c">c - Film cartridge</option>
+         <option value="f">f - Film cassette</option>
+         <option value="r">r - Film reel</option>
+         <option value="u">u - Unspecified</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P02">
+    <td class="label">02 Undefined</td>
+    <td class="data">
+      <input id="F007_MOP_P02_VAL" size="1" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P03">
+    <td class="label">03 Color</td>
+    <td class="data">
+      <select id="F007_MOP_P03_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="b">b - Black-and-white</option>
+         <option value="c">c - Multicolored</option>
+         <option value="h">h - Hand colored</option>
+         <option value="m">m - Mixed</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P04">
+    <td class="label">04 Motion picture presentation format</td>
+    <td class="data">
+      <select id="F007_MOP_P04_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Standard sound aperture (reduced frame)</option>
+         <option value="b">b - Nonanamorphic (wide-screen)</option>
+         <option value="c">c - 3D</option>
+         <option value="d">d - Anamorphic (wide-screen)</option>
+         <option value="e">e - Other wide-screen format</option>
+         <option value="f">f - Standard silent aperture (full frame)</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P05">
+    <td class="label">05 Sound on medium or separate</td>
+    <td class="data">
+      <select id="F007_MOP_P05_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="#"># - No sound (silent)</option>
+         <option value="a">a - Sound on medium</option>
+         <option value="b">b - Sound separate from medium</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P06">
+    <td class="label">06 Medium for sound</td>
+    <td class="data">
+      <select id="F007_MOP_P06_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="#"># - No sound (silent)</option>
+         <option value="a">a - Optical sound track on motion picture film</option>
+         <option value="b">b - Magnetic sound track on motion picture film</option>
+         <option value="c">c - Magnetic audio tape in cartridge</option>
+         <option value="d">d - Sound disc</option>
+         <option value="e">e - Magnetic audio tape on reel</option>
+         <option value="f">f - Magnetic audio tape in cassette</option>
+         <option value="g">g - Optical and magnetic sound track on motion picture film</option>
+         <option value="h">h - Videotape</option>
+         <option value="i">i - Videodisc</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P07">
+    <td class="label">07 Dimensions</td>
+    <td class="data">
+      <select id="F007_MOP_P07_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Standard 8 mm.</option>
+         <option value="b">b - Super 8 mm./single 8 mm.</option>
+         <option value="c">c - 9.5 mm.</option>
+         <option value="d">d - 16 mm.</option>
+         <option value="e">e - 28 mm.</option>
+         <option value="f">f - 35 mm.</option>
+         <option value="g">g - 70 mm.</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P08">
+    <td class="label">08 Configuration of playback channels</td>
+    <td class="data">
+      <select id="F007_MOP_P08_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="k">k - Mixed</option>
+         <option value="m">m - Monaural</option>
+         <option value="n">n - Not applicable</option>
+         <option value="q">q - Quadraphonic, multichannel, or surround</option>
+         <option value="s">s - Stereophonic</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P09">
+    <td class="label">09 Production elements</td>
+    <td class="data">
+      <select id="F007_MOP_P09_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Workprint</option>
+         <option value="b">b - Trims</option>
+         <option value="c">c - Outtakes</option>
+         <option value="d">d - Rushes</option>
+         <option value="e">e - Mixing tracks</option>
+         <option value="f">f - Title bands/inter-title rolls</option>
+         <option value="g">g - Production rolls</option>
+         <option value="n">n - Not applicable</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P10">
+    <td class="label">10 Positive/negative aspect</td>
+    <td class="data">
+      <select id="F007_MOP_P10_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Positive</option>
+         <option value="b">b - Negative</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P11">
+    <td class="label">11 Generation</td>
+    <td class="data">
+      <select id="F007_MOP_P11_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="d">d - Duplicate</option>
+         <option value="e">e - Master</option>
+         <option value="o">o - Original</option>
+         <option value="r">r - Reference print/viewing copy</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P12">
+    <td class="label">12 Base of film</td>
+    <td class="data">
+      <select id="F007_MOP_P12_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Safety base, undetermined</option>
+         <option value="c">c - Safety base, acetate undetermined</option>
+         <option value="d">d - Safety base, diacetate</option>
+         <option value="i">i - Nitrate base</option>
+         <option value="m">m - Mixed base (nitrate and safety)</option>
+         <option value="n">n - Not applicable</option>
+         <option value="p">p - Safety base, polyester</option>
+         <option value="r">r - Safety base, mixed</option>
+         <option value="t">t - Safety base, triacetate</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P13">
+    <td class="label">13 Refined categories of color</td>
+    <td class="data">
+      <select id="F007_MOP_P13_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - 3 layer color</option>
+         <option value="b">b - 2 color, single strip</option>
+         <option value="c">c - Undetermined 2 color</option>
+         <option value="d">d - Undetermined 3 color</option>
+         <option value="e">e - 3 strip color</option>
+         <option value="f">f - 2 strip color</option>
+         <option value="g">g - Red strip</option>
+         <option value="h">h - Blue or green strip</option>
+         <option value="i">i - Cyan strip</option>
+         <option value="j">j - Magenta strip</option>
+         <option value="k">k - Yellow strip</option>
+         <option value="l">l - S E N 2</option>
+         <option value="m">m - S E N 3</option>
+         <option value="n">n - Not applicable</option>
+         <option value="p">p - Sepia tone</option>
+         <option value="q">q - Other tone</option>
+         <option value="r">r - Tint</option>
+         <option value="s">s - Tinted and toned</option>
+         <option value="t">t - Stencil color</option>
+         <option value="u">u - Unknown</option>
+         <option value="v">v - Hand colored</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P14">
+    <td class="label">14 Kind of color stock or print</td>
+    <td class="data">
+      <select id="F007_MOP_P14_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Imbibition dye transfer prints</option>
+         <option value="b">b - Three-layer stock</option>
+         <option value="c">c - Three layer stock, low fade</option>
+         <option value="d">d - Duplitized stock</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P15">
+    <td class="label">15 Deterioration stage</td>
+    <td class="data">
+      <select id="F007_MOP_P15_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - None apparent</option>
+         <option value="b">b - Nitrate: suspicious odor</option>
+         <option value="c">c - Nitrate: pungent odor</option>
+         <option value="d">d - Nitrate: brownish, discoloration, fading, dusty</option>
+         <option value="e">e - Nitrate: sticky</option>
+         <option value="f">f - Nitrate: frothy, bubbles, blisters</option>
+         <option value="g">g - Nitrate: congealed</option>
+         <option value="h">h - Nitrate: powder</option>
+         <option value="k">k - Non-nitrate: detectable deterioration</option>
+         <option value="l">l - Non-nitrate: advanced deterioration</option>
+         <option value="m">m - Non-nitrate: disaster</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P16">
+    <td class="label">16 Completeness</td>
+    <td class="data">
+      <select id="F007_MOP_P16_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="c">c - Complete</option>
+         <option value="i">i - Incomplete</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_MOP_P17_22">
+    <td class="label">17-22 Film inspection date</td>
+    <td class="data"><input id="F007_MOP_P17_22_VAL" size="10" maxlength="6" value="######"/></td>    </tr>
+</table>
+   
+<table id="F007_KIT" style="display: none;">
+  <tr class="variable" id="F007_KIT_P00">
+    <td class="label">00 資料種別</td>
+    <td class="data">
+      <select id="F007_KIT_P00_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="t">文字資料</option>
+         <option value="c">電子資料</option>
+         <option value="e">地図資料</option>
+         <option value="f">点字資料</option>
+         <option value="h">マイクロ資料</option>
+         <option value="d">球儀</option>
+         <option value="q">楽譜</option>
+         <option value="s">録音資料</option>
+         <option value="m">映画</option>
+         <option value="v">映像資料</option>
+         <option value="g">映像資料（静止画）</option>
+         <option value="k">静止画資料</option>
+         <option value="r">リモートセンシング画像</option>
+         <option value="o" selected="selected">キット</option>
+         <option value="z">指定なし</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_KIT_P01">
+    <td class="label">01 Specific material designation</td>
+    <td class="data">
+      <select id="F007_KIT_P01_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="u">u - Unspecified</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+</table>
+
+<table id="F007_NOM" style="display: none;">
+  <tr class="variable" id="F007_NOM_P00">
+    <td class="label">00 資料種別</td>
+    <td class="data">
+      <select id="F007_NOM_P00_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="t">文字資料</option>
+         <option value="c">電子資料</option>
+         <option value="e">地図資料</option>
+         <option value="f">点字資料</option>
+         <option value="h">マイクロ資料</option>
+         <option value="d">球儀</option>
+         <option value="q" selected="selected">楽譜</option>
+         <option value="s">録音資料</option>
+         <option value="m">映画</option>
+         <option value="v">映像資料</option>
+         <option value="g">映像資料（静止画）</option>
+         <option value="k">静止画資料</option>
+         <option value="r">リモートセンシング画像</option>
+         <option value="o">キット</option>
+         <option value="z">指定なし</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_NOM_P01">
+    <td class="label">01 特定資料種別</td>
+    <td class="data">
+      <select id="F007_NOM_P01_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="u">u - 特定しない</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+</table>
+
+
+<table id="F007_RSI" style="display: none;">
+  <tr class="variable" id="F007_RSI_P00">
+    <td class="label">00 資料種別</td>
+    <td class="data">
+      <select id="F007_RSI_P00_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="t">文字資料</option>
+         <option value="c">電子資料</option>
+         <option value="e">地図資料</option>
+         <option value="f">点字資料</option>
+         <option value="h">マイクロ資料</option>
+         <option value="d">球儀</option>
+         <option value="q">楽譜</option>
+         <option value="s">録音資料</option>
+         <option value="m">映画</option>
+         <option value="v">映像資料</option>
+         <option value="g">映像資料（静止画）</option>
+         <option value="k">静止画資料</option>
+         <option value="r" selected="selected">リモートセンシング画像</option>
+         <option value="o">キット</option>
+         <option value="z">指定なし</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_RSI_P01">
+    <td class="label">01 Specific material designation</td>
+    <td class="data">
+      <select id="F007_RSI_P01_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="u">u - Unspecified</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_RSI_P02">
+    <td class="label">02 Undefined</td>
+    <td class="data">
+      <input id="F007_RSI_P02_VAL" size="1" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_RSI_P03">
+    <td class="label">03 Altitude of sensor</td>
+    <td class="data">
+      <select id="F007_RSI_P03_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Surface</option>
+         <option value="b">b - Airborne</option>
+         <option value="c">c - Spaceborne</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_RSI_P04">
+    <td class="label">04 Attitude of sensor</td>
+    <td class="data">
+      <select id="F007_RSI_P04_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Low oblique</option>
+         <option value="b">b - High oblique</option>
+         <option value="c">c - Vertical</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_RSI_P05">
+    <td class="label">05 Cloud cover</td>
+    <td class="data">
+      <select id="F007_RSI_P05_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="0">0 - 0-9%</option>
+         <option value="1">1 - 10-19%</option>
+         <option value="2">2 - 20-29%</option>
+         <option value="3">3 - 30-39%</option>
+         <option value="4">4 - 40-49%</option>
+         <option value="5">5 - 50-59%</option>
+         <option value="6">6 - 60-69%</option>
+         <option value="7">7 - 70-79%</option>
+         <option value="8">8 - 80-89%</option>
+         <option value="9">9 - 90-100%</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_RSI_P06">
+    <td class="label">06 Platform construction type</td>
+    <td class="data">
+      <select id="F007_RSI_P06_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Balloon</option>
+         <option value="b">b - Aircraft--low altitude</option>
+         <option value="c">c - Aircraft--medium altitude</option>
+         <option value="d">d - Aircraft--high altitude</option>
+         <option value="e">e - Manned spacecraft</option>
+         <option value="f">f - Unmanned spacecraft</option>
+         <option value="g">g - Land-based remote-sensing device</option>
+         <option value="h">h - Water surface-based remote-sensing device</option>
+         <option value="i">i - Submersible remote-sensing device</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_RSI_P07">
+    <td class="label">07 Platform use category</td>
+    <td class="data">
+      <select id="F007_RSI_P07_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Meteorological</option>
+         <option value="b">b - Surface observing</option>
+         <option value="c">c - Space observing</option>
+         <option value="m">m - Mixed uses</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_RSI_P08">
+    <td class="label">08 Sensor type</td>
+    <td class="data">
+      <select id="F007_RSI_P08_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Active</option>
+         <option value="b">b - Passive</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_RSI_P09_10">
+    <td class="label">09-10 Data type</td>
+    <td class="data">
+      <select id="F007_RSI_P09_10_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="aa">aa - Visible light</option>
+         <option value="da">da - Near infrared</option>
+         <option value="db">db - Middle infrared</option>
+         <option value="dc">dc - Far infrared</option>
+         <option value="dd">dd - Thermal infrared</option>
+         <option value="de">de - Shortwave infrared (SWIR)</option>
+         <option value="df">df - Reflective infrared</option>
+         <option value="dv">dv - Combinations</option>
+         <option value="dz">dz - Other infrared data</option>
+         <option value="ga">ga - Sidelooking airborne radar (SLAR)</option>
+         <option value="gb">gb - Synthetic aperture radar (SAR)-Single frequency</option>
+         <option value="gc">gc - SAR-multi-frequency (multichannel)</option>
+         <option value="gd">gd - SAR-like polarization</option>
+         <option value="ge">ge - SAR-cross polarization</option>
+         <option value="gf">gf - Infometric SAR</option>
+         <option value="gg">gg - polarmetric SAR</option>
+         <option value="gu">gu - Passive microwave mapping</option>
+         <option value="gz">gz - Other microwave data</option>
+         <option value="ja">ja - Far ultraviolet</option>
+         <option value="jb">jb - Middle ultraviolet</option>
+         <option value="jc">jc - Near ultraviolet</option>
+         <option value="jv">jv - Ultraviolet combinations</option>
+         <option value="jz">jz - Other ultraviolet data</option>
+         <option value="ma">ma - Multi-spectral, multidata</option>
+         <option value="mb">mb - Multi-temporal</option>
+         <option value="mm">mm - Combination of various data types</option>
+         <option value="nn">nn - Not applicable</option>
+         <option value="pa">pa - Sonar--water depth</option>
+         <option value="pb">pb - Sonar--bottom topography images, sidescan</option>
+         <option value="pc">pc - Sonar--bottom topography, near-surface</option>
+         <option value="pd">pd - Sonar--bottom topography, near-bottom</option>
+         <option value="pe">pe - Seismic surveys</option>
+         <option value="pz">pz - Other acoustical data</option>
+         <option value="ra">ra - Gravity anomalies (general)</option>
+         <option value="rb">rb - Free-air</option>
+         <option value="rc">rc - Bouger</option>
+         <option value="rd">rd - Isostatic</option>
+         <option value="sa">sa - Magnetic field</option>
+         <option value="ta">ta - radiometric surveys</option>
+         <option value="uu">uu - Unknown</option>
+         <option value="zz">zz - Other</option>
+         <option value="||">|| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+</table>
+   
+
+<table id="F007_REC" style="display: none;">
+  <tr class="variable" id="F007_REC_P00">
+    <td class="label">00 資料種別</td>
+    <td class="data">
+      <select id="F007_REC_P00_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="t">文字資料</option>
+         <option value="c">電子資料</option>
+         <option value="e">地図資料</option>
+         <option value="f">点字資料</option>
+         <option value="h">マイクロ資料</option>
+         <option value="d">球儀</option>
+         <option value="q">楽譜</option>
+         <option value="s" selected="selected">録音資料</option>
+         <option value="m">映画</option>
+         <option value="v">映像資料</option>
+         <option value="g">映像資料（静止画）</option>
+         <option value="k">静止画資料</option>
+         <option value="r">リモートセンシング画像</option>
+         <option value="o">キット</option>
+         <option value="z">指定なし</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_REC_P01">
+    <td class="label">01 特定資料種別</td>
+    <td class="data">
+      <select id="F007_REC_P01_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="d">d - 録音ディスク</option>
+         <option value="e">e - Cylinder</option>
+         <option value="g">g - Sound cartridge</option>
+         <option value="i">i - Sound-track film</option>
+         <option value="q">q - Roll</option>
+         <option value="s">s - 録音カセット</option>
+         <option value="t">t - 録音リール</option>
+         <option value="u">u - Unspecified</option>
+         <option value="w">w - Wire recording</option>
+         <option value="z">z - その他</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_REC_P02">
+    <td class="label">02 未定義</td>
+    <td class="data">
+      <input id="F007_REC_P02_VAL" size="1" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_REC_P03">
+    <td class="label">03 再生速度</td>
+    <td class="data">
+      <select id="F007_REC_P03_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - 16 rpm (discs)</option>
+         <option value="b">b - 33回転</option>
+         <option value="c">c - 45回転</option>
+         <option value="d">d - 78 rpm (discs)</option>
+         <option value="e">e - 8 rpm (discs)</option>
+         <option value="f">f - 1.4 m. per second (discs)</option>
+         <option value="h">h - 120 rpm (cylinders)</option>
+         <option value="i">i - 160 rpm (cylinders)</option>
+         <option value="k">k - 15/16 ips (tapes)</option>
+         <option value="l">l - 1 7/8 ips (tapes)</option>
+         <option value="m">m - 3 3/4 ips (tapes)</option>
+         <option value="o">o - 7 1/2 ips (tapes)</option>
+         <option value="p">p - 15 ips (tapes)</option>
+         <option value="r">r - 30 ips (tape)</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_REC_P04">
+    <td class="label">04 録音チャネル数</td>
+    <td class="data">
+      <select id="F007_REC_P04_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="m">m - モノラル</option>
+         <option value="q">q - Quadraphonic</option>
+         <option value="s">s - ステレオ</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_REC_P05">
+    <td class="label">05 音溝の幅</td>
+    <td class="data">
+      <select id="F007_REC_P05_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="m">m - Microgroove/fine</option>
+         <option value="n">n - Not applicable</option>
+         <option value="s">s - Coarse/standard</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_REC_P06">
+    <td class="label">06 大きさ</td>
+    <td class="data">
+      <select id="F007_REC_P06_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - 3 in. diameter</option>
+         <option value="b">b - 5 in. diameter</option>
+         <option value="c">c - EP（7インチ）</option>
+         <option value="d">d - 10 in. diameter</option>
+         <option value="e">e - LP（12インチ）</option>
+         <option value="f">f - 16 in. diameter</option>
+         <option value="g">g - 4 3/4 in. or 12 cm. diameter</option>
+         <option value="j">j - 3 7/8 x 2 1/2 in.</option>
+         <option value="n">n - Not applicable</option>
+         <option value="o">o - 5 1/4 x 3 7/8 in.</option>
+         <option value="s">s - 2 3/4 x 4 in.</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_REC_P07">
+    <td class="label">07 テープの幅</td>
+    <td class="data">
+      <select id="F007_REC_P07_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="l">l - 1/8 in.</option>
+         <option value="m">m - 1/4 in.</option>
+         <option value="n">n - Not applicable</option>
+         <option value="o">o - 1/2 in.</option>
+         <option value="p">p - 1 in.</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_REC_P08">
+    <td class="label">08 テープの構成</td>
+    <td class="data">
+      <select id="F007_REC_P08_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Full (1) track</option>
+         <option value="b">b - Half (2) track</option>
+         <option value="c">c - Quarter (4) track</option>
+         <option value="d">d - Eight track</option>
+         <option value="e">e - Twelve track</option>
+         <option value="f">f - Sixteen track</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_REC_P09">
+    <td class="label">09 記録媒体の種類</td>
+    <td class="data">
+      <select id="F007_REC_P09_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Master tape</option>
+         <option value="b">b - Tape duplication master</option>
+         <option value="d">d - Disc master (negative)</option>
+         <option value="i">i - Instantaneous (recorded on the spot)</option>
+         <option value="m">m - Mass-produced</option>
+         <option value="n">n - Not applicable</option>
+         <option value="r">r - Mother (positive)</option>
+         <option value="s">s - Stamper (negative)</option>
+         <option value="t">t - Test pressing</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_REC_P10">
+    <td class="label">10 材料の種別</td>
+    <td class="data">
+      <select id="F007_REC_P10_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Lacquer coating</option>
+         <option value="b">b - Cellulose nitrate</option>
+         <option value="c">c - Acetate tape with ferrous oxide</option>
+         <option value="g">g - Glass with lacquer</option>
+         <option value="i">i - Aluminum with lacquer</option>
+         <option value="l">l - Metal</option>
+         <option value="m">m - Plastic with metal</option>
+         <option value="p">p - Plastic</option>
+         <option value="r">r - Paper with lacquer or ferrous oxide</option>
+         <option value="s">s - Shellac</option>
+         <option value="w">w - Wax</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_REC_P11">
+    <td class="label">11 カッティングの種別</td>
+    <td class="data">
+      <select id="F007_REC_P11_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="h">h - Hill-and-dale cutting</option>
+         <option value="l">l - Lateral or combined cutting</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_REC_P12">
+    <td class="label">12 再生方法の特性</td>
+    <td class="data">
+      <select id="F007_REC_P12_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - NAB standard</option>
+         <option value="b">b - CCIR standard</option>
+         <option value="c">c - Dolby-B encoded</option>
+         <option value="d">d - dbx encoded</option>
+         <option value="e">e - Digital recording</option>
+         <option value="f">f - Dolby-A encoded</option>
+         <option value="g">g - Dolby-C encoded</option>
+         <option value="h">h - CX encoded</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_REC_P13">
+    <td class="label">13 音の記録方式</td>
+    <td class="data">
+      <select id="F007_REC_P13_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - Acoustical capture, direct storage</option>
+         <option value="b">b - Direct storage, not acoustical</option>
+         <option value="d">d - Digital storage</option>
+         <option value="e">e - Analog electrical storage</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+</table>
+   
+
+<table id="F007_TXT" style="display: none;">
+  <tr class="variable" id="F007_TXT_P00">
+    <td class="label">00 資料種別</td>
+    <td class="data">
+      <select id="F007_TXT_P00_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="t" selected="selected">文字資料</option>
+         <option value="c">電子資料</option>
+         <option value="e">地図資料</option>
+         <option value="f">点字資料</option>
+         <option value="h">マイクロ資料</option>
+         <option value="d">球儀</option>
+         <option value="q">楽譜</option>
+         <option value="s">録音資料</option>
+         <option value="m">映画</option>
+         <option value="v">映像資料</option>
+         <option value="g">映像資料（静止画）</option>
+         <option value="k">静止画資料</option>
+         <option value="r">リモートセンシング画像</option>
+         <option value="o">キット</option>
+         <option value="z">指定なし</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_TXT_P01">
+    <td class="label">01 特定資料種別</td>
+    <td class="data">
+      <select id="F007_TXT_P01_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - 普通活字</option>
+         <option value="b">b - 大活字</option>
+         <option value="c">c - Braille</option>
+         <option value="d">d - Loose-leaf</option>
+         <option value="u">u - 特定しない</option>
+         <option value="z">z - その他</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+</table>
+   
+
+<table id="F007_VDO" style="display: none;">
+  <tr class="variable" id="F007_VDO_P00">
+    <td class="label">00 資料種別</td>
+    <td class="data">
+      <select id="F007_VDO_P00_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="t">文字資料</option>
+         <option value="c">電子資料</option>
+         <option value="e">地図資料</option>
+         <option value="f">点字資料</option>
+         <option value="h">マイクロ資料</option>
+         <option value="d">球儀</option>
+         <option value="q">楽譜</option>
+         <option value="s">録音資料</option>
+         <option value="m">映画</option>
+         <option value="v" selected="selected">映像資料</option>
+         <option value="g">映像資料（静止画）</option>
+         <option value="k">静止画資料</option>
+         <option value="r">リモートセンシング画像</option>
+         <option value="o">キット</option>
+         <option value="z">指定なし</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_VDO_P01">
+    <td class="label">01 特定資料種別</td>
+    <td class="data">
+      <select id="F007_VDO_P01_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="c">c - Videocartridge</option>
+         <option value="d">d - ビデオディスク</option>
+         <option value="f">f - ビデオカセット</option>
+         <option value="r">r - Videoreel</option>
+         <option value="u">u - Unspecified</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_VDO_P02">
+    <td class="label">02 未定義</td>
+    <td class="data">
+      <input id="F007_VDO_P02_VAL" size="1" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_VDO_P03">
+    <td class="label">03 色彩</td>
+    <td class="data">
+      <select id="F007_VDO_P03_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - One color</option>
+         <option value="b">b - 白黒</option>
+         <option value="c">c - 天然色</option>
+         <option value="m">m - Mixed</option>
+         <option value="n">n - Not applicable</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_VDO_P04">
+    <td class="label">04 録音特性</td>
+    <td class="data">
+      <select id="F007_VDO_P04_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - ベータ（1/2インチ、ビデオカセット）</option>
+         <option value="b">b - VHS（1/2インチ、ビデオカセット）</option>
+         <option value="c">c - Uマチック（3/4インチ、ビデオカセット）</option>
+         <option value="d">d - EIAJ (1/2 in., reel)</option>
+         <option value="e">e - Type C (1 in., reel)</option>
+         <option value="f">f - Quadruplex (1 in. or 2 in., reel)</option>
+         <option value="g">g - レーザーディスク</option>
+         <option value="h">h - CED (Capacitance Electronic Disc) videodisc</option>
+         <option value="i">i - Betacam (1/2 in., videocassette)</option>
+         <option value="j">j - Betacam SP (1/2 in., videocassette)</option>
+         <option value="k">k - Super-VHS (1/2 in., videocassette)</option>
+         <option value="m">m - M-II (1/2 in., videocassette)</option>
+         <option value="o">o - D-2 (3/4 in., videocassette)</option>
+         <option value="p">p - 8 mm.</option>
+         <option value="q">q - Hi-8 mm.</option>
+         <option value="s">s - ブルーレイディスク</option>
+         <option value="u">u - Unknown</option>
+         <option value="v">v - DVD</option>
+         <option value="z">z - その他</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_VDO_P05">
+    <td class="label">05 音声の形態</td>
+    <td class="data">
+      <select id="F007_VDO_P05_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="#"># - No sound (silent)</option>
+         <option value="a">a - Sound on medium</option>
+         <option value="b">b - Sound separate from medium</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_VDO_P06">
+    <td class="label">06 音声用の媒体</td>
+    <td class="data">
+      <select id="F007_VDO_P06_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="#"># - No sound (silent)</option>
+         <option value="a">a - Optical sound track on motion picture film</option>
+         <option value="b">b - Magnetic sound track on motion picture film</option>
+         <option value="c">c - Magnetic audio tape in cartridge</option>
+         <option value="d">d - Sound disc</option>
+         <option value="e">e - Magnetic audio tape on reel</option>
+         <option value="f">f - Magnetic audio tape in cassette</option>
+         <option value="g">g - Optical and magnetic sound track on motion picture film</option>
+         <option value="h">h - Videotape</option>
+         <option value="i">i - Videodisc</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_VDO_P07">
+    <td class="label">07 大きさ</td>
+    <td class="data">
+      <select id="F007_VDO_P07_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="a">a - 8 mm.</option>
+         <option value="m">m - 1/4 in.</option>
+         <option value="o">o - 1/2 in.</option>
+         <option value="p">p - 1 in.</option>
+         <option value="q">q - 2 in.</option>
+         <option value="r">r - 3/4 in.</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_VDO_P08">
+    <td class="label">08 録音チャンネル数</td>
+    <td class="data">
+      <select id="F007_VDO_P08_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="k">k - Mixed</option>
+         <option value="m">m - Monaural</option>
+         <option value="n">n - Not applicable</option>
+         <option value="q">q - Quadraphonic, multichannel, or surround</option>
+         <option value="s">s - Stereophonic</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - コード不使用</option>
+      </select>
+    </td>
+  </tr>
+</table>
+   
+<table id="F007_UNS" style="display: none;">
+  <tr class="variable" id="F007_UNS_P00">
+    <td class="label">00 資料種別</td>
+    <td class="data">
+      <select id="F007_UNS_P00_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="t">文字資料</option>
+         <option value="c">電子資料</option>
+         <option value="e">地図資料</option>
+         <option value="f">点字資料</option>
+         <option value="h">マイクロ資料</option>
+         <option value="d">球儀</option>
+         <option value="q">楽譜</option>
+         <option value="s">録音資料</option>
+         <option value="m">映画</option>
+         <option value="v">映像資料</option>
+         <option value="g">映像資料（静止画）</option>
+         <option value="k">静止画資料</option>
+         <option value="r">リモートセンシング画像</option>
+         <option value="o">キット</option>
+         <option value="z" selected="selected">指定なし</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F007_UNS_P01">
+    <td class="label">01 Specific material designation</td>
+    <td class="data">
+      <select id="F007_UNS_P01_VAL" size="1">
+         <option value=" ">選択してください</option>
+         <option value="m">m - Multiple physical forms</option>
+         <option value="u">u - Unspecified</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+</table>
+
+<input class="submit" type="button" id="btn_submit" value="<?=$this->transEsc('Send')?>" />
+<input class="cancel" type="button" id="btn_cancel" value="<?=$this->transEsc('Cancel')?>" />
+</form>
+

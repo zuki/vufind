@@ -1,0 +1,1058 @@
+<?
+    $this->inlineScript(\Zend\View\Helper\HeadScript::FILE, "field-common.js");
+    $this->inlineScript(\Zend\View\Helper\HeadScript::FILE, "field008.js");
+    echo $this->inlineScript();
+?>
+
+<h3>008 - 一般コード化情報</h3>
+
+<table class="f008_builder">
+    <tr id="tr_result">
+    </tr>
+</table>
+
+<form id="f_F008" name="f_F008" action="">
+<input id="leader" type="hidden" name="leader" value="<?=$this->leader_val?>" />
+<input id="result" type="hidden" name="result" value="<?=$this->field_val?>" />
+
+<div id="F008_TYPE">
+  <div id="F008_TYPE_SELECT">
+    <label for="F008_TYPE_SELECT_VAL" title="資料種別を入力">資料種別</label>
+    <select id="F008_TYPE_SELECT_VAL" size="1">
+         <option value="  ">資料種別を選択してください</option>
+         <option value="BKS">図書</option>
+         <option value="MAP">地図資料</option>
+         <option value="MUS">楽譜・録音資料</option>
+         <option value="VIS">映像・静止画資料</option>
+         <option value="CMP">電子資料</option>
+         <option value="CNT">継続資料</option>
+         <option value="MIX">混合資料</option>
+    </select>
+  </div>
+</div>
+
+<table id="F008" class="build-field" border="1">
+  <tr id="F008_ALL_P00_05">
+    <td class="label">00-05 ファイル入力日:</td>
+    <td class="data">
+      <input id="F008_ALL_P00_05_VAL" size="10" maxlength="6" value="######"/>
+    </td>
+  </tr>
+  <tr id="F008_ALL_P06">
+    <td class="label">06 刊行種別:</td>
+    <td class="data">
+    <select id="F008_ALL_P06_VAL" size="1">
+         <option value="b">b - No dates given; B.C. date involved</option>
+         <option value="c">c - 継続資料：刊行中</option>
+         <option value="d">d - 継続資料：刊行終了</option>
+         <option value="e">e - Detailed date</option>
+         <option value="i">i - Inclusive dates of collection</option>
+         <option value="k">k - Range of years of bulk of collection</option>
+         <option value="m">m - 複数の日付（多巻もの）</option>
+         <option value="n">n - 日付不明</option>
+         <option value="p">p - Date of distribution/release/issue and production/recording session when</option>
+         <option value="q">q - Questionable date</option>
+         <option value="r">r - Reprint/reissue date and original date</option>
+         <option value="s">s - 単一の日付</option>
+         <option value="t">t - Publication date and copyright date</option>
+         <option value="u">u - 継続資料：刊行状況不明</option>
+         <option value="|">| - No attempt to code</option>
+    </select>
+    </td>
+  </tr>
+  <tr id="F008_ALL_P07_10">
+    <td class="label">07-10 西暦年1:</td>
+    <td class="data">
+      <input id="F008_ALL_P07_10_VAL" size="10" maxlength="4" value="####"/>
+    </td>
+  </tr>
+  <tr id="F008_ALL_P11_14">
+    <td class="label">11-14 西暦年2:</td>
+    <td class="data">
+      <input id="F008_ALL_P11_14_VAL" size="10" maxlength="4" value="####"/>
+    </td>
+  </tr>
+  <tr id="F008_ALL_P15_17">
+    <td class="label">15-17 出版国コード:</td>
+    <td class="data">
+      <input id="F008_ALL_P15_17_VAL" size="10" maxlength="3" value="###"/>
+    </td>
+  </tr>
+  <tr id="F008_ALL_P35_37">
+    <td class="label">35-37 言語コード:</td>
+    <td class="data">
+      <input id="F008_ALL_P35_37_VAL" size="10" maxlength="3" value="###"/>
+    </td>
+  </tr>
+  <tr id="F008_ALL_P38">
+    <td class="label">38 改変レコードコード:</td>
+    <td class="data">
+      <select id="F008_ALL_P38_VAL" size="1">
+         <option value="#"># - 改変なし</option>
+         <option value="d">d - Dashed-on information omitted</option>
+         <option value="o">o - Completely romanized/printed cards romanized</option>
+         <option value="r">r - Completely romanized/printed cards in script</option>
+         <option value="s">s - Shortened</option>
+         <option value="x">x - 欠落文字あり</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr id="F008_ALL_P39">
+    <td class="label">39 目録作成機関:</td>
+    <td class="data">
+      <select id="F008_ALL_P39_VAL" size="1">
+         <option value="#"># - 国家機関</option>
+         <option value="c">c - Cooperative cataloging program</option>
+         <option value="d">d - Other</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+</table>
+
+<table id="F008_BKS" style="display: none;">
+  <tr class="variable" id="F008_BKS_P18_21">
+    <td class="label">18-21 挿図等:</td>
+    <td class="data">
+      <input id="F008_BKS_P18_21_VAL" size="10" maxlength="4" value="||||"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_BKS_P22">
+    <td class="label">22 対象利用者コード:</td>
+    <td class="data">
+      <select id="F008_BKS_P22_VAL" size="1">
+         <option value="#"># - 特定なし</option>
+         <option value="a">a - Preschool</option>
+         <option value="b">b - Primary</option>
+         <option value="c">c - Pre-adolescent</option>
+         <option value="d">d - Adolescent</option>
+         <option value="e">e - Adult</option>
+         <option value="f">f - Specialized</option>
+         <option value="g">g - 一般</option>
+         <option value="j">j - 児童書</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_BKS_P23">
+    <td class="label">23 物理的属性:</td>
+    <td class="data">
+      <select id="F008_BKS_P23_VAL" size="1">
+         <option value="#"># - 以下以外</option>
+         <option value="a">a - マイクロフィルム</option>
+         <option value="b">b - マイクロフィッシュ</option>
+         <option value="c">c - マイクロオペーク</option>
+         <option value="d">d - 大活字図書</option>
+         <option value="f">f - 点字図書</option>
+         <option value="r">r - Regular print reproduction</option>
+         <option value="s">s - Electronic</option>
+         <option value="|">| - No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_BKS_P24_27">
+    <td class="label">24-27 資料形式図書:</td>
+    <td class="data">
+      <input id="F008_BKS_P24_27_VAL" size="10" maxlength="4" value="||||"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_BKS_P28">
+    <td class="label">28 政府刊行物（図書）:</td>
+    <td class="data">
+      <select id="F008_BKS_P28_VAL" size="1">
+         <option value="#"># - 民間出版物</option>
+         <option value="a">a - Autonomous or semi-autonomous component</option>
+         <option value="c">c - Multilocal</option>
+         <option value="f">f - 中央官庁</option>
+         <option value="i">i - International intergovernmental</option>
+         <option value="l">l - 地方自治体</option>
+         <option value="m">m - Multistate</option>
+         <option value="o">o - Government publication-level undetermined</option>
+         <option value="s">s - State, provincial, territorial, dependent, etc.</option>
+         <option value="u">u - Unknown if item is government publication</option>
+         <option value="z">z - その他</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_BKS_P29">
+    <td class="label">29 会議録（図書）:</td>
+    <td class="data">
+      <select id="F008_BKS_P29_VAL" size="1">
+         <option value="0">0 - Not a conference publication</option>
+         <option value="1">1 - Conference publication</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_BKS_P30">
+    <td class="label">30 記念論文集（図書）:</td>
+    <td class="data">
+      <select id="F008_BKS_P30_VAL" size="1">
+         <option value="0">0 - Not a festschrift</option>
+         <option value="1">1 - Festschrift</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_BKS_P31">
+    <td class="label">31 索引（図書）:</td>
+    <td class="data">
+      <select id="F008_BKS_P31_VAL" size="1">
+         <option value="0">0 - No index</option>
+         <option value="1">1 - Index present</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_BKS_P32">
+    <td class="label">32 未定義（図書）:</td>
+    <td class="data">
+      <input id="F008_BKS_P32_VAL" size="10" maxlength="1" value="|"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_BKS_P33">
+    <td class="label">33 文学形式（図書）:</td>
+    <td class="data">
+      <select id="F008_BKS_P33_VAL" size="1">
+         <option value="0">0 - Not fiction (not further specified)</option>
+         <option value="1">1 - Fiction (not further specified)</option>
+         <option value="c">c - Comic strips</option>
+         <option value="d">d - Dramas</option>
+         <option value="e">e - Essays</option>
+         <option value="f">f - Novels</option>
+         <option value="h">h - Humor, satires, etc.</option>
+         <option value="i">i - Letters</option>
+         <option value="j">j - Short stories</option>
+         <option value="m">m - Mixed forms</option>
+         <option value="p">p - Poetry</option>
+         <option value="s">s - Speeches</option>
+         <option value="u">u - Unknown</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_BKS_P34">
+    <td class="label">34 伝記（図書）:</td>
+    <td class="data">
+      <select id="F008_BKS_P34_VAL" size="1">
+         <option value="#"># - No biographical material</option>
+         <option value="a">a - Autobiography</option>
+         <option value="b">b - Individual biography</option>
+         <option value="c">c - Collective biography</option>
+         <option value="d">d - Contains biographical information</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+</table>
+
+<table id="F008_MAP" style="display: none;">
+  <tr class="variable" id="F008_MAP_P18_21">
+    <td class="label">18-21 高低差表現（地図資料）:</td>
+    <td class="data">
+      <input id="F008_MAP_P18_21_VAL" size="10" maxlength="4" value="||||"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MAP_P22_23">
+    <td class="label">22-23 投影図法（地図資料）:</td>
+    <td class="data">
+      <select id="F008_MAP_P22_23_VAL" size="1">
+         <option value="##">不明</option>
+         <option value="aa">エイトフ投影図法（Aitoff）</option>
+         <option value="ab">心射図法</option>
+         <option value="ac">ランベルト正積方位図法</option>
+         <option value="ad">正射図法</option>
+         <option value="ae">正距方位図法</option>
+         <option value="af">平射図法</option>
+         <option value="ag">General vertical near-sided</option>
+         <option value="am">変更平射図法（アラスカ用）</option>
+         <option value="an">Chamberlin trimetric</option>
+         <option value="ap">極平射図法</option>
+         <option value="au">方位図法（型不明）</option>
+         <option value="az">方位図法（その他）</option>
+         <option value="ba">ガル図法</option>
+         <option value="bb">グード図法</option>
+         <option value="bc">ランベルト正積円筒図法</option>
+         <option value="bd">メルカトル図法</option>
+         <option value="be">ミラー図法</option>
+         <option value="bf">モルワイデ図法</option>
+         <option value="bg">サンソン図法</option>
+         <option value="bh">横メルカトール図法</option>
+         <option value="bi">ガウス-クリューゲル図法</option>
+         <option value="bj">正距円筒図法</option>
+         <option value="bo">斜軸メルカトル図法</option>
+         <option value="br">ロビンソン図法</option>
+         <option value="bs">スペース・オブリーク・メルカトル図法</option>
+         <option value="bu">円筒図法（型不明）</option>
+         <option value="bz">円筒図法（その他）</option>
+         <option value="ca">アルベルス正積図法</option>
+         <option value="cb">ボンヌ図法</option>
+         <option value="cc">ランベルト正角円錐図法</option>
+         <option value="cd">円錐図法</option>
+         <option value="ce">正距円錐図法</option>
+         <option value="cf">ドリール図法</option>
+         <option value="cg">万国図図法（変更多円錐図法）</option>
+         <option value="ch">ティソー指示楕円図法</option>
+         <option value="cp">多円錐図法</option>
+         <option value="cu">円錐図法（型不明）</option>
+         <option value="cz">円錐図法（その他）</option>
+         <option value="da">Armadillo</option>
+         <option value="db">蝶形図形</option>
+         <option value="dc">エケルト図法</option>
+         <option value="dd">グード・ホモロサイン図法</option>
+         <option value="de">双極斜軸円錐図法</option>
+         <option value="df">ヴァン・デル・グリテン図法</option>
+         <option value="dg">ダイマクション地図</option>
+         <option value="dh">等角図法</option>
+         <option value="di">多面体図法</option>
+         <option value="dl">ランベルト正角図法</option>
+         <option value="zz">その他</option>
+         <option value="||">不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MAP_P24">
+    <td class="label">24 未定義（地図資料）:</td>
+    <td class="data">
+      <input id="F008_MAP_P24_VAL" size="10" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MAP_P25">
+    <td class="label">25 地図タイプ（地図資料）:</td>
+    <td class="data">
+      <select id="F008_MAP_P25_VAL" size="1">
+         <option value="a">a - Single map</option>
+         <option value="b">b - Map series</option>
+         <option value="c">c - Map serial</option>
+         <option value="d">d - Globe</option>
+         <option value="e">e - Atlas</option>
+         <option value="f">f - Separate supplement to another work</option>
+         <option value="g">g - Bound as part of another work</option>
+         <option value="u">u - Unknown</option>
+         <option value="z">z - Other</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MAP_P26_27">
+    <td class="label">26-27 未定義（地図資料）:</td>
+    <td class="data">
+      <input id="F008_MAP_P26_27_VALUE" size="10" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MAP_P28">
+    <td class="label">28 政府刊行物（地図資料）:</td>
+    <td class="data">
+      <select id="F008_MAP_P28_VAL" size="1">
+         <option value="#"># - 民間出版物</option>
+         <option value="a">a - Autonomous or semi-autonomous component</option>
+         <option value="c">c - Multilocal</option>
+         <option value="f">f - 中央官庁</option>
+         <option value="i">i - International intergovernmental</option>
+         <option value="l">l - 地方自治体</option>
+         <option value="m">m - Multistate</option>
+         <option value="o">o - Government publication-level undetermined</option>
+         <option value="s">s - State, provincial, territorial, dependent, etc.</option>
+         <option value="u">u - Unknown if item is government publication</option>
+         <option value="z">z - その他</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MAP_P29">
+    <td class="label">29 物理的属性（地図資料）:</td>
+    <td class="data">
+      <select id="F008_MAP_P29_VAL" size="1">
+         <option value="#"># - 指定なし・不明g</option>
+         <option value="a">a - Microfilm</option>
+         <option value="b">b - Microfiche</option>
+         <option value="c">c - Microopaque</option>
+         <option value="d">d - Large print</option>
+         <option value="f">f - Braille</option>
+         <option value="r">r - Regular print reproduction</option>
+         <option value="s">s - Electronic</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MAP_P30">
+    <td class="label">30 未定義（地図資料）:</td>
+    <td class="data">
+      <input id="F008_MAP_P30_VALUE" size="10" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MAP_P31">
+    <td class="label">31 索引（地図資料）:</td>
+    <td class="data">
+      <select id="F008_MAP_P31_VAL" size="1">
+         <option value="0">0 - No index</option>
+         <option value="1">1 - Index present</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MAP_P32">
+    <td class="label">32 未定義（地図資料）:</td>
+    <td class="data">
+      <input id="F008_MAP_P32_VALUE" size="10" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MAP_P33_34">
+    <td class="label">33-34 索引（地図資料）:</td>
+    <td class="data">
+      <input id="F008_MAP_P33_34_VAL" size="10" maxlength="2" value="||"/>
+    </td>
+  </tr>
+</table>
+
+<table id="F008_MUS" style="display: none;">
+  <tr class="variable" id="F008_MUS_P18_19">
+    <td class="label">18-19 音楽タイプ（楽譜・録音資料）:</td>
+    <td class="data">
+      <select id="F008_MUS_P18_19_VAL" size="1">
+         <option value="an">Anthems</option>
+         <option value="bd">Ballads</option>
+         <option value="bg">Bluegrass music</option>
+         <option value="bl">Blues</option>
+         <option value="bt">Ballets</option>
+         <option value="ca">Chaconnes</option>
+         <option value="cb">Chants, Other religions</option>
+         <option value="cc">Chant, Christian</option>
+         <option value="cg">Concerti grossi</option>
+         <option value="ch">Chorales</option>
+         <option value="cl">Chorale preludes</option>
+         <option value="cn">Canons and rounds</option>
+         <option value="co">Concertos</option>
+         <option value="cp">Chansons, polyphonic</option>
+         <option value="cr">Carols</option>
+         <option value="cs">Chance compositions</option>
+         <option value="ct">Cantatas</option>
+         <option value="cy">Country music</option>
+         <option value="cz">Canzonas</option>
+         <option value="df">Dance forms</option>
+         <option value="dv">Divertimentos, serenades, cassations, divertissements, and notturni</option>
+         <option value="fg">Fugues</option>
+         <option value="fm">Folk music</option>
+         <option value="ft">Fantasias</option>
+         <option value="gm">Gospel music</option>
+         <option value="hy">Hymns</option>
+         <option value="jz">Jazz</option>
+         <option value="mc">Musical revues and comedies</option>
+         <option value="md">Madrigals</option>
+         <option value="mi">Minuets</option>
+         <option value="mo">Motets</option>
+         <option value="mp">Motion picture music</option>
+         <option value="mr">Marches</option>
+         <option value="ms">Masses</option>
+         <option value="mu">Multiple forms</option>
+         <option value="mz">Mazurkas</option>
+         <option value="nc">Nocturnes</option>
+         <option value="nn">Not applicable</option>
+         <option value="op">Operas</option>
+         <option value="or">Oratorios</option>
+         <option value="ov">Overtures</option>
+         <option value="pg">Program music</option>
+         <option value="pm">Passion music</option>
+         <option value="po">Polonaises</option>
+         <option value="pp">Popular music</option>
+         <option value="pr">Preludes</option>
+         <option value="ps">Passacaglias</option>
+         <option value="pt">Part-songs</option>
+         <option value="pv">Pavans</option>
+         <option value="rc">Rock music</option>
+         <option value="rd">Rondos</option>
+         <option value="rg">Ragtime music</option>
+         <option value="ri">Ricercars</option>
+         <option value="rp">Rhapsodies</option>
+         <option value="rq">Requiems</option>
+         <option value="sd">Square dance music</option>
+         <option value="sg">Songs</option>
+         <option value="sn">Sonatas</option>
+         <option value="sp">Symphonic poems</option>
+         <option value="st">Studies and exercises</option>
+         <option value="su">Suites</option>
+         <option value="sy">Symphonies</option>
+         <option value="tc">Toccatas</option>
+         <option value="ts">Trio-sonatas</option>
+         <option value="uu">Unknown</option>
+         <option value="vr">Variations</option>
+         <option value="wz">Waltzes</option>
+         <option value="zz">Other</option>
+         <option value="||">|| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MUS_P20">
+    <td class="label">20 音楽形態（楽譜・録音資料）:</td>
+    <td class="data">
+      <select id="F008_MUS_P20_VAL" size="1">
+         <option value="a">Full score</option>
+         <option value="b">Full score, miniature or study size</option>
+         <option value="c">Accompaniment reduced for keyboard</option>
+         <option value="d">Voice score</option>
+         <option value="e">Condensed score or piano-conductor score</option>
+         <option value="g">Close score</option>
+         <option value="m">Multiple score formats</option>
+         <option value="n">Not applicable</option>
+         <option value="u">Unknown</option>
+         <option value="z">Other</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MUS_P21">
+    <td class="label">21 音楽のパート（楽譜・録音資料）:</td>
+    <td class="data">
+      <select id="F008_MUS_P21_VAL" size="1">
+         <option value="#">No parts in hand or not specified</option>
+         <option value="d">Instrumental and vocal parts</option>
+         <option value="e">Instrumental parts</option>
+         <option value="f">Vocal parts</option>
+         <option value="n">Not applicable</option>
+         <option value="u">u - 不明</option>
+         <option value="|">No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MUS_P22">
+    <td class="label">22 対象利用者コード（楽譜・録音資料）:</td>
+    <td class="data">
+      <select id="F008_MUS_P22_VAL" size="1">
+         <option value="#"># - 指定なし・不明</option>
+         <option value="a">Preschool</option>
+         <option value="b">Primary</option>
+         <option value="c">Pre-adolescent</option>
+         <option value="d">Adolescent</option>
+         <option value="e">Adult</option>
+         <option value="f">Specialized</option>
+         <option value="g">g - 一般</option>
+         <option value="j">j - 児童書</option>
+         <option value="|">No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MUS_P23">
+    <td class="label">23 物理的属性（楽譜・録音資料）:</td>
+    <td class="data">
+      <select id="F008_MUS_P23_VAL" size="1">
+         <option value="#"># - 指定なし・不明</option>
+         <option value="a">Microfilm</option>
+         <option value="b">Microfiche</option>
+         <option value="c">Microopaque</option>
+         <option value="d">Large print</option>
+         <option value="f">Braille</option>
+         <option value="r">r - 印刷物</option>
+         <option value="q">q - 録音資料</option>
+         <option value="s">Electronic</option>
+         <option value="|">No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MUS_P24_29">
+    <td class="label">24-29 関連事項（楽譜・録音資料）:</td>
+    <td class="data">
+      <input id="F008_MUS_P24_29_VALUE" size="10" maxlength="6" value="||||||"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MUS_P30_31">
+    <td class="label">30-31 本文の文学形式（楽譜・録音資料）:</td>
+    <td class="data">
+      <input id="F008_MUS_P30_31_VALUE" size="10" maxlength="2" value="||"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MUS_P32">
+    <td class="label">32 未定義（楽譜・録音資料）:</td>
+    <td class="data">
+      <input id="F008_MUS_P32_VALUE" size="10" maxlength="1" value="|"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MUS_P33">
+    <td class="label">33 転調・編曲（楽譜・録音資料）:</td>
+    <td class="data">
+      <select id="F008_MUS_P33_VAL" size="1">
+         <option value="#">Not arrangement or transposition or not specified</option>
+         <option value="a">Transposition</option>
+         <option value="b">Arrangement</option>
+         <option value="c">Both transposed and arranged</option>
+         <option value="n">Not applicable</option>
+         <option value="u">u - 不明</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MUS_P34">
+    <td class="label">34 未定義（楽譜・録音資料）:</td>
+    <td class="data">
+      <input id="F008_MUS_P34_VALUE" size="10" maxlength="1" value="|"/>
+    </td>
+  </tr>
+</table>
+
+<table id="F008_VIS" style="display: none;">
+  <tr class="variable" id="F008_VIS_P18_20">
+    <td class="label">18-20 再生時間（映像・静止画資料）:</td>
+    <td class="data">
+      <input id="F008_VIS_P18_20_VALUE" size="10" maxlength="3" value="|||"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_VIS_P21">
+    <td class="label">21 未定義（映像・静止画資料）:</td>
+    <td class="data">
+      <input id="F008_VIS_P21_VALUE" size="10" maxlength="1" value="|"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_VIS_P22">
+    <td class="label">22 対象利用者コード（映像・静止画資料）:</td>
+    <td class="data">
+      <select id="F008_VIS_P22_VAL" size="1">
+         <option value="#"># - 指定なし・不明</option>
+         <option value="a">Preschool</option>
+         <option value="b">Primary</option>
+         <option value="c">Pre-adolescent</option>
+         <option value="d">Adolescent</option>
+         <option value="e">Adult</option>
+         <option value="f">Specialized</option>
+         <option value="g">g - 一般</option>
+         <option value="j">j - 児童書</option>
+         <option value="|">No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_VIS_P23_27">
+    <td class="label">23-27 未定義（映像・静止画資料）:</td>
+    <td class="data">
+      <input id="F008_VIS_P23_27_VALUE" size="10" maxlength="5" value="#####"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_VIS_P28">
+    <td class="label">28 政府刊行物（映像・静止画資料）:</td>
+    <td class="data">
+      <select id="F008_VIS_P28_VAL" size="1">
+         <option value="#"># - 民間出版物</option>
+         <option value="a">Autonomous or semi-autonomous component</option>
+         <option value="c">Multilocal</option>
+         <option value="f">f - 中央官庁</option>
+         <option value="i">International intergovernmental</option>
+         <option value="l">l - 地方自治体</option>
+         <option value="m">Multistate</option>
+         <option value="o">Government publication-level undetermined</option>
+         <option value="s">State, provincial, territorial, dependent, etc.</option>
+         <option value="u">Unknown if item is government publication</option>
+         <option value="z">z - その他</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_VIS_P29">
+    <td class="label">29 物理的属性（映像・静止画資料）:</td>
+    <td class="data">
+      <select id="F008_VIS_P29_VAL" size="1">
+         <option value="#"># - 指定なし・不明</option>
+         <option value="a">Microfilm</option>
+         <option value="b">Microfiche</option>
+         <option value="c">Microopaque</option>
+         <option value="d">Large print</option>
+         <option value="f">Braille</option>
+         <option value="q">q - 映像資料</option>
+         <option value="r">Regular print reproduction</option>
+         <option value="s">s - 電子資料</option>
+         <option value="|">No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_VIS_P30_32">
+    <td class="label">30-32 未定義（映像・静止画資料）:</td>
+    <td class="data">
+      <input id="F008_VIS_P30_32_VALUE" size="10" maxlength="3" value="###"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_VIS_P33">
+    <td class="label">33 資料内容種別（映像・静止画資料）:</td>
+    <td class="data">
+      <select id="F008_VIS_P33_VAL" size="1">
+         <option value="a">Art original</option>
+         <option value="b">Kit</option>
+         <option value="c">Art reproduction</option>
+         <option value="d">Diorama</option>
+         <option value="f">Filmstrip</option>
+         <option value="g">Game</option>
+         <option value="i">i - 静止画</option>
+         <option value="k">Graphic</option>
+         <option value="l">l - 設計図</option>
+         <option value="m">Motion picture</option>
+         <option value="n">Chart</option>
+         <option value="o">o - カード</option>
+         <option value="p">Microscope slide</option>
+         <option value="q">Model</option>
+         <option value="r">Realia</option>
+         <option value="s">s - スライド</option>
+         <option value="t">Transparency</option>
+         <option value="v">v - 映像資料</option>
+         <option value="w">Toy</option>
+         <option value="z">Other</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_VIS_P34">
+    <td class="label">34 動画技術（映像・静止画資料）:</td>
+    <td class="data">
+      <select id="F008_VIS_P34_VAL" size="1">
+         <option value="a">Animation</option>
+         <option value="c">Animation and live action</option>
+         <option value="l">Live action</option>
+         <option value="n">Not applicable</option>
+         <option value="u">u - 不明</option>
+         <option value="z">Other</option>
+         <option value="|">No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+</table>
+
+<table id="F008_CMP" style="display: none;">
+  <tr class="variable" id="F008_CMP_P18_21">
+    <td class="label">18-21 未定義（電子資料）:</td>
+    <td class="data">
+      <input id="F008_CMP_P18_21_VALUE" size="10" maxlength="4" value="####"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CMP_P22">
+    <td class="label">22 対象利用者コード（電子資料）:</td>
+    <td class="data">
+      <select id="F008_CMP_P22_VAL" size="1">
+         <option value="#"># - 指定なし・不明</option>
+         <option value="a">Preschool</option>
+         <option value="b">Primary</option>
+         <option value="c">Pre-adolescent</option>
+         <option value="d">Adolescent</option>
+         <option value="e">Adult</option>
+         <option value="f">Specialized</option>
+         <option value="g">g - 一般</option>
+         <option value="j">j - 児童書</option>
+         <option value="|">No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CMP_P23">
+    <td class="label">23 物理的属性（電子資料）:</td>
+    <td class="data">
+      <select id="F008_CMP_P23_VAL" size="1">
+         <option value="#"># - 指定なし・不明</option>
+         <option value="a">Numeric data</option>
+         <option value="b">Computer program</option>
+         <option value="c">Representational</option>
+         <option value="d">Document</option>
+         <option value="e">Bibliographic data</option>
+         <option value="f">Font</option>
+         <option value="g">Game</option>
+         <option value="h">Sound</option>
+         <option value="i">Interactive multimedia</option>
+         <option value="j">Online system or service</option>
+         <option value="m">Combination</option>
+         <option value="u">Unknown</option>
+         <option value="z">Other</option>
+         <option value="|">No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CMP_P24_25">
+    <td class="label">24-25 未定義（電子資料）:</td>
+    <td class="data">
+      <input id="F008_CMP_P24_25_VALUE" size="10" maxlength="2" value="##"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CMP_P26">
+    <td class="label">26 電子的内容（電子資料）:</td>
+    <td class="data">
+      <select id="F008_CMP_P26_VAL" size="1">
+         <option value="a">a - 数値データ</option>
+         <option value="b">b - コンピュータ・プログラム</option>
+         <option value="c">c - 画像データ</option>
+         <option value="d">d - 文書データ</option>
+         <option value="e">Bibliographic data</option>
+         <option value="f">f - フォント・データ</option>
+         <option value="g">g - ゲーム・ソフトウェア</option>
+         <option value="h">h - 録音データ</option>
+         <option value="i">i - インタラクティブ・マルチメディア</option>
+         <option value="j">Online system or service</option>
+         <option value="m">m - 複合体</option>
+         <option value="u">Unknown</option>
+         <option value="z">z - その他</option>
+         <option value="|">No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CMP_P27">
+    <td class="label">27 未定義（電子資料）:</td>
+    <td class="data">
+      <input id="F008_CMP_P27_VALUE" size="10" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CMP_P28">
+    <td class="label">28 政府刊行物（電子資料）:</td>
+    <td class="data">
+      <select id="F008_CMP_P28_VAL" size="1">
+         <option value="#"># - 民間出版物</option>
+         <option value="a">Autonomous or semi-autonomous component</option>
+         <option value="c">Multilocal</option>
+         <option value="f">f - 中央官庁</option>
+         <option value="i">International intergovernmental</option>
+         <option value="l">l - 地方自治体</option>
+         <option value="m">Multistate</option>
+         <option value="o">Government publication-level undetermined</option>
+         <option value="s">State, provincial, territorial, dependent, etc.</option>
+         <option value="u">Unknown if item is government publication</option>
+         <option value="z">z - その他</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CMP_P29_34">
+    <td class="label">29-34 未定義（電子資料）:</td>
+    <td class="data">
+      <input id="F008_CMP_P29_34_VALUE" size="10" maxlength="6" value="######"/>
+    </td>
+  </tr>
+</table>
+
+<table id="F008_CNT" style="display: none;">
+  <tr class="variable" id="F008_CNT_P18">
+    <td class="label">18 一般コード化情報（継続資料）:</td>
+    <td class="data">
+      <select id="F008_CNT_P18_VAL" size="1">
+         <option value="#"># - 不定期刊</option>
+         <option value="a">a - 年刊</option>
+         <option value="b">b - 隔月刊</option>
+         <option value="c">c - 半週刊</option>
+         <option value="d">d - 日刊</option>
+         <option value="e">e - 隔週刊</option>
+         <option value="f">f - 半年刊</option>
+         <option value="g">g - 隔年刊</option>
+         <option value="h">h - 3年1回刊</option>
+         <option value="i">i - 週3回刊</option>
+         <option value="j">j - 旬刊</option>
+         <option value="k">Continuously updated</option>
+         <option value="m">m - 月刊</option>
+         <option value="q">q - 季刊</option>
+         <option value="s">s - 半月刊</option>
+         <option value="t">t - 年3回刊</option>
+         <option value="u">u - 不明</option>
+         <option value="w">w - 週刊</option>
+         <option value="z">z - その他</option>
+         <option value="|">No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CNT_P19">
+    <td class="label">19 刊行の規則性（継続資料）:</td>
+    <td class="data">
+      <select id="F008_CNT_P19_VAL" size="1">
+         <option value="n">Normalized irregular</option>
+         <option value="r">r - 定期</option>
+         <option value="u">u - 不明</option>
+         <option value="x">x - 完全に不定期</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CNT_P20">
+    <td class="label">20 未定義（継続資料）:</td>
+    <td class="data">
+      <input id="F008_CNT_P20_VALUE" size="10" maxlength="1" value="#"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CNT_P21">
+    <td class="label">21 逐次刊行物種別コード（継続資料）:</td>
+    <td class="data">
+      <select id="F008_CNT_P21_VAL" size="1">
+         <option value="#">None of the following</option>
+         <option value="d">Updating database</option>
+         <option value="l">Updating loose-leaf</option>
+         <option value="m">Monographic series</option>
+         <option value="n">n - 新聞</option>
+         <option value="p">p - 逐次刊行物</option>
+         <option value="w">Updating Web site</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CNT_P22">
+    <td class="label">22 原資料の物理的属性（継続資料）:</td>
+    <td class="data">
+      <select id="F008_CNT_P22_VAL" size="1">
+         <option value="#"># - その他</option>
+         <option value="a">Microfilm</option>
+         <option value="b">Microfiche</option>
+         <option value="c">Microopaque</option>
+         <option value="d">Large print</option>
+         <option value="e">Newspaper format</option>
+         <option value="f">Braille</option>
+         <option value="s">Electronic</option>
+         <option value="|">No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CNT_23">
+    <td class="label">23 物理的属性（継続資料）:</td>
+    <td class="data">
+      <select id="F008_CNT_P23_VAL" size="1">
+         <option value="#"># - 指定なし・不明</option>
+         <option value="a">a - マイクロフィルム</option>
+         <option value="b">b - マイクロフィッシュ</option>
+         <option value="c">c - マイクロオペーク</option>
+         <option value="d">d - 大活字</option>
+         <option value="f">f - 点字</option>
+         <option value="o">o - オンライン資料</option>
+         <option value="r">Regular print reproduction</option>
+         <option value="s">s - 電子資料</option>
+         <option value="|">No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CNT_24">
+    <td class="label">24 継続刊行レベルの資料形式（継続資料）:</td>
+    <td class="data">
+      <select id="F008_CNT_P24_VAL" size="1">
+         <option value="#"># - 指定なし</option>
+         <option value="a">Abstracts/summaries</option>
+         <option value="b">Bibliographies</option>
+         <option value="c">Catalogs</option>
+         <option value="d">Dictionaries</option>
+         <option value="e">Encyclopedias</option>
+         <option value="f">Handbooks</option>
+         <option value="g">Legal articles</option>
+         <option value="h">Biography</option>
+         <option value="i">Indexes</option>
+         <option value="k">Discographies</option>
+         <option value="l">Legislation</option>
+         <option value="m">Theses</option>
+         <option value="n">Surveys of literature in a subject area</option>
+         <option value="o">Reviews</option>
+         <option value="p">Programmed texts</option>
+         <option value="q">Filmographies</option>
+         <option value="r">Directories</option>
+         <option value="s">Statistics</option>
+         <option value="t">Technical reports</option>
+         <option value="u">Standards/specifications</option>
+         <option value="v">Legal cases and case notes</option>
+         <option value="w">Law reports and digests</option>
+         <option value="z">Treaties</option>
+         <option value="|">No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CNT_P25_27">
+    <td class="label">25-27 構成レベルの資料形式（継続資料）:</td>
+    <td class="data">
+      <input id="F008_CNT_P25_27_VALUE" size="10" maxlength="3" value="###"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CNT_28">
+    <td class="label">28 政府刊行物（継続資料）:</td>
+    <td class="data">
+      <select id="F008_CNT_P28_VAL" size="1">
+         <option value="#"># - 民間出版物</option>
+         <option value="a">Autonomous or semi-autonomous component</option>
+         <option value="c">Multilocal</option>
+         <option value="f">f - 中央官庁</option>
+         <option value="i">International intergovernmental</option>
+         <option value="l">l - 地方自治体</option>
+         <option value="m">Multistate</option>
+         <option value="o">Government publication-level undetermined</option>
+         <option value="s">State, provincial, territorial, dependent, etc.</option>
+         <option value="u">Unknown if item is government publication</option>
+         <option value="z">z - その他</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CNT_29">
+    <td class="label">29 会議録（継続資料）:</td>
+    <td class="data">
+      <select id="F008_CNT_P29_VAL" size="1">
+         <option value="0">Not a conference publication</option>
+         <option value="1">Conference publication</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CNT_P30_32">
+    <td class="label">30-32 構成レベルの資料形式（継続資料）:</td>
+    <td class="data">
+      <input id="F008_CNT_P30_32_VALUE" size="10" maxlength="3" value="###"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CNT_33">
+    <td class="label">33 原綴タイトルの使用文字種（継続資料）:</td>
+    <td class="data">
+      <select id="F008_CNT_P33_VAL" size="1">
+         <option value="#"># - No alphabet or script given/No key title</option>
+         <option value="a">a - ローマ字</option>
+         <option value="b">b - 符号付きローマ字</option>
+         <option value="c">c - キリル文字</option>
+         <option value="d">d - 仮名、日本漢字</option>
+         <option value="e">e - 中国漢字</option>
+         <option value="f">f - アラビア文字</option>
+         <option value="g">g - ギリシア文字</option>
+         <option value="h">h - ヘブライ文字</option>
+         <option value="i">i - タイ文字</option>
+         <option value="j">j - デーヴァナーガリー文字</option>
+         <option value="k">k - ハングル</option>
+         <option value="l">l - タミル文字</option>
+         <option value="u">uUnknown</option>
+         <option value="z">z - その他</option>
+         <option value="|">| - 不使用</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_CNT_34">
+    <td class="label">34 記入リンクフィールドの有無（継続資料）:</td>
+    <td class="data">
+      <select id="F008_CNT_P34_VAL" size="1">
+         <option value="0">0 - 先行記入・後継記入あり</option>
+         <option value="1">Latest entry</option>
+         <option value="2">Integrated entry</option>
+         <option value="|">| - 先行記入・後継記入なし</option>
+      </select>
+    </td>
+  </tr>
+</table>
+
+<table id="F008_MIX" style="display: none;">
+  <tr class="variable" id="F008_MIX_P18_22">
+    <td class="label">18-22 未定義（混合資料）:</td>
+    <td class="data">
+      <input id="F008_MIX_P18_22_VALUE" size="10" maxlength="5" value="#####"/>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MIX_P23">
+    <td class="label">23 物理的属性（混合資料）:</td>
+    <td class="data">
+      <select id="F008_MIX_P23_VAL" size="1">
+         <option value="#">None of the following</option>
+         <option value="a">Microfilm</option>
+         <option value="b">Microfiche</option>
+         <option value="c">Microopaque</option>
+         <option value="d">Large print</option>
+         <option value="f">Braille</option>
+         <option value="r">Regular print reproduction</option>
+         <option value="s">Electronic</option>
+         <option value="|">No attempt to code</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="variable" id="F008_MIX_P24_34">
+    <td class="label">24-34 未定義（混合資料）:</td>
+    <td class="data">
+      <input id="F008_MIX_P24_34_VALUE" size="20" maxlength="11" value="###########"/>
+    </td>
+  </tr>
+</table>
+<input class="submit" type="button" id="btn_submit" value="<?=$this->transEsc('Send')?>" />
+<input class="cancel" type="button" id="btn_cancel" value="<?=$this->transEsc('Cancel')?>" />
+
+</form>

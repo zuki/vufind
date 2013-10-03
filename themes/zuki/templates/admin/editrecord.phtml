@@ -1,0 +1,28 @@
+<?
+    $this->headScript()->appendFile("jquery.scrollTo.min.js");
+    $this->headScript()->appendFile("biblio.js");
+
+    // Set page title.
+    $this->headTitle($this->translate('VuFind Administration - Edit Record'));
+?>
+
+
+<div class="span-5">
+  <?=$this->render("admin/menu.phtml")?>
+</div>
+
+<div class="span-18 last">
+  <h1><?=$this->transEsc('Edit Record')?></h1>
+  <? if ($this->marc): ?>
+    <form action="<?=$this->url('admin-saverecord')?>" method="post" name="editRecord">
+      <input type="hidden" name="util" value="" />
+      <input type="hidden" name="id" value="<?=$this->id?>" />
+      <?=$this->marc?>
+      <input class="button" type="submit" name="submit" value="<?=$this->transEsc('Save')?>" onclick="document.forms['editRecord'].elements['util'].value='editrecord';"/>
+      <input class="button" type="submit" name="submit" value="<?=$this->transEsc('Coping')?>" onclick="document.forms['editRecord'].elements['util'].value='copyrecord';"/>
+      <input class="button" type="submit" name="submit" value="<?=$this->transEsc('Cancel')?>" onclick="document.forms['editRecord'].elements['util'].value='cancel';"/>
+    </form>
+  <? endif; ?>
+</div>
+
+<div class="clear"></div>

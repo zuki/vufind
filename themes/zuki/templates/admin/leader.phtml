@@ -1,0 +1,164 @@
+<form methos="post" action="" name="leaderEdit">
+  <input id="leader_val" type="hidden" name="leader_val" value="<?=$this->leader_val?>" />
+  <h3>000 - リーダー</h3>
+  <table>
+  <tr>
+    <td><span class="label">0-4 レコード長</span></td>
+    <td>（自動設定）</td>
+  </tr>
+  <tr>
+    <td><label for="f5">5- レコードステータス</label></td>
+    <td>
+      <select name="f5" id="f5" size="1">
+        <option value=" ">a - 追加</option>
+        <option value="c">c - 訂正</option>
+        <option value="d">d - 削除</option>
+        <option value="n">n - 新規</option>
+        <option value="p">p - 出版前データからの追加</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><label for="f6">6- レコード種別</label></td>
+    <td>
+      <select name="f6" id="f6" size="1">
+        <option value="a">a - 文字資料</option>
+        <option value="c">c - 楽譜</option>
+        <option value="d">d - 手書楽譜</option>
+        <option value="e">e - 地図資料</option>
+        <option value="f">f - 書写地図資料</option>
+        <option value="g">g - 映写資料</option>
+        <option value="i">i - 非音楽録音資料</option>
+        <option value="j">j - 音楽録音資料</option>
+        <option value="k">k - 静止画資料</option>
+        <option value="m">m - 電子資料</option>
+        <option value="o">o - キット</option>
+        <option value="p">p - 複合資料</option>
+        <option value="r">r - 3次元作品</option>
+        <option value="t">t - 書写文字資料</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><label for="f7">7- 書誌レベル</label></td>
+    <td>
+      <select name="f7" id="f7" size="1">
+          <option value="a">a - 単行資料の一部</option>
+          <option value="b">b - 逐次刊行資料の一部</option>
+          <option value="c">c - 多巻資料</option>
+          <option value="d">d - サブユニット</option>
+          <option value="i">i - 加除式資料</option>
+          <option value="m">m - 単行資料</option>
+          <option value="s">s - 逐次刊行資料</option>
+      </select>
+    </td>
+  </tr>
+  
+  <tr>
+    <td><label for="f8">8- 制御種別コード</label></td>
+    <td>
+      <select name="f8" id="f8" size="1">
+          <option value=" "># - 特定される種別なし</option>
+          <option value="a">a - 保管用</option>
+      </select>
+    </td>
+  </tr>
+
+  <tr>
+    <td>9- 文字コード</td>
+    <td>a - UCS/Unicode（自動設定）</td>
+  </tr>
+  <tr>
+    <td>10-16 インジケータ長・サブフィールド長・ベースアドレス</td>
+    <td>（自動設定）</td>
+    </tr>
+    <tr>
+    <td><label for="f17">17- 符号化レベル</label></td>
+    <td>
+      <select name="f17" id="f17" size="1">
+          <option value=" "># - フルレベル</option>
+          <option value="1">1 - 完全レベル（資料と未照合）</option>
+          <option value="2">2 - 非完全レベル（資料と未照合）</option>
+          <option value="3">3 - 簡略レベル</option>
+          <option value="4">4 - 主要部のみ</option>
+          <option value="5">5 - 部分（予備）レベル</option>
+          <option value="7">7 - 最小限レベル</option>
+          <option value="8">8 - 出版前レベル</option>
+          <option value="u">u - 不明</option>
+          <option value="z">z - 非適用</option>
+      </select>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label for="f18">18 - 記述目録形式</label></td>
+    <td>
+      <select name="f18" id="f18" size="1">
+          <option value=" "># - 非ISBD</option>
+          <option value="a">a - AACR 2</option>
+          <option value="i">i - ISBD</option>
+          <option value="u">u - 不明</option>
+      </select>
+    </td>
+  </tr>
+  
+  <tr>
+    <td><label for="f19">19 - リンクレコード要求仕様</label></td>
+    <td>
+      <select name="f19" id="f19" size="1">
+          <option value=" "># - 非適用</option>
+          <option value="a">a - セット</option>
+          <option value="b">b - 独立タイトルへのリンクなし</option>
+          <option value="c">c - 従属タイトルへもリンクなし</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td>20-24 エントリマップと長さ</td>
+    <td>（自動設定）</td>
+  </tr>
+
+</table>
+<br/>
+<input class="submit" type="button" id="btn_submit" value="<?=$this->transEsc('Send')?>"/>
+<input class="button" type="button" id="btn_cancel" value="<?=$this->transEsc('Cancel')?>"/>
+</form>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    var result = $('#leader_val').attr('value');
+    $('#f5').val(result.charAt(5));
+    $('#f6').val(result.charAt(6));
+    $('#f7').val(result.charAt(7));
+    $('#f8').val(result.charAt(8));
+    $('#f17').val(result.charAt(17));
+    $('#f18').val(result.charAt(18));
+    $('#f19').val(result.charAt(19));
+
+    $('#btn_submit').click(function() {
+      var field_val = 
+          '     '+
+          $('#f5').val()+
+          $('#f6').val()+
+          $('#f7').val()+
+          $('#f8').val()+
+          'a'+ // MARC21 UNICODE flag - must be 'a'
+          '22     '+
+          $('#f17').val()+
+          $('#f18').val()+
+          $('#f19').val()+
+          '4500';
+      hideLightbox();
+      $('#leader_val').val(field_val);
+      var subfield = $('.sf_builder_000').closest('div[class="subfield_line f000"]');
+      $(':input.input_marceditor', subfield).val(field_val);
+      return false;
+    });
+
+    $('#btn_cancel').click(function() {
+        hideLightbox();
+        return false;
+    });
+
+  });
+</script>

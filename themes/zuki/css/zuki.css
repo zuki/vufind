@@ -1,0 +1,7 @@
+table.citation td.evenrow {
+    background-color: #EEEEEE;
+}
+
+table.citation td.oddrow {
+    background-color: #DDDDDD;
+}

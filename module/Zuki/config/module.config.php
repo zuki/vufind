@@ -116,7 +116,8 @@ $recordRoutes = array(
 
 $staticRoutes = array(
     'Ndl/Advanced', 'Ndl/Home', 'Ndl/Search', 'Admin/Records',
-    'Admin/AddRecord', 'Admin/NewRecord', 'Admin/EditRecord',
+    'Admin/AddRecord', 'Admin/SearchRecord', 'Admin/RegisterRecord',
+    'Admin/NewRecord', 'Admin/EditRecord',
     'Admin/ViewRecord', 'Admin/SaveRecord', 'Admin/Leader',
     'Admin/Field007', 'Admin/Field008', 'Admin/DeleteRecord'
 );

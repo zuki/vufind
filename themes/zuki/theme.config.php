@@ -3,6 +3,7 @@
     'extends' => 'blueprint',
     'css' => array(
         'biblio.css',
+        'zuki.css',
     ),
     'helpers' => array(
         'invokables' => array(

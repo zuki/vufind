@@ -122,7 +122,7 @@ class SolrRecord
         fwrite($fh, $marc->toRaw());
         fclose($fh);
 
-        chmod($marc_file, 0664);
+        chmod($marc_file, 0666);
 
         $client = new \GearmanClient();
         $client->addServer();

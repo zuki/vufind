@@ -116,7 +116,7 @@ function register($marc_string, $shelf, $isbn, $vols, $year) {
     fwrite($fh, $record->toRaw());
     fclose($fh);
     
-    chmod($marc_file, 0664);
+    chmod($marc_file, 0666);
 
     return $marc_file;
 }

@@ -269,6 +269,18 @@ class Ndl extends \Zuki\RecordDriver\SolrDefault
     }
 
     /**
+     * Get the publication date
+     *
+     * @return String
+     */
+    public function getPubDate()
+    {
+        $dates = $this->getPublicationDates();
+        return count($dates) > 0 ? $dates[0] : null;
+    }
+
+
+    /**
      * Get an array of all secondary authors (complementing getPrimaryAuthor()).
      *
      * @return array
@@ -323,8 +335,48 @@ class Ndl extends \Zuki\RecordDriver\SolrDefault
      */
     public function getOriginalURI()
     {
-        return $this->fields['sameAs'];
+        return $this->getField('sameAs');
     }
+
+    /**
+     * Get a volume
+     *
+     * @return array
+     */
+    public function getVolume()
+    {
+        $volume = $this->getField('volume');
+        return count($volume) > 0 ? $volume[0] : null;
+    }
+
+    /**
+     * Get a series title
+     *
+     * @return array
+     */
+    public function getSeriesTitle()
+    {
+        $stitle = $this->getField('seriesTitle');
+        return count($stitle) > 0 ? $stitle[0] : null;
+    }
+
+    /**
+     * Get a NDL Opac ID
+     *
+     * @return array
+     */
+    public function getNDLOpacID()
+    {
+        $fields = $this->getField('seeAlso');
+        foreach ($fields as $field) {
+            $pos = strpos($field, 'http://id.ndl.go.jp/bib/');
+            if ($pos !== false && strlen($field) > 24) { // 24 = strlen('http://id.ndl.go.jp/bib/')
+                return substr($field, 24);
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Returns an associative array (action => description) of record tabs supported

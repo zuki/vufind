@@ -178,12 +178,14 @@ class QueryBuilder
         $queryStr = '';
         if (count($groups) > 0) {
             $queryStr
-                .= join(") " . $query->getOperator() . " (", $groups);
+                = '(' . join(") " . $query->getOperator() . " (", $groups) . ')';
         }
+        /* 
         // and concatenate exclusion after that
         if (count($excludes) > 0) {
             $queryStr .= " NOT ((" . join(") OR (", $excludes) . "))";
         }
+        */
 
         return $queryStr;
     }
@@ -197,7 +199,7 @@ class QueryBuilder
      */
     protected function queryToString(Query $query)
     {
-        $exacts = array('jpno', 'itemno', 'publisher', 'ndc', 'isbn', 'issn');
+        $exacts = array('jpno', 'itemno', 'publisher', 'ndc', 'isbn', 'issn', 'dpid');
         // Clean and validate input:
         $field = $query->getHandler();
         if (empty($field)) {

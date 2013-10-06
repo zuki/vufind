@@ -222,21 +222,6 @@ class AdminController extends \VuFind\Controller\AdminController
      */
     public function addrecordAction()
     {
-        $util = $this->params()->fromQuery('util');
-        $source = $this->params()->fromQuery('source');
-        $field  = $this->params()->fromQuery('field');
-        $value  = $this->params()->fromQuery('value');
-        if (isset($util)) {
-            if (empty($value) || empty($source) || empty($field)) {
-                $this->flashMessenger()->setNamespace('error')
-                    ->addMessage('検索元コード、検索フィールド、検索値を入力してください。');
-            } elseif ($source != 'ndl' && $source != 'lc') {
-                $this->flashMessenger()->setNamespace('error')
-                    ->addMessage(sprintf('検索元コードが違います: %s', $source));
-            } else {
-                return $this->forwardTo('Admin', $util);
-            }
-        }
         return $this->createViewModel();
     }
 
@@ -252,14 +237,26 @@ class AdminController extends \VuFind\Controller\AdminController
         $field  = $this->params()->fromQuery('field');
         $value  = $this->params()->fromQuery('value');
 
-        $forward  = false;
+        $forward  = true;
         $ns      = null;
         $message = null;        
         try
         {
-            if ($source == 'ndl') {
+            if (!$value) {
+               $ns = 'error';
+               $message = '検索値を入力してください。';
+            } elseif ($source != 'ndl' && $source != 'lc') {
+               $ns = 'error';
+               $message = sprintf('検索元コードが違います: %s', $source);
+            } else if ($source == 'ndl') {
                 $records = $this->getRecordsFromNDL(
                     $this->getServiceLocator()->get('VuFind\Search'), $field, $value);
+                if (!$records) {
+                    $ns = 'info';
+                    $message = sprintf('該当レコードなし: %s=%s', $field, $value);
+                } else {
+                    $foward = false;
+                }
             } else {
                 //$result = $this->getRecordsFromLC($field, $value);
                $forward = true;
@@ -270,15 +267,9 @@ class AdminController extends \VuFind\Controller\AdminController
             $forward = true;
             $ns = 'error';
             $message = sprintsprintf('%s 検索中にエラーが発生しました: %s', 
-                    $source, $e->getMessage());
+                $source, $e->getMessage());
         } 
         
-        if (!$records) {
-            $forward = true;
-            $ns = 'info';
-            $message = sprintf('該当レコードなし: %s=%s', $field, $value);
-        }
-       
         if ($forward) {
             $this->flashMessenger()->setNamespace($ns)->addMessage($message);
             $this->getRequest()->setQuery(new \Zend\Stdlib\Parameters());

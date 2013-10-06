@@ -12,7 +12,7 @@
   <h1>レコードの追加</h1>
   <?=$this->flashmessages()?>
   <h2><?=$this->transEsc('Search Adding Records')?></h2>
-  <form action="<?=$this->url('admin-addrecord')?>" method="get" name="search">
+  <form action="<?=$this->url('admin-searchrecord')?>" method="get" name="search">
     <input type="hidden" name="util" value="searchrecord" />
     <div class="selectSource">
       <select name="source">
@@ -29,7 +29,7 @@
         <option value="title"<?('title'===$this->source?' selected="selected"':'');?>>タイトル</option>
       </select>
       <input type="text" name="value" value="<?=$this->value?>" size="50" tabindex="1" />
-      <input class="button" type="submit" name="submit" value="検索" onclick="document.forms['search'].element['util'].value='searchrecord';"/>
+      <input class="button" type="submit" name="submit" value="検索"/>
     </div>
   </form>
 

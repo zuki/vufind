@@ -129,17 +129,17 @@ class Connector extends \VuFindSearch\Backend\SRU\Connector
      *
      * @return string|SimpleXMLElement
      */
-    protected function process($result) 
+    protected function process($response) 
     {
         // Convert facets string to xml
-        $pos1 = mb_strpos($result, '<extraResponseData>');
-        $pos2 = mb_strpos($result, '</extraResponseData>');
+        $pos1 = mb_strpos($response, '<extraResponseData>');
+        $pos2 = mb_strpos($response, '</extraResponseData>');
         if ($pos1 && $pos2 && ($pos2 - $pos1) > 19) {
-            $result = mb_substr($result, 0, $pos1+19)
-                    . htmlspecialchars_decode(mb_substr($result, $pos1+19, ($pos2 - $pos1)-19))
-                    . mb_substr($result, $pos2);
+            $response = mb_substr($response, 0, $pos1+19)
+                    . htmlspecialchars_decode(mb_substr($response, $pos1+19, ($pos2 - $pos1)-19))
+                    . mb_substr($response, $pos2);
         }
-        $result = XSLTProcessor::process('sru-dcndl-simple.xsl', $result);
+        $result = XSLTProcessor::process('sru-dcndl-simple.xsl', $response);
         if (!$result) {
             throw new BackendException(
                 sprintf('Error processing NdlSearch response: %20s', $response)

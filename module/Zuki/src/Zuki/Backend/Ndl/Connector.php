@@ -31,6 +31,8 @@ namespace Zuki\Backend\Ndl;
 use VuFindSearch\Query\AbstractQuery;
 use VuFindSearch\ParamBag;
 use VuFind\XSLT\Processor as XSLTProcessor;
+use VuFindSearch\Backend\Exception\HttpErrorException;
+use VuFindSearch\Backend\Exception\BackendException;
 
 /**
  * NDLSearch SRU Search Interface
@@ -88,8 +90,13 @@ class Connector extends \VuFindSearch\Backend\SRU\Connector
         $params->set('maximumRecords', $limit);
         $params->set('recordPacking', 'xml');
         $params->set('recordSchema', 'dcndl_simple');
-        
-        $response = $this->call('GET', $params->getArrayCopy(), false);
+
+        try
+        {        
+            $response = $this->call('GET', $params->getArrayCopy(), false);
+        } catch (HttpErrorException $e) {
+            throw new BackendException($e.getMessage());
+        }
 
         // xml: SimpleXMLElement
         $sxml = $this->process($response);
@@ -133,6 +140,11 @@ class Connector extends \VuFindSearch\Backend\SRU\Connector
                     . mb_substr($result, $pos2);
         }
         $result = XSLTProcessor::process('sru-dcndl-simple.xsl', $result);
+        if (!$result) {
+            throw new BackendException(
+                sprintf('Error processing NdlSearch response: %20s', $response)
+            );
+        }
         return simplexml_load_string($result);
     }
 

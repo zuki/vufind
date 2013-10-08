@@ -258,10 +258,14 @@ class AdminController extends \VuFind\Controller\AdminController
                     $foward = false;
                 }
             } else {
-                //$result = $this->getRecordsFromLC($field, $value);
-               $forward = true;
-               $ns = 'info';
-               $message = 'まだ実装していません';
+                $records = $this->getRecordsFromLC(
+                    $this->getServiceLocator()->get('VuFind\Search'), $field, $value);
+                if (!$records) {
+                    $ns = 'info';
+                    $message = sprintf('該当レコードなし: %s=%s', $field, $value);
+                } else {
+                    $foward = false;
+                }
             }
         } catch (BackendException $e) {
             $forward = true;
@@ -319,50 +323,33 @@ class AdminController extends \VuFind\Controller\AdminController
                 $this->flashMessenger()->setNamespace('error')
                     ->addMessage(sprintf('Germandにジョブを登録できませんでした: id = %s, shelf = %s, isbn = %s', $selected, $shelf, $isbn));
             }
-      /* TODO 
         } elseif ($source == 'lc') {
-            $sru = new SRU('http://lx2.loc.gov:210/LCDB');
-            $record = $sru->getRecord($selected);
-            if (PEAR::isError($record)) {
-                $interface->assign('status', "Failed add a record: id = {$selected}, shelf = {$shelf}");
-            } else {
-                if (!empty($isbn)) {
-                    $sfisbn[] = new File_MARC_Subfield('a', $isbn);
-                    $f020 = new File_MARC_Data_Field('020', $sfisbn);
-                    $record->appendField($f020);
-                }
-                if (!empty($vols) or !empty($year)) {
-                    if (!empty($vols)) {
-                        $volyear[] = new File_MARC_Subfield('a', $vols);
-                    }
-                    if (!empty($year)) {
-			$volyear[] = new File_MARC_Subfield('i', $year);
-                    }
-                    $f963 = new File_MARC_Data_Field('963', $volyear, ' ', '0');
-                    $record->appendField($f963);
-                }
-                $sfshelf[] = new File_MARC_Subfield('a', $shelf);
-                $f852 = new File_MARC_Data_Field('852', $sfshelf);
-                $record->appendField($f852);
+            try
+            {
+                $record = $this->retrieveFromLC( 
+                    $this->getServiceLocator()->get('VuFind\Search'), $selected, $shelf, $isbn, $vols, $year);
 
-                $marc_file ='/usr/local/data/marc/LC'.$selected.'.mrc'; 
+                $marc_file = $this->getServiceLocator()->get('VuFind\Config')->get('config')->MARC->Directory.'LC'.$selected.'.mrc'; 
                 $fh = fopen($marc_file, 'w');
                 fwrite($fh, $record->toRaw());
                 fclose($fh);
 
-                chgrp($marc_file, "dspace");
-                chmod($marc_file, 0664);
+                chmod($marc_file, 0666);
 
-                $client = new GearmanClient();
+                $client = new \GearmanClient();
                 $client->addServer();
                 $client->doBackground("index_marc", $marc_file);
                 if ($client->returnCode() == GEARMAN_SUCCESS) {
-                    $interface->assign('status', "Add a job to the Germand: file = {$marc_file}");
+                $this->flashMessenger()->setNamespace('info')
+                    ->addMessage(sprintf('Germandにジョブを登録しました: id = %s, shelf = %s, isbn = %s', $selected, $shelf, $isbn));
                 } else {
-                    $interface->assign('status', "Failed add job to Germand: file = {$marc_file}");
+                    $this->flashMessenger()->setNamespace('error')
+                        ->addMessage(sprintf('Germandにジョブを登録できませんでした: id = %s, shelf = %s, isbn = %s', $selected, $shelf, $isbn));
                 }
+            } catch (BackendException $e) {
+                $this->flashMessenger()->setNamespace('error')
+                    ->addMessage(sprintf('Germandにジョブを登録できませんでした: id = %s, shelf = %s, isbn = %s', $selected, $shelf, $isbn));
             }
-    */
         }
 
         $this->getRequest()->setQuery(new \Zend\Stdlib\Parameters());
@@ -408,5 +395,72 @@ class AdminController extends \VuFind\Controller\AdminController
         return $records;
     }
 
+
+    private function getRecordsFromLC($service, $field, $value)
+    {
+        if ("rec.id" !== $field) {
+            $field = 'bath.' . $field;
+        }
+        $query = new Query($value, $field);
+        
+        $collection = $service->search('Loc', $query, 1, 20);
+        
+        if ($collection->getTotal() == 0) {
+            return null;
+        }
+        $records = array();
+        foreach ($collection->getRecords() as $record) {
+            $id       = $record->getUniqueID();
+            $date     = $record->getPubYear();
+            $title    = $record->getTitleStatement();
+            $edition  = $record->getEdition();
+            $series   = $record->getSeries();
+
+            $citation = $title;
+            if ($edition) {
+                $citation .= '. ' . $edition;
+            }
+            $citation .= ' (' . $date . ')';
+            if ($series) {
+                $citation .= ' -- ( ' . $series[0]['name'];
+                if ($series[0]['number']) {
+                    $citation .= ' ' . $series[0]['number'];
+                }
+                $citation .= ')';
+            }
+            $records[] = array($id, $citation);
+        }
+        
+        return $records;
+    }
+
+    private function retrieveFromLC($service, $id, $shelf, $isbn, $vols, $year)
+    {
+        $query = new Query($value, 'rec.id');
+        
+        $record = $service->retrieve('Loc', $id)->first()->getMarcRecord();
+
+        if (!empty($isbn)) {
+            $sfisbn[] = new \File_MARC_Subfield('a', $isbn);
+            $f020 = new \File_MARC_Data_Field('020', $sfisbn);
+            $record->appendField($f020);
+        }
+        if (!empty($vols) or !empty($year)) {
+            if (!empty($vols)) {
+                $volyear[] = new \File_MARC_Subfield('a', $vols);
+            }
+            if (!empty($year)) {
+			    $volyear[] = new \File_MARC_Subfield('i', $year);
+            }
+            $f963 = new \File_MARC_Data_Field('963', $volyear, ' ', '0');
+            $record->appendField($f963);
+        }
+        $sfshelf[] = new \File_MARC_Subfield('a', $shelf);
+        $f852 = new \File_MARC_Data_Field('852', $sfshelf);
+        $record->appendField($f852);
+
+        return $record;
+    }
+    
 }
 

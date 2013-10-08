@@ -16,39 +16,17 @@ $config = array(
             'search_backend' => array(
                 'factories' => array(
                     'Ndl' => 'Zuki\Search\Factory\NdlBackendFactory',
-                ),
+                    'Loc' => 'Zuki\Search\Factory\LocBackendFactory',
+               ),
             ),
             'search_options' => array(
-                'factories' => array(
-                    'Ndl' => function ($sm) {
-                        return new \Zuki\Search\Ndl\Options(
-                            $sm->getServiceLocator()->get('VuFind\Config')
-                        );
-                    },
-                ),
+                'abstract_factories' => array('Zuki\Search\Options\PluginFactory'),
             ),
             'search_params' => array(
-                'factories' => array(
-                    'Ndl' => function ($sm) {
-                        $options = $sm->getServiceLocator()
-                                      ->get('VuFind\SearchOptionsPluginManager')
-                                      ->get('Ndl');
-                        return new \Zuki\Search\Ndl\Params(
-                            clone($options),
-                            $sm->getServiceLocator()->get('VuFind\Config')
-                        );
-                    },
-                ),
+                'abstract_factories' => array('Zuki\Search\Params\PluginFactory'),
             ),
             'search_results' => array(
-                'factories' => array(
-                    'Ndl' => function ($sm) {
-                        $params = $sm->getServiceLocator()
-                                     ->get('VuFind\SearchParamsPluginManager')
-                                     ->get('Ndl');
-                        return new \Zuki\Search\Ndl\Results($params);
-                    },
-                ),
+                'abstract_factories' => array('Zuki\Search\Results\PluginFactory'),
             ),
             'recorddriver' => array(
                 'factories' => array(
@@ -76,6 +54,12 @@ $config = array(
                         return new \Zuki\RecordDriver\Ndl(
                             $sm->getServiceLocator()->get('VuFind\Config')->get('config'),
                             $sm->getServiceLocator()->get('VuFind\Config')->get('Ndl')
+                        );
+                    },
+                    'Loc' => function ($sm) {
+                        return new \Zuki\RecordDriver\Loc(
+                            $sm->getServiceLocator()->get('VuFind\Config')->get('config'),
+                            $sm->getServiceLocator()->get('VuFind\Config')->get('Loc')
                         );
                     },
                 ),
@@ -111,13 +95,13 @@ $config = array(
 );
 
 $recordRoutes = array(
-    'ndlrecord' => 'NdlRecord'
+    'ndlrecord' => 'NdlRecord',
 );
 
 $staticRoutes = array(
-    'Ndl/Advanced', 'Ndl/Home', 'Ndl/Search', 'Admin/Records',
-    'Admin/AddRecord', 'Admin/SearchRecord', 'Admin/RegisterRecord',
-    'Admin/NewRecord', 'Admin/EditRecord',
+    'Ndl/Advanced', 'Ndl/Home', 'Ndl/Search', 
+    'Admin/Records', 'Admin/AddRecord', 'Admin/SearchRecord', 
+    'Admin/RegisterRecord', 'Admin/NewRecord', 'Admin/EditRecord',
     'Admin/ViewRecord', 'Admin/SaveRecord', 'Admin/Leader',
     'Admin/Field007', 'Admin/Field008', 'Admin/DeleteRecord'
 );

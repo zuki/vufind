@@ -102,6 +102,7 @@ $config = array(
             'missingrecord' => 'VuFind\Controller\MissingrecordController',
             'my-research' => 'VuFind\Controller\MyResearchController',
             'oai' => 'VuFind\Controller\OaiController',
+            'qrcode' => 'VuFind\Controller\QRCodeController',
             'pazpar2' => 'VuFind\Controller\Pazpar2Controller',
             'records' => 'VuFind\Controller\RecordsController',
             'search' => 'VuFind\Controller\SearchController',
@@ -109,7 +110,6 @@ $config = array(
             'summonrecord' => 'VuFind\Controller\SummonrecordController',
             'tag' => 'VuFind\Controller\TagController',
             'upgrade' => 'VuFind\Controller\UpgradeController',
-            'vudl' => 'VuFind\Controller\VudlController',
             'web' => 'VuFind\Controller\WebController',
             'worldcat' => 'VuFind\Controller\WorldcatController',
             'worldcatrecord' => 'VuFind\Controller\WorldcatrecordController',
@@ -381,6 +381,7 @@ $config = array(
                     'ldap' => 'VuFind\Auth\LDAP',
                     'multiauth' => 'VuFind\Auth\MultiAuth',
                     'shibboleth' => 'VuFind\Auth\Shibboleth',
+                    'cas' => 'VuFind\Auth\CAS',
                     'sip2' => 'VuFind\Auth\SIP2',
                 ),
                 'aliases' => array(
@@ -486,6 +487,7 @@ $config = array(
                 'factories' => array(
                     'aleph' => function ($sm) {
                         return new \VuFind\ILS\Driver\Aleph(
+                            $sm->getServiceLocator()->get('VuFind\DateConverter'),
                             $sm->getServiceLocator()->get('VuFind\CacheManager')
                         );
                     },
@@ -617,6 +619,11 @@ $config = array(
                             $sm->getServiceLocator()->get('VuFind\SearchResultsPluginManager')
                         );
                     },
+                    'switchquery' => function ($sm) {
+                        return new \VuFind\Recommend\SwitchQuery(
+                            $sm->getServiceLocator()->get('VuFind\Search\BackendManager')
+                        );
+                    },
                     'topfacets' => function ($sm) {
                         return new \VuFind\Recommend\TopFacets(
                             $sm->getServiceLocator()->get('VuFind\Config')
@@ -693,13 +700,6 @@ $config = array(
                     },
                     'solrreserves' => function ($sm) {
                         return new \VuFind\RecordDriver\SolrReserves(
-                            $sm->getServiceLocator()->get('VuFind\Config')->get('config'),
-                            null,
-                            $sm->getServiceLocator()->get('VuFind\Config')->get('searches')
-                        );
-                    },
-                    'solrvudl' => function ($sm) {
-                        return new \VuFind\RecordDriver\SolrVudl(
                             $sm->getServiceLocator()->get('VuFind\Config')->get('config'),
                             null,
                             $sm->getServiceLocator()->get('VuFind\Config')->get('searches')
@@ -1039,6 +1039,7 @@ $staticRoutes = array(
     'MyResearch/Favorites', 'MyResearch/Fines',
     'MyResearch/Holds', 'MyResearch/Home', 'MyResearch/Logout', 'MyResearch/Profile',
     'MyResearch/SaveSearch',
+    'QRCode/Show', 'QRCode/Unavailable',
     'OAI/Server', 'Pazpar2/Home', 'Pazpar2/Search', 'Records/Home',
     'Search/Advanced', 'Search/Email', 'Search/History', 'Search/Home',
     'Search/NewItem', 'Search/OpenSearch', 'Search/Reserves', 'Search/Results',
@@ -1050,7 +1051,6 @@ $staticRoutes = array(
     'Upgrade/GetDBCredentials', 'Upgrade/GetDbEncodingPreference',
     'Upgrade/GetSourceDir', 'Upgrade/GetSourceVersion', 'Upgrade/Reset',
     'Upgrade/ShowSQL',
-    'VuDL/Browse', 'VuDL/DSRecord', 'VuDL/Record',
     'Web/Home', 'Web/Results',
     'Worldcat/Advanced', 'Worldcat/Home', 'Worldcat/Search'
 );

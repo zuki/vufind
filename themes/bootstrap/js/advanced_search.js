@@ -1,4 +1,4 @@
-/*global addSearchString, deleteSearchGroupString, searchFieldLabel, searchFields, searchJoins, searchLabel, searchMatch*/
+/*global addSearchString, searchFields, searchFieldLabel, searchLabel, searchMatch */
 
 var nextGroup = 0;
 
@@ -12,7 +12,7 @@ function addSearch(group, term, field)
   var inputIndex = $('#group'+group+' input').length;
   var inputID = group+'_'+$('#group'+group+' input').length;
   var newSearch = '<div class="search" id="search'+inputID+'"><input class="span7" id="search_lookfor'+inputID+'" type="text" name="lookfor'+group+'[]" value="'+term+'">'
-    + ' in '
+    + '<span class="help-inline">'+searchFieldLabel+'</span> '
     + '<select class="span4" id="search_type'+inputID+'" name="type'+group+'[]">';
   for (var key in searchFields) {
     newSearch += '<option value="' + key + '"';
@@ -54,18 +54,24 @@ function addGroup(firstTerm, firstField, join)
   
   var newGroup = '<div id="group'+nextGroup+'" class="group well clearfix">'
     + '<div class="span4 pull-right">'
-    + '<label for="search_bool'+nextGroup+'">Match:&nbsp;</label>'
+    + '<label for="search_bool'+nextGroup+'"><span class="help-inline">'+searchMatch+':</span>&nbsp;</label>'
     + '<select class="span8" id="search_bool'+nextGroup+'" name="bool'+nextGroup+'[]">'
     + '<option value="AND"';
-  if(join == 'AND') newGroup += ' selected';
+  if(join == 'AND') {
+    newGroup += ' selected';
+  }
   newGroup += '>ALL Terms</option>'
     + '<option value="OR"';
-  if(join == 'OR') newGroup += ' selected';
+  if(join == 'OR') {
+    newGroup += ' selected';
+  }
   newGroup += '>ANY Terms</option>'
     + '<option value="NOT"';
-  if(join == 'NOT') newGroup += ' selected';
+  if(join == 'NOT') {
+    newGroup += ' selected';
+  }
   newGroup += '>NO Terms</option>'
-    + '</select><a href="#" onClick="deleteGroup('+nextGroup+')" class="close hide" title="Remove Group">&times;</a></div><div class="span8 pull-left switch-margins row-fluid"><div class="span3 text-right">'+searchLabel+':</div>'
+    + '</select><a href="#" onClick="deleteGroup('+nextGroup+')" class="close hide" title="Remove Group">&times;</a></div><div class="span8 pull-left switch-margins row-fluid"><div class="span3 text-right"><span class="help-inline">'+searchLabel+':</span></div>'
     + '<div class="span9"><i id="group'+nextGroup+'Holder" class="icon-plus-sign"></i> <a href="#" onClick="addSearch('+nextGroup+')">'+addSearchString+'</a></div></div></div>';
   
   $('#groupPlaceHolder').before(newGroup);  

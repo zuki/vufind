@@ -1,0 +1,38 @@
+<?
+    // Set page title.
+    $this->headTitle($this->translate('VuFind Administration - View Record'));
+?>
+
+<div class="<?=$this->layoutClass('mainbody')?>">
+  <h2><?=$this->transEsc('View Record')?></h2>
+
+  <? if ($this->record): ?>
+    <table class="citation table table-striped table-condensed">
+    <? $keys = array_keys($this->record); ?>
+    <? natsort($keys); ?>
+    <? foreach ($keys as $key): ?>
+      <? $value = $this->record[$key]; ?>
+      <? if (is_array($value)): ?>
+        <? foreach ($value as $val): ?>
+        <tr>
+          <th><?=$key?>: </th>
+          <td style="max-width: 500px;">
+            <div class="fieldValue"><?=$this->escapeHtml(preg_replace('/[\x1D\x1E\x1F]/', '', $val))?></div>
+          </td>
+        </tr>
+        <? endforeach; ?>
+     <? else: ?>
+        <tr>
+          <th><?=$key?>: </th>
+          <td style="max-width: 500px;">
+            <div class="fieldValue"><?=$this->escapeHtml(preg_replace('/[\x1D\x1E\x1F]/', '', $value))?></div>
+          </td>
+        </tr>
+     <? endif; ?>
+   <? endforeach; ?>
+    </table>
+  <? endif; ?>
+</div>
+
+<div class="<?=$this->layoutClass('sidebar')?>">
+  <?=$this->render("admin/menu.phtml")?>

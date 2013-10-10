@@ -38,4 +38,50 @@ namespace Zuki\Search\Ndl;
  */
 class Params extends \VuFind\Search\Base\Params
 {
+    /**
+     * Initialize facet settings for the specified configuration sections.
+     *
+     * @param string $facetList     Config section containing fields to activate
+     * @param string $facetSettings Config section containing related settings
+     *
+     * @return bool                 True if facets set, false if no settings found
+     */
+    protected function initFacetList($facetList, $facetSettings)
+    {
+        $config = $this->getServiceLocator()->get('VuFind\Config')->get('Ndl');
+        if (!isset($config->$facetList)) {
+            return false;
+        }
+        foreach ($config->$facetList as $key => $value) {
+            $this->addFacet($key, $value);
+        }
+        if (isset($config->$facetSettings->facet_limit)
+            && is_numeric($config->$facetSettings->facet_limit)
+        ) {
+            $this->setFacetLimit($config->$facetSettings->facet_limit);
+        }
+        return true;
+    }
+
+    /**
+     * Initialize facet settings for the advanced search screen.
+     *
+     * @return void
+     */
+    public function initAdvancedFacets()
+    {
+        $this->initFacetList('Advanced', 'Advanced_Settings');
+    }
+
+    /**
+     * Set Facet Limit
+     *
+     * @param int $l the new limit value
+     *
+     * @return void
+     */
+    public function setFacetLimit($l)
+    {
+        $this->facetLimit = $l;
+    }
 }

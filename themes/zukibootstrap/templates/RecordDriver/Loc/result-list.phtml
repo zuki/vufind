@@ -1,0 +1,64 @@
+<div class="result source<?=$this->escapeHtml($this->driver->getResourceSource())?> recordId<?=$this->driver->supportsAjaxStatus()?' ajaxItemId':''?>">
+  <input type="hidden" value="<?=$this->escapeHtml($this->driver->getUniqueID())?>" class="hiddenId" />
+  <div class="span-2">
+  <? if ($summThumb = $this->record($this->driver)->getThumbnail()): ?>
+    <img src="<?=$this->escapeHtml($summThumb)?>" class="summcover" alt="<?=$this->transEsc('Cover Image')?>"/>
+  <? else: ?>
+    <img src="<?=$this->url('cover-unavailable')?>" class="summcover" alt="<?=$this->transEsc('No Cover Image')?>"/>
+  <? endif; ?>
+  </div>
+  <div class="span-9">
+    <div class="resultItemLine1">
+      <a href="<?=$this->recordLink()->getUrl($this->driver)?>" class="title"><?
+        $summTitle = $this->driver->getTitle();
+        if (!empty($summTitle)) {
+            echo $this->escapeHtml($this->truncate($summTitle, 180));
+        } else {
+            echo $this->transEsc('Title not available');
+        }
+      ?></a>
+    </div>
+
+    <div class="resultItemLine2">
+      <? $summAuthor = $this->driver->getPrimaryAuthor(); if (!empty($summAuthor)): ?>
+      <?=$this->transEsc('by')?>
+      <a href="<?=$this->record($this->driver)->getLink('author', $summAuthor)?>"><?
+        echo $this->escapeHtml($summAuthor);
+      ?></a>
+      <? endif; ?>
+
+      <? $journalTitle = $this->driver->getContainerTitle(); $summDate = $this->driver->getPublicationDates(); ?>
+      <? if (!empty($journalTitle)): ?>
+        <?=!empty($summAuthor) ? '<br />' : ''?>
+        <?= $this->transEsc('Published in') . ' ' . $journalTitle;?>
+        <?=!empty($summDate) ? ' (' . $this->escapeHtml($summDate[0]) . ')' : ''?>
+      <? elseif (!empty($summDate)): ?>
+        <?=!empty($summAuthor) ? '<br />' : ''?>
+        <?=$this->transEsc('Published') . ' ' . $this->escapeHtml($summDate[0])?>
+      <? endif; ?>
+    </div>
+
+  <div class="span-4 last">
+    <a href="<?=$this->recordLink()->getActionUrl($this->driver, 'Save')?>" class="fav tool saveRecord controller<?=$this->record($this->driver)->getController()?>" title="<?=$this->transEsc('Add to favorites')?>"><?=$this->transEsc('Add to favorites')?></a>
+
+    <div class="savedLists info hide">
+      <strong><?=$this->transEsc("Saved in")?>:</strong>
+    </div>
+
+    <? $trees = $this->driver->tryMethod('getHierarchyTrees'); if (!empty($trees)): ?>
+      <? $this->headScript()->appendFile('search_hierarchyTree.js'); ?>
+      <? foreach ($trees as $hierarchyID => $hierarchyTitle): ?>
+        <div class="hierarchyTreeLink">
+          <input type="hidden" value="<?=$this->escapeHtml($hierarchyID)?>" class="hiddenHierarchyId" />
+          <a class="hierarchyTreeLinkText" href="<?=$this->recordLink()->getTabUrl($this->driver, 'HierarchyTree')?>?hierarchy=<?=urlencode($hierarchyID)?>#tabnav" title="<?=$this->transEsc('hierarchy_tree')?>">
+            <?=$this->transEsc('hierarchy_view_context')?><? if (count($trees) > 1): ?>: <?=$this->escapeHtml($hierarchyTitle)?><? endif; ?>
+          </a>
+        </div>
+      <? endforeach; ?>
+    <? endif; ?>
+  </div>
+
+  <div class="clear"></div>
+</div>
+
+<?=$openUrl?'<span class="Z3988" title="'.$this->escapeHtml($openUrl).'"></span>':''?>

@@ -1,0 +1,71 @@
+<?
+    // Set page title.
+    $this->headTitle($this->translate('レコード管理 - レコードの追加'));
+?>
+
+<div class="<?=$this->layoutClass('mainbody')?>">
+  <h2>レコードの追加</h2>
+  <?=$this->flashmessages()?>
+  <h3><?=$this->transEsc('Search Adding Records')?></h3>
+  <form class="well" action="<?=$this->url('admin-searchrecord')?>" method="get" name="search">
+    <input type="hidden" name="util" value="searchrecord" />
+    <div class="selectSource">
+      <select name="source">
+        <option value="ndl"<?('ndl'===$this->source?' selected="selected"':'');?>>NDL</option>
+        <option value="lc"<?('lc'===$this->source?' selected="selected"':'');?>>LC</option>
+      </select>
+    </div>
+    <div class="inputQeury">
+      <select name="field">
+        <option value="isbn"<?('isbn'===$this->source?' selected="selected"':'');?>>ISBN</option>
+        <option value="jpno"<?('jpno'===$this->source?' selected="selected"':'');?>>JPNO</option>
+        <option value="rec.id"<?('rec.id'===$this->source?' selected="selected"':'');?>>レコードID</option>
+        <option value="issn"<?('issn'===$this->source?' selected="selected"':'');?>>ISSN</option>
+        <option value="title"<?('title'===$this->source?' selected="selected"':'');?>>タイトル</option>
+      </select>
+      <input class="form-search" type="text" name="value" value="<?=$this->value?>"/>
+      <input class="btn btn-primary" type="submit" name="submit" value="検索"/>
+    </div>
+  </form>
+
+  <?if ($this->records):?>
+  <form action="<?=$this->url('admin-registerrecord')?>" method="get" name="result">
+    <input type="hidden" name="source" value="<?=$this->source?>" />
+    <input type="hidden" name="selected" value="" />
+
+    <div style="margin: 10px 0; padding: 10px; background-color: #DDDDDD;">
+
+    <h3>追加メタデータ</h3>
+
+    ISBN　　: <input type="text" name="isbn" size="20" value="" /><br/>
+    書架番号 : <input type="text" name="shelf" size="10" value="" />
+
+    <h4>雑誌用</h4>
+
+    巻号 : <input type="text" name="vols" size="40" value="" /><br/>
+    年号 : <input type="text" name="year" size="10" value="" />
+
+   </div>
+
+  <h2>検索結果</h2>
+
+    <p style="text-align: right;">
+      <input class="button" type="submit" name="cancel" value="キャンセル"/>
+    </p>
+
+    <table class="citation">
+    <?$class='evenrow';?>
+    <?foreach ($this->records as $record):?>
+      <?$class=('evenrow'==$class?'oddrow':'evenrow');?>
+    <tr>
+    <td class="<?=$class?>"><?=$this->escapeHtml($record[1]) ?></td>
+    <td><input class="button" type="submit" name="submit" value="選択" onclick="document.forms['result'].elements['selected'].value='<?=$record[0] ?>'" /></td>
+    </tr>
+    <? endforeach?>
+    </table>
+  </form>
+  <?endif;?>
+</div>
+
+<div class="<?=$this->layoutClass('sidebar')?>">
+  <?=$this->render("admin/menu.phtml")?>

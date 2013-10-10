@@ -70,6 +70,20 @@ class Options extends \VuFind\Search\Base\Options
         if (isset($searchSettings->General->default_limit)) {
             $this->defaultLimit = $searchSettings->General->default_limit;
         }
+        if (isset($searchSettings->General->limit_options)) {
+            $this->limitOptions
+                = explode(",", $searchSettings->General->limit_options);
+        }
+        if (isset($searchSettings->General->default_sort)) {
+            $this->defaultSort = $searchSettings->General->default_sort;
+        }
+        if (isset($searchSettings->DefaultSortingByType)
+            && count($searchSettings->DefaultSortingByType) > 0
+        ) {
+            foreach ($searchSettings->DefaultSortingByType as $key => $val) {
+                $this->defaultSortByHandler[$key] = $val;
+            }
+        }
 
         // Search handler setup:
         $this->defaultHandler = 'anywhere';
@@ -101,6 +115,20 @@ class Options extends \VuFind\Search\Base\Options
             }
         }
         
+        // Load facet preferences
+        $facetSettings = $configLoader->get($this->facetsIni);
+        if (isset($facetSettings->Advanced_Settings->translated_facets)
+            && count($facetSettings->Advanced_Settings->translated_facets) > 0
+        ) {
+            foreach ($facetSettings->Advanced_Settings->translated_facets as $c) {
+                $this->translatedFacets[] = $c;
+            }
+        }
+        if (isset($facetSettings->Advanced_Settings->special_facets)) {
+            $this->specialAdvancedFacets
+                = $facetSettings->Advanced_Settings->special_facets;
+        }
+
         if (isset($searchSettings->Providers_Code)
             && count($searchSettings->Providers_Code) > 0
         ) {

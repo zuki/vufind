@@ -1,0 +1,14 @@
+<ul class="nav nav-list">
+  <li<?=strtolower($this->layout()->templateName) == "home" ? ' class="active"' : ''?>><a href="<?=$this->url('admin-home')?>"><?=$this->transEsc('Home')?></a></li>
+  <li<?=strtolower($this->layout()->templateName) == "records" ? ' class="active"' : ''?>><?=$this->transEsc('Admin Records')?>
+    <ul class="meu" id="adminRecordMenu">
+      <li><a href="<?=$this->url('admin-records')?>"><?=$this->transEsc('Admin Records')?></a></li>
+      <li><a href="<?=$this->url('admin-addrecord')?>"><?=$this->transEsc('Add Record')?></a></li>
+      <li><?=$this->transEsc('New Record')?></li>
+    </ul>
+  </li>
+  <li<?=strtolower($this->layout()->templateName) == "socialstats" ? ' class="active"' : ''?>><a href="<?=$this->url('admin-socialstats')?>"><?=$this->transEsc('Social Statistics')?></a></li>
+  <li<?=strtolower($this->layout()->templateName) == "statistics" ? ' class="active"' : ''?>><a href="<?=$this->url('admin-statistics')?>"><?=$this->transEsc('Statistics')?></a></li>
+  <li<?=strtolower($this->layout()->templateName) == "config" ? ' class="active"' : ''?>><a href="<?=$this->url('admin-config')?>"><?=$this->transEsc('Configuration')?></a>
+  <li<?=strtolower($this->layout()->templateName) == "maintenance" ? ' class="active"' : ''?>><a href="<?=$this->url('admin-maintenance')?>"><?=$this->transEsc('System Maintenance')?></a></li>
+</ul>

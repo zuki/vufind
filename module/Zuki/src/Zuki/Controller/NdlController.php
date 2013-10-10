@@ -36,7 +36,7 @@ namespace Zuki\Controller;
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     http://vufind.org   Main Site
  */
-class NdlController extends \VuFind\Controller\AbstractSearch
+class NdlController extends \VuFind\Controller\SearchController
 {
     /**
      * Constructor
@@ -79,5 +79,57 @@ class NdlController extends \VuFind\Controller\AbstractSearch
     {
         return $this->resultsAction();
     }
+    
+    /**
+     * Return a Search Results object containing requested facet information.  This
+     * data may come from the cache.
+     *
+     * @param string $initMethod Name of params method to use to request facets
+     * @param string $cacheName  Cache key for facet data
+     *
+     * @return \VuFind\Search\Solr\Results
+     */
+    protected function getFacetResults($initMethod, $cacheName)
+    {
+        // Check if we have facet results cached, and build them if we don't.
+        $cache = $this->getServiceLocator()->get('VuFind\CacheManager')
+            ->getCache('object');
+        if (!($results = $cache->getItem($cacheName))) {
+            // Use advanced facet settings to get summary facets on the front page;
+            // we may want to make this more flexible later.  Also keep in mind that
+            // the template is currently looking for certain hard-coded fields; this
+            // should also be made smarter.
+            $results = $this->getResultsManager()->get('Ndl');
+            $params = $results->getParams();
+            $params->$initMethod();
+
+            // We only care about facet lists, so don't get any results (this helps
+            // prevent problems with serialized File_MARC objects in the cache):
+            $params->setLimit(0);
+
+            $results->getResults();                     // force processing for cache
+
+            $cache->setItem($cacheName, $results);
+        }
+
+        // Restore the real service locator to the object (it was lost during
+        // serialization):
+        $results->restoreServiceLocator($this->getServiceLocator());
+        return $results;
+    }
+
+    /**
+     * Return a Search Results object containing advanced facet information.  This
+     * data may come from the cache.
+     *
+     * @return \VuFind\Search\Solr\Results
+     */
+    protected function getAdvancedFacets()
+    {
+        return $this->getFacetResults(
+            'initAdvancedFacets', 'ndlSearchAdvancedFacets'
+        );
+    }
+
 }
 

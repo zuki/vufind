@@ -1,0 +1,99 @@
+<?
+  // Set page title.
+  $this->headTitle($this->translate('Search Home'));
+
+  // Disable top search box -- this page has a special layout.
+  $this->layout()->searchbox = false;
+  $this->layout()->showBreadcrumbs = false;
+
+  // Set default value if necessary:
+  if (!isset($this->searchClassId)) {
+    $this->searchClassId = 'Solr';
+  }
+
+  // Load search actions and settings (if any):
+  $options = $this->searchOptions($this->searchClassId);
+  $basicSearch = $options->getSearchAction();
+  $advSearch = $options->getAdvancedSearchAction();
+  
+  $this->layout()->breadcrumbs .= '<li class="active">Search</li>';
+?>
+<div class="searchHomeContent">
+  <div class="row">
+    <div class="span1">&nbsp;</div>
+    <div class="span10">
+      <h3>鈴木家蔵書目録</h3>
+      <p>
+    本サイトはオープンソースのOPACシステム "VuFind Version2" を利用した個人蔵書目録です。
+      </p>
+      <h4>書誌データ</h4>
+
+      <table class="table table-striped">
+        <tr>
+          <td nowrap="nowarap">和資料</td>
+          <td>NDL-OPACからダウンロードしたMARCデータを使用しています。NDL-OPAC資料URIはNDLSearch SRU APIで取得しています。</td>
+        </tr>
+        <tr>
+          <td>洋資料</td>
+          <td>Library of Congress SRU APIを利用してダウンロードしたMARCデータを使用しています。</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <? if ($this->ils()->getOfflineMode() == "ils-offline"): ?>
+    <div class="alert alert-warning">
+      <h2><?=$this->transEsc('ils_offline_title')?></h2>
+      <p><strong><?=$this->transEsc('ils_offline_status')?></strong></p>
+      <p><?=$this->transEsc('ils_offline_home_message')?></p>
+      <? $supportEmail = $this->escapeHtml($this->systemEmail()); ?>
+      <p><a href="mailto:<?=$supportEmail?>"><?=$supportEmail?></a></p>
+    </div>
+  <? endif; ?>
+  <div class="hero-unit">
+    <?=$this->render("search/searchbox.phtml")?>
+  </div>
+</div>
+
+<? $facetList = is_object($this->results) ? $this->results->getFacetList() : array(); if (isset($facetList) && is_array($facetList)): ?>
+<div class="row-fluid">
+  <? foreach ($facetList as $field => $details): ?>
+    <? $sortedList = $this->sortFacetList($this->results, $field, $details['list'], $basicSearch); ?>
+    <div class="<?=$field=='callnumber-first' ? 'span6' : 'span3' ?>">
+      <p class="lead"><?=$this->transEsc($details['label'])?></p>
+      <div class="row-fluid">
+        <ul class="unstyled<? if ($field == "callnumber-first"): ?> span6<?endif?>">
+        <? /* Special case: two columns for LC call numbers... */ ?>
+        <? if ($field == "callnumber-first"): ?>
+          <? $i = 0; foreach ($sortedList as $url => $value): ?>
+            <li><a href="<?=$url?>"><?=$this->escapeHtml($value)?></a></li>
+            <? if (++$i == 13): ?>
+              </ul><ul class="unstyled span6">
+            <? endif; ?>
+          <? endforeach; ?>
+        <? /* Special case: collections */ ?>
+        <? elseif ($field == 'hierarchy_top_title'): ?>
+          <? $i = 0; foreach ($sortedList as $url => $value): ?>
+            <? if (++$i > 10): ?>
+              <li><a href="<?=$this->url('collections-home')?>"><strong><?=$this->transEsc("More options")?>...</strong></a></li>
+              <? break; ?>
+            <? else: ?>
+              <li><a href="<?=$this->url('collections-bytitle')?>?title=<?=urlencode($value)?>"><?=$this->escapeHtml($value)?></a></li>
+            <? endif; ?>
+          <? endforeach; ?>
+        <? else: ?>
+          <? $i = 0; foreach ($sortedList as $url => $value): ?>
+            <? if (++$i > 10): ?>
+              <li><a href="<?=$this->url($advSearch)?>"><strong><?=$this->transEsc("More options")?>...</strong></a></li>
+              <? break; ?>
+            <? else: ?>
+              <li><a href="<?=$url?>"><?=$this->escapeHtml($value)?></a></li>
+            <? endif; ?>
+          <? endforeach; ?>
+        <? endif; ?>
+        </ul>
+      </div>
+    </div>
+  <? endforeach; ?>
+</div>
+<? endif; ?>

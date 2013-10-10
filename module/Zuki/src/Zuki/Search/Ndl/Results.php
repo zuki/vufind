@@ -126,8 +126,8 @@ class Results extends \VuFind\Search\Base\Results
             // Build our array of values for this field
             $list[$field]['list']  = array();
             // Should we translate values for the current facet?
-            $translate = in_array($field, $this->params->getOptions()->getTranslatedFacets());
-            $convert   = in_array($field, $this->params->getOptions()->getConvertedFacets());
+            $translate = in_array($field, $this->getParams()->getOptions()->getTranslatedFacets());
+            $convert   = in_array($field, $this->getParams()->getOptions()->getConvertedFacets());
             // Loop through values:
             foreach ($facet->children() as $item) {
                 $item_str = (String)$item;

@@ -1,0 +1,70 @@
+<? foreach ($this->driver->getFormats() as $format): ?>
+<?
+    switch ($format) {
+      case  '図書':
+          $format = 'Book';
+          break;
+      case '記事・論文':
+          $format = 'Article';
+          break;
+      case 'オンライン資料':
+          $format = 'Online';
+          break;
+      case '雑誌':
+          $format = 'Journal';
+          break;
+      case '新聞':
+          $format = 'Newspaper';
+          break;
+      case '録音資料':
+          $format = 'Audio';
+          break;
+      case '映像資料':
+          $format = 'Video';
+          break;
+      case '電子資料':
+          $format = 'Electronic';
+          break;
+      case '地図':
+          $format = 'Map';
+          break;
+      case '楽譜':
+          $format = 'Musical Score';
+          break;
+      case '静止画資料':
+          $format = 'Photo';
+          break;
+      case '和古書':
+          $format = 'Rare Book';
+          break;
+      case '漢籍':
+          $format = 'Chinese Classic';
+          break;
+      case '政府刊行物':
+          $format = 'Goverment Publication';
+          break;
+      case '博士論文':
+          $format = 'Thesis';
+          break;
+      case '会議録':
+          $format = 'Proceedings';
+          break;
+      case '規格・テクニカルリポート類':
+          $format = 'Standard';
+          break;
+      case '視覚障害者向け資料':
+          $format = 'Braille';
+          break;
+      case '博物資料':
+          $format = 'Artifact';
+          break;
+      case '立法情報':
+          $format = 'Legislative Info';
+          break;
+      case '参考情報':
+          $format = 'Reference Info';
+          break;
+  }
+?>
+    <span class="iconlabel <?=$this->record($this->driver)->getFormatClass($format)?>"><?=$this->transEsc($format)?></span>
+<? endforeach; ?>

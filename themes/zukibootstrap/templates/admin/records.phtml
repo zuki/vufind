@@ -1,0 +1,20 @@
+<?
+    // Set page title.
+    $this->headTitle($this->translate('VuFind Administration - Record Maintenance'));
+?>
+
+<div class="<?=$this->layoutClass('mainbody')?>">
+  <h2><?=$this->transEsc('Record Management')?></h2>
+  <?=$this->flashmessages()?>
+  <form class="well form-inline" action="<?=$this->url('admin-records')?>" method="get" name="recordEdit">
+    <input type="hidden" name="util" value=""/>
+    <label for="ld" class="displayBlock"><?=$this->translate('Record Id')?></label>
+    <input class="search-query span6" type="text" name="id"/>
+    <input class="btn btn-primary" type="submit" name="submit" value="<?=$this->translate('View')?>" onclick="document.forms['recordEdit'].elements['util'].value='viewrecord';"/>
+    <input class="btn" type="submit" name="submit" value="<?=$this->translate('Edit')?>" onclick="document.forms['recordEdit'].elements['util'].value='editrecord';"/>
+    <input class="btn" type="submit" name="submit" value="<?=$this->translate('Delete')?>" onclick="if (!confirm('Are you sure you want to delete it?')) return false; else document.forms['recordEdit'].elements['util'].value='deleterecord';"/>
+  </form>
+</div>
+
+<div class="<?=$this->layoutClass('sidebar')?>">
+  <?=$this->render("admin/menu.phtml")?>

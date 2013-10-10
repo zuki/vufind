@@ -1,0 +1,47 @@
+<?
+  // Set page title.
+  $this->headTitle($this->translate('Search Home'));
+
+  // Disable top search box -- this page has a special layout.
+  $this->layout()->searchbox = false;
+  $this->layout()->showBreadcrumbs = false;
+
+  // Set default value if necessary:
+  if (!isset($this->searchClassId)) {
+    $this->searchClassId = 'Ndl';
+  }
+
+  // Load search actions and settings (if any):
+  $options = $this->searchOptions($this->searchClassId);
+  $basicSearch = $options->getSearchAction();
+  $advSearch = $options->getAdvancedSearchAction();
+  
+  $this->layout()->breadcrumbs .= '<li class="active">Search</li>';
+?>
+<div class="searchHomeContent">
+  <div class="row">
+    <div class="span1">&nbsp;</div>
+    <div class="span10">
+      <h2>NDL Search</h2>
+      <p>
+        <a href="http://iss.ndl.go.jp/information/api/">NDL Search SRU API</a>を利用して<a href="http://iss.ndl.go.jp">NDL Search</a>を検索して表示します。全フィールド検索ではファセットによる絞り込みができませんのでご注意ください(2013.05.05 できるようになりました）。
+        <br/><br/>
+  本サイトの目的はVuFindの外部データソース機能の検証ですので、予告なくシステムを停止したり、エラーが発生する場合があります。検索サービスの提供を目的としたものではありませんのでご了承ください。
+      </p>
+    </div>
+  </div>
+
+  <? if ($this->ils()->getOfflineMode() == "ils-offline"): ?>
+    <div class="alert alert-warning">
+      <h2><?=$this->transEsc('ils_offline_title')?></h2>
+      <p><strong><?=$this->transEsc('ils_offline_status')?></strong></p>
+      <p><?=$this->transEsc('ils_offline_home_message')?></p>
+      <? $supportEmail = $this->escapeHtml($this->systemEmail()); ?>
+      <p><a href="mailto:<?=$supportEmail?>"><?=$supportEmail?></a></p>
+    </div>
+  <? endif; ?>
+  <div class="hero-unit">
+    <?=$this->render("search/searchbox.phtml")?>
+  </div>
+</div>
+

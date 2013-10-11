@@ -1,5 +1,6 @@
-<div class="row-fluid">
-  <div class="span3 text-center">
+<div class="row-fluid" vocab="http://schema.org/" resource="#record" typeof="<?=$this->driver->getSchemaOrgFormats()?> Product">
+  <div class="span3">
+    <div class="text-center">
     <? /* Display thumbnail if appropriate: */ ?>
     <? $mediumThumb = $this->record($this->driver)->getThumbnail('medium'); $largeThumb = $this->record($this->driver)->getThumbnail('large'); ?>
     <? if ($mediumThumb): ?>
@@ -10,20 +11,28 @@
       <img src="<?=$this->url('cover-unavailable')?>" class="recordcover" alt="<?=$this->transEsc('No Cover Image')?>"/>
     <? endif; ?>
 
-    <? /* Display the lists that this record is saved to */ ?>
-    <div class="savedLists info hide" id="savedLists">
-      <strong><?=$this->transEsc("Saved in")?>:</strong>
+      <? /* Display qrcode if appropriate: */ ?>
+      <? $QRCode = $this->record($this->driver)->getQRCode("core"); ?>
+      <? if($QRCode): ?>
+        <br/><img alt="<?=$this->transEsc('QR Code')?>" class="qrcode" src="<?=$this->escapeHtml($QRCode);?>"/>
+      <? endif; ?>
     </div>
 
     <?=$this->record($this->driver)->getPreviews()?>
   </div>
 
   <div class="span9">
-    <h3><?=$this->escapeHtml($this->driver->getFullTitle())?></h3>
+    <h3 property="name"><?=$this->escapeHtml($this->driver->getFullTitle())?></h3>
 
     <? $summary = $this->driver->getSummary(); $summary = isset($summary[0]) ? $summary[0] : false; ?>
     <? if ($summary): ?>
       <p><?=$this->truncate($summary, 300)?></p>
+
+      <? /* Display the lists that this record is saved to */ ?>
+      <div class="savedLists hide alert alert-info" id="savedLists">
+        <strong><?=$this->transEsc("Saved in")?>:</strong>
+      </div>
+      
       <? if(strlen($summary) > 300): ?>
         <p><a href='<?=$this->recordLink()->getTabUrl($this->driver, 'Description')?>#tabnav'><?=$this->transEsc('Full description')?></a></p>
       <? endif; ?>
@@ -83,7 +92,18 @@
         <th><?=$this->transEsc('Published')?>: </th>
         <td>
           <? foreach ($publications as $field): ?>
-            <?=$this->escapeHtml($field)?><br/>
+            <span property="publisher" typeof="Organization">
+            <? $pubPlace = $field->getPlace(); if (!empty($pubPlace)): ?>
+              <span property="location"><?=$this->escapeHtml($pubPlace)?></span>
+            <? endif; ?>
+            <? $pubName = $field->getName(); if (!empty($pubName)): ?>
+              <span property="name"><?=$this->escapeHtml($pubName)?></span>
+            <? endif; ?>
+            </span>
+            <? $pubDate = $field->getDate(); if (!empty($pubDate)): ?>
+              <span property="publicationDate"><?=$this->escapeHtml($pubDate)?></span>
+            <? endif; ?>
+            <br/>
           <? endforeach; ?>
         </td>
       </tr>
@@ -92,7 +112,7 @@
       <? $edition = $this->driver->getEdition(); if (!empty($edition)): ?>
       <tr>
         <th><?=$this->transEsc('Edition')?>: </th>
-        <td><?=$this->escapeHtml($edition)?></td>
+        <td property="bookEdition"><?=$this->escapeHtml($edition)?></td>
       </tr>
       <? endif; ?>
 
@@ -133,7 +153,7 @@
         <th><?=$this->transEsc('Subjects')?>: </th>
         <td>
           <? foreach ($subjects as $field): ?>
-          <div class="subjectLine">
+          <div class="subjectLine" property="keywords">
             <? $subject = ''; ?>
             <? $subid = count($field) > 1 ? array_pop($field) : null; ?>
             <? $i = 0; foreach ($field as $subfield): ?>
@@ -189,14 +209,14 @@
       <? if (!empty($mainAuthor)): ?>
       <tr>
         <th><?=$this->transEsc('Main Author')?>: </th>
-        <td><a href="<?=$this->record($this->driver)->getLink('author', $mainAuthor)?>"><?=$this->escapeHtml($mainAuthor)?></a></td>
+        <td property="author"><a href="<?=$this->record($this->driver)->getLink('author', $mainAuthor)?>"><?=$this->escapeHtml($mainAuthor)?></a></td>
       </tr>
       <? endif; ?>
   
       <? if (!empty($corpAuthor)): ?>
       <tr>
         <th><?=$this->transEsc('Corporate Author')?>: </th>
-        <td><a href="<?=$this->record($this->driver)->getLink('author', $corpAuthor)?>"><?=$this->escapeHtml($corpAuthor)?></a></td>
+        <td> property="creator"<a href="<?=$this->record($this->driver)->getLink('author', $corpAuthor)?>"><?=$this->escapeHtml($corpAuthor)?></a></td>
       </tr>
       <? endif; ?>
   

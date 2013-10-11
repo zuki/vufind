@@ -124,13 +124,15 @@ class AdminController extends \VuFind\Controller\AdminController
     public function deleterecordAction()
     {
         // Read in the original record:
-        //$id = $this->params()->fromQuery('id');
-        
+        $id = $this->params()->fromQuery('id');
+
+        $writer = $this->getServiceLocator()->get('VuFind\Solr\Writer');       
+        $writer->deleteRecords('Solr', array($id));
+        $writer->commit('Solr');
+
         $this->flashMessenger()->setNamespace('info')
-                    ->addMessage($this->translate(
-                        'Not implemented'
-                    ));
-        
+            ->addMessage(sprintf('レコードを削除しました: id = %s', $id));
+
         $this->getRequest()->setQuery(new \Zend\Stdlib\Parameters());
         return $this->forwardTo('Admin', 'Records');
     }

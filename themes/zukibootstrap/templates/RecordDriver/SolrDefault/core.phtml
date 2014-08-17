@@ -144,7 +144,11 @@
       <? $contents = $this->driver->getContents(); if (!empty($contents)): ?>
       <tr>
         <th><?=$this->transEsc('Contents note')?>: </th>
-        <td><?=$this->escapeHtml($contents)?></td>
+        <td>
+            <? foreach ($contents as $content): ?>
+                <?= $this->escapeHtml($content)?><br/>
+            <? endforeach; ?>
+        </td>
       </tr>
       <? endif; ?>
 

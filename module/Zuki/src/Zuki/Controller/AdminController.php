@@ -316,7 +316,7 @@ class AdminController extends \VuFind\Controller\AdminController
                         'レコードを指定して、書架記号を入力してください。'));
         } elseif ($source == 'ndl') {
             $client = new \GearmanClient();
-            $client->addServer();
+            $client->addServer("127.0.0.1", 4730);
             $client->doBackground("register_marc", $selected.':'.$shelf.':'.$isbn.':'.$vols.':'.$year);
             if ($client->returnCode() == GEARMAN_SUCCESS) {
                 $this->flashMessenger()->setNamespace('info')
@@ -339,7 +339,7 @@ class AdminController extends \VuFind\Controller\AdminController
                 chmod($marc_file, 0666);
 
                 $client = new \GearmanClient();
-                $client->addServer();
+                $client->addServer("127.0.0.1", 4730);
                 $client->doBackground("index_marc", $marc_file);
                 if ($client->returnCode() == GEARMAN_SUCCESS) {
                 $this->flashMessenger()->setNamespace('info')

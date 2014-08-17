@@ -1,6 +1,6 @@
 <?php
 $worker = new GearmanWorker();
-$worker->addServer();
+$worker->addServer("127.0.0.1", 4730);
 $worker->addFunction('register_marc', 'registerMARC');
 $worker->addFunction('index_marc', 'indexMARC');
 $worker->addFunction('index_original', 'indexOriginal');

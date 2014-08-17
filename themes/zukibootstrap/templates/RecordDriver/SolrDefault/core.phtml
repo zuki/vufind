@@ -220,7 +220,7 @@
       <? if (!empty($corpAuthor)): ?>
       <tr>
         <th><?=$this->transEsc('Corporate Author')?>: </th>
-        <td> property="creator"<a href="<?=$this->record($this->driver)->getLink('author', $corpAuthor)?>"><?=$this->escapeHtml($corpAuthor)?></a></td>
+        <td property="creator"><a href="<?=$this->record($this->driver)->getLink('author', $corpAuthor)?>"><?=$this->escapeHtml($corpAuthor)?></a></td>
       </tr>
       <? endif; ?>
   

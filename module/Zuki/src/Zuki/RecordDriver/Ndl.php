@@ -113,7 +113,7 @@ class Ndl extends \Zuki\RecordDriver\SolrDefault
      */
     public function getFormats()
     {
-        return $this->getField('materialType', true);     
+        return $this->getField('materialType', true);
     }
 
     /**
@@ -214,7 +214,7 @@ class Ndl extends \Zuki\RecordDriver\SolrDefault
         $authors = $this->getAuthors();
         if ($authors) {
             $title .= ' / ' . implode(' ; ', $authors);
-        }  
+        }
         return $title;
     }
 
@@ -377,6 +377,20 @@ class Ndl extends \Zuki\RecordDriver\SolrDefault
         return null;
     }
 
+    /**
+     * Get a JPNO 日本全国書士番号
+     *
+     * @return array
+     */
+    public function getJPNO()
+    {
+        $fields = $this->getField('JPNO');
+        if (isset($fields)) {
+          return $fields[0];
+        } else {
+          return null;
+        }
+    }
 
     /**
      * Returns an associative array (action => description) of record tabs supported
@@ -426,7 +440,7 @@ class Ndl extends \Zuki\RecordDriver\SolrDefault
      * @return array
      */
     private function sxml2array($sxml) {
-    
+
         $fields = array();
         foreach ($sxml->children() as $element) {
             $key = $element->getName();
@@ -454,7 +468,7 @@ class Ndl extends \Zuki\RecordDriver\SolrDefault
         return $fields;
     }
 
-    private function getField($tag, $uniq=false) {    
+    private function getField($tag, $uniq=false) {
         $field = array();
         if (isset($this->fields[$tag])) {
             if (is_array($this->fields[$tag])) {

@@ -8,6 +8,7 @@ while ($worker->work());
 
 function registerMARC($job) {
     $tag = $job->workload();
+    printf("tag = ".$tag);
     list($id, $shelf, $isbn, $vols, $year) = explode(":", $tag);
     $result = getMarc($id);
     if (PEAR::isError($result)) {
@@ -37,38 +38,27 @@ function import($file, $properties='import.properties') {
         printf("Error occured at importing the file: %s\n", $file);
     }
 }
-    
+
 // Get a MARC record from NDL-OPAC
 function getMarc($source) {
+    // この$sourceはJPNO
+    // NDL-BIBは最初にログインがないの
+    //  https://ndl-bib.ndl.go.jp/F/?func=find-a&find_code=JNB&request={$source} で詳細画面までいける
     require_once "HTTP/Client.php";
 
-    $client = new HTTP_Client(); 
+    $client = new HTTP_Client();
     try {
-        // 1st Get: Get a record with the specified ID
-        $url = 'http://id.ndl.go.jp/bib/' . $source;
-        $client->get($url); 
-        $response = $client->currentResponse(); 
-        // 2nd Get: For SSO authentication, loop 1
-        preg_match('/<a href=\"([^\"]+)\">/', $response['body'], $match);
-        $url = $match[1];
+        // 1st Get: Get a record with the specified JPNO
+        $url = 'https://ndl-bib.ndl.go.jp/F/?func=find-a&find_code=JNB&request=' . $source;
         $client->get($url);
-        $response = $client->currentResponse(); 
-        // 3rd Get: For SSO authentication, loop 2
-        preg_match("/var url = \'([^\']+)\'/", $response['body'], $match);
-        $url = $match[1];
-        $client->get($url);
-        $response = $client->currentResponse(); 
-        // 4th Get: Get its record display page
-        preg_match('/<a href=\"([^\"]+)\">/', $response['body'], $match);
-        $url = preg_replace('/&amp%3B/', '&', $match[1]);
-        $client->get($url);
-        $response = $client->currentResponse(); 
-        // 5th Get: Get its download page
+        $response = $client->currentResponse();
+        printf("getMARC first step");
+        // 2nd Get: Get its download page
         preg_match('/<a href=\"([^\"]+)\"\s*title=\"選択したデータをパソコンにダウンロードする\"/', $response['body'], $match);
         $url = preg_replace('/&amp;/', '&', $match[1]);
         $client->get($url);
-        $response = $client->currentResponse(); 
-        // 1st Post: Get its marc record 
+        $response = $client->currentResponse();
+        // 1st Post: Get its marc record
         preg_match('/<form method=POST\s*name=form1\s*action=\"([^\"]+)\".*name=doc_library value=\"([^\"]+)\".*doc_number value=\"([^\"]+)\"/s', $response['body'], $match);
 
         $params = 'func=full-mail&preview_required=Y&doc_library='.$match[2].'&doc_number='.$match[3].'&option_type=&encoding=NONE&format=997';
@@ -87,14 +77,14 @@ function register($marc_string, $shelf, $isbn, $vols, $year) {
 
     $marc = new File_MARC($marc_string, File_MARC::SOURCE_STRING);
     $record = $marc->next();
-    
+
     if (!empty($isbn)) {
 	    $sbisbn[] = new File_MARC_Subfield('a', $isbn);
         $fisbn = new File_MARC_Data_Field('020', $sbisbn);
         $f015 = $record->getField('015');
         $record->insertField($fisbn, $f015);
 		}
-	
+
     $sbshelf[] = new File_MARC_Subfield('a', $shelf);
     $f852 = new File_MARC_Data_Field('852', $sbshelf);
 	  $record->appendField($f852);
@@ -109,13 +99,13 @@ function register($marc_string, $shelf, $isbn, $vols, $year) {
         $f963 = new File_MARC_Data_Field('963', $volyear, ' ', '0');
         $record->appendField($f963);
     }
-    
+
     $id = $record->getField('001')->getData();
-    $marc_file = '/home/dspace/vufind/data/marc/JP'.$id.'.mrc'; 
+    $marc_file = '/home/dspace/vufind/data/marc/JP'.$id.'.mrc';
     $fh = fopen($marc_file, 'w');
     fwrite($fh, $record->toRaw());
     fclose($fh);
-    
+
     chmod($marc_file, 0666);
 
     return $marc_file;

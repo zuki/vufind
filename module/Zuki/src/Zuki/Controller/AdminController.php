@@ -110,11 +110,11 @@ class AdminController extends \VuFind\Controller\AdminController
 
         $view = $this->createViewModel();
         $view->marc = $html;
-        $view->id   = $id;        
+        $view->id   = $id;
 
         return $view;
     }
-    
+
     /**
      * Delete the specified record.
      *
@@ -126,7 +126,7 @@ class AdminController extends \VuFind\Controller\AdminController
         // Read in the original record:
         $id = $this->params()->fromQuery('id');
 
-        $writer = $this->getServiceLocator()->get('VuFind\Solr\Writer');       
+        $writer = $this->getServiceLocator()->get('VuFind\Solr\Writer');
         $writer->deleteRecords('Solr', array($id));
         $writer->commit('Solr');
 
@@ -136,7 +136,7 @@ class AdminController extends \VuFind\Controller\AdminController
         $this->getRequest()->setQuery(new \Zend\Stdlib\Parameters());
         return $this->forwardTo('Admin', 'Records');
     }
-    
+
     /**
      * Process parameters and display the page.
      *
@@ -146,10 +146,10 @@ class AdminController extends \VuFind\Controller\AdminController
     public function saverecordAction()
     {
         $util = $this->params()->fromPost('util');
-        if (isset($util) && $util !== 'cancel') {  
+        if (isset($util) && $util !== 'cancel') {
             // $tags[tag][random1][code-random2] = value
             $tags = $this->params()->fromPost('tag');
-            $tool = new SolrRecord($this->getConfig(), $tags);   
+            $tool = new SolrRecord($this->getConfig(), $tags);
             switch ($util) {
                 case 'editrecord':
                     $retval = $tool->writeMarc(false);
@@ -169,8 +169,8 @@ class AdminController extends \VuFind\Controller\AdminController
                         'Failed add job to Germand'
                     ));
             }
-        } 
-        
+        }
+
         return $this->forwardTo('Admin', 'Records');
     }
 
@@ -183,10 +183,10 @@ class AdminController extends \VuFind\Controller\AdminController
     public function leaderAction()
     {
         $view = $this->createViewModel();
-        $view->leader_val = $this->params()->fromQuery('leader_val');      
-        
+        $view->leader_val = $this->params()->fromQuery('leader_val');
+
         return $view;
-    }    
+    }
 
     /**
      * Process Field 007
@@ -198,9 +198,9 @@ class AdminController extends \VuFind\Controller\AdminController
     {
         $view = $this->createViewModel();
         $view->field_val = $this->params()->fromQuery('field_val');
-        
+
         return $view;
-    }    
+    }
 
     /**
      * Process Field 008
@@ -211,11 +211,11 @@ class AdminController extends \VuFind\Controller\AdminController
     public function field008Action()
     {
         $view = $this->createViewModel();
-        $view->leader_val = $this->params()->fromQuery('leader_val');      
+        $view->leader_val = $this->params()->fromQuery('leader_val');
         $view->field_val = $this->params()->fromQuery('field_val');
-        
+
         return $view;
-    }    
+    }
 
     /**
      * Add record from NDL Opac
@@ -241,7 +241,7 @@ class AdminController extends \VuFind\Controller\AdminController
 
         $forward  = true;
         $ns      = null;
-        $message = null;        
+        $message = null;
         try
         {
             if (!$value) {
@@ -272,16 +272,16 @@ class AdminController extends \VuFind\Controller\AdminController
         } catch (BackendException $e) {
             $forward = true;
             $ns = 'error';
-            $message = sprintsprintf('%s 検索中にエラーが発生しました: %s', 
+            $message = sprintsprintf('%s 検索中にエラーが発生しました: %s',
                 $source, $e->getMessage());
-        } 
-        
+        }
+
         if ($forward) {
             $this->flashMessenger()->setNamespace($ns)->addMessage($message);
             $this->getRequest()->setQuery(new \Zend\Stdlib\Parameters());
             $this->forwardTo('Admin', 'AddRecord');
         }
-        
+
         $view = $this->createViewModel();
         $view->setTemplate('admin/addrecord');
         $view->records = $records;
@@ -298,18 +298,18 @@ class AdminController extends \VuFind\Controller\AdminController
     public function registerrecordAction()
     {
         $selected = $this->params()->fromQuery('selected');
-        
+
         if (empty($selected)) {
             $this->getRequest()->setQuery(new \Zend\Stdlib\Parameters());
             return $this->forwardTo('Admin', 'AddRecord');
         }
-        
+
         $shelf = $this->params()->fromQuery('shelf');
         $isbn = $this->params()->fromQuery('isbn');
         $vols = $this->params()->fromQuery('vols');
         $year = $this->params()->fromQuery('year');
         $source = $this->params()->fromQuery('source');
-        
+
         if (empty($selected) || empty($shelf)) {
                 $this->flashMessenger()->setNamespace('error')
                     ->addMessage($this->translate(
@@ -328,10 +328,10 @@ class AdminController extends \VuFind\Controller\AdminController
         } elseif ($source == 'lc') {
             try
             {
-                $record = $this->retrieveFromLC( 
+                $record = $this->retrieveFromLC(
                     $this->getServiceLocator()->get('VuFind\Search'), $selected, $shelf, $isbn, $vols, $year);
 
-                $marc_file = $this->getServiceLocator()->get('VuFind\Config')->get('config')->MARC->Directory.'LC'.$selected.'.mrc'; 
+                $marc_file = $this->getServiceLocator()->get('VuFind\Config')->get('config')->MARC->Directory.'LC'.$selected.'.mrc';
                 $fh = fopen($marc_file, 'w');
                 fwrite($fh, $record->toRaw());
                 fclose($fh);
@@ -365,15 +365,16 @@ class AdminController extends \VuFind\Controller\AdminController
         $queries[] = new Query($value, $field);
         $queries[] = new Query('iss-ndl-opac','dpid');
         $query = new QueryGroup('AND', $queries);
-        
+
         $collection = $service->search('Ndl', $query, 1, 20);
-        
+
         if ($collection->getTotal() == 0) {
             return null;
         }
         $records = array();
         foreach ($collection->getRecords() as $record) {
-            $id = $record->getNDLOpacID();
+            //$id = $record->getNDLOpacID();
+            $id = $record->getJPNO();
             if ($id === null) {
                 continue;
             }
@@ -393,7 +394,7 @@ class AdminController extends \VuFind\Controller\AdminController
             }
             $records[] = array($id, $citation);
         }
-        
+
         return $records;
     }
 
@@ -404,9 +405,9 @@ class AdminController extends \VuFind\Controller\AdminController
             $field = 'bath.' . $field;
         }
         $query = new Query($value, $field);
-        
+
         $collection = $service->search('Loc', $query, 1, 20);
-        
+
         if ($collection->getTotal() == 0) {
             return null;
         }
@@ -432,14 +433,14 @@ class AdminController extends \VuFind\Controller\AdminController
             }
             $records[] = array($id, $citation);
         }
-        
+
         return $records;
     }
 
     private function retrieveFromLC($service, $id, $shelf, $isbn, $vols, $year)
     {
         $query = new Query($value, 'rec.id');
-        
+
         $record = $service->retrieve('Loc', $id)->first()->getMarcRecord();
 
         if (!empty($isbn)) {
@@ -463,6 +464,5 @@ class AdminController extends \VuFind\Controller\AdminController
 
         return $record;
     }
-    
-}
 
+}

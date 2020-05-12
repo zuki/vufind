@@ -369,7 +369,7 @@ class Ndl extends \Zuki\RecordDriver\SolrDefault
     {
         $fields = $this->getField('seeAlso');
         foreach ($fields as $field) {
-            $pos = strpos($field, 'http://id.ndl.go.jp/bib/');
+            $pos = strpos($field, 'https://id.ndl.go.jp/bib/');
             if ($pos !== false && strlen($field) > 24) { // 24 = strlen('http://id.ndl.go.jp/bib/')
                 return substr($field, 24);
             }

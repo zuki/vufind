@@ -52,7 +52,7 @@ class Connector extends \VuFindSearch\Backend\SRU\Connector
     public function __construct(\Zend\Http\Client $client)
     {
         parent::__construct(
-            'http://iss.ndl.go.jp/api/sru', $client
+            'https://iss.ndl.go.jp/api/sru', $client
         );
     }
 

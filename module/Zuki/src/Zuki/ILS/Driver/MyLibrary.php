@@ -21,7 +21,7 @@ class MyLibrary implements \VuFind\ILS\Driver\DriverInterface
     /**
      * Constructor
      *
-     * @param \VuFind\Record\Loader $loader Record loader
+     * @param \VuFindSearch\Service $service Search Service
      */
     public function __construct(\VuFindSearch\Service $service)
     {

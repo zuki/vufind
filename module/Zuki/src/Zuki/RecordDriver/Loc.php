@@ -4,7 +4,7 @@
  *
  * PHP version 7
  *
- * Copyright (C) Keiji Suzuki 2013.-2020
+ * CCopyright (C) Keiji Suzuki 2013.-2020
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2,
@@ -19,7 +19,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * @category VuFind2
+ * @category VuFind
  * @package  RecordDrivers
  * @author   Keiji Suzuki <zuki.ebetsu@gmail.com>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
@@ -30,15 +30,15 @@ namespace Zuki\RecordDriver;
 use VuFind\Exception\ILS as ILSException, VuFind\XSLT\Processor as XSLTProcessor;
 
 /**
- * Model for MARC records in Solr.
+ * Model for MARC records in LoC.
  *
  * @category VuFind
  * @package  RecordDrivers
- * @author   Keiji Suzuki <zuki.ebetsu@gmail.com>
+ * @author   Demian Katz <demian.katz@villanova.edu>
  * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
  * @link     http://vufind.org/wiki/vufind2:record_drivers Wiki
  */
-class SolrMarc extends \VuFind\RecordDriver\SolrMarc
+class Loc extends \VuFind\RecordDriver\AbstractBase
 {
     /**
      * MARC record
@@ -48,56 +48,28 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
     protected $marcRecord;
 
     /**
-     * ILS connection
+     * Constructor
      *
-     * @var \VuFind\ILS\Connection
+     * @param \Zend\Config $mainConfig VuFind main configuration
+     * @param \Zend\Config $recordConfig Record-sepcific configuration file
      */
-    protected $ils = null;
-
-    /**
-     * Hold logic
-     *
-     * @var \VuFind\ILS\Logic\Holds
-     */
-    protected $holdLogic;
-
-    /**
-     * Title hold logic
-     *
-     * @var \VuFind\ILS\Logic\TitleHolds
-     */
-    protected $titleHoldLogic;
+    public function __construct($mainConfig = null, $recordConfig = null)
+    {
+        parent::__construct($mainConfig, $recordConfig);
+    }
 
     /**
      * Set raw data to initialize the object.
      *
-     * @param mixed $data Raw data representing the record; Record Model
-     * objects are normally constructed by Record Driver objects using data
-     * passed in from a Search Results object.  In this case, $data is a Solr record
-     * array containing MARC data in the 'fullrecord' field.
+     * @param $data MARCXML
      *
      * @return void
      */
     public function setRawData($data)
     {
-        // Call the parent's set method...
         parent::setRawData($data);
 
-        // Also process the MARC record:
-        $marc = trim($data['fullrecord']);
-
-        // check if we are dealing with MARCXML
-        $xmlHead = '<?xml version';
-        if (strcasecmp(substr($marc, 0, strlen($xmlHead)), $xmlHead) === 0) {
-            $marc = new \File_MARCXML($marc, \File_MARCXML::SOURCE_STRING);
-        } else {
-            // When indexing over HTTP, SolrMarc may use entities instead of certain
-            // control characters; we should normalize these:
-            $marc = str_replace(
-                array('#29;', '#30;', '#31;'), array("\x1D", "\x1E", "\x1F"), $marc
-            );
-            $marc = new \File_MARC($marc, \File_MARC::SOURCE_STRING);
-        }
+        $marc = new \File_MARCXML($data, \File_MARC::SOURCE_STRING);
 
         $this->marcRecord = $marc->next();
         if (!$this->marcRecord) {
@@ -122,7 +94,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
      *
      * @return array
      */
-    public function getAllSubjectHeadings($extended = false)
+    public function getAllSubjectHeadings()
     {
         // These are the fields that may contain subject headings:
         $fields = array(
@@ -144,24 +116,19 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
             foreach ($results as $result) {
                 // Start an array for holding the chunks of the current heading:
                 $current = array();
-                $subid = null;
 
                 // Get all the chunks and collect them together:
                 $subfields = $result->getSubfields();
                 if ($subfields) {
                     foreach ($subfields as $subfield) {
-                        if ($subfield->getCode() == '0') {
-                            $subid = $subfield->getData();
-                        }
                         // Numeric subfields are for control purposes and should not
                         // be displayed:
-                        elseif (!is_numeric($subfield->getCode())) {
+                        if (!is_numeric($subfield->getCode())) {
                             $current[] = $subfield->getData();
                         }
                     }
                     // If we found at least one chunk, add a heading to our result:
                     if (!empty($current)) {
-                        $current[] = $subid;
                         $retval[] = $current;
                     }
                 }
@@ -248,7 +215,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
      *
      * @return array
      */
-    protected function getFieldArray($field, $subfields = null, $concat = true, $separator = ' ')
+    protected function getFieldArray($field, $subfields = null, $concat = true)
     {
         // Default to subfield a if nothing is specified.
         if (!is_array($subfields)) {
@@ -317,11 +284,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
      */
     public function getNewerTitles()
     {
-        // If the MARC links are being used, return blank array
-        $fieldsNames = isset($this->mainConfig->Record->marc_links)
-            ? array_map('trim', explode(',', $this->mainConfig->Record->marc_links))
-            : array();
-        return in_array('785', $fieldsNames) ? array() : parent::getNewerTitles();
+        return $this->getFieldArray('785');
     }
 
     /**
@@ -393,11 +356,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
      */
     public function getPreviousTitles()
     {
-        // If the MARC links are being used, return blank array
-        $fieldsNames = isset($this->mainConfig->Record->marc_links)
-            ? array_map('trim', explode(',', $this->mainConfig->Record->marc_links))
-            : array();
-        return in_array('780', $fieldsNames) ? array() : parent::getPreviousTitles();
+        return $this->getFieldArray('780');
     }
 
     /**
@@ -459,7 +418,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
         }
 
         // Still no results found?  Resort to the Solr-based method just in case!
-        return parent::getSeries();
+        return array();
     }
 
     /**
@@ -519,7 +478,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
      *
      * @return array
      */
-    protected function getSubfieldArray($currentField, $subfields, $concat = true, $separator = ' ')
+    protected function getSubfieldArray($currentField, $subfields, $concat = true)
     {
         // Start building a line of text for the current field
         $matches = array();
@@ -555,16 +514,6 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
 
         // Send back our result array:
         return $matches;
-    }
-
-    /**
-     * Get the shelf strings for the record.
-     *
-     * @return array
-     */
-    public function getShelf()
-    {
-        return count($this->getFieldArray('852')) > 0 ? $this->getFieldArray('852')[0] : '';
     }
 
     /**
@@ -605,17 +554,6 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
     public function getTitleSection()
     {
         return $this->getFirstFieldValue('245', array('n', 'p'));
-    }
-
-    /**
-     * Get the statement of responsibility that goes with the title (i.e. "by John
-     * Smith").
-     *
-     * @return string
-     */
-    public function getTitleStatement()
-    {
-        return $this->getFirstFieldValue('245', array('c'));
     }
 
     /**
@@ -787,11 +725,12 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
      * Returns the array element for the 'getAllRecordLinks' method
      *
      * @param File_MARC_Data_Field $field Field to examine
+     * @param string               $value Field name for use in label
      *
      * @return array|bool                 Array on success, boolean false if no
      * valid link could be found in the data.
      */
-    protected function getFieldData($field)
+    protected function getFieldData($field, $value)
     {
         // Make sure that there is a t field to be displayed:
         if ($title = $field->getSubfield('t')) {
@@ -859,11 +798,9 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
             }
         }
         // Make sure we have something to display:
-        return !isset($link) ? false : [
-            'title' => $this->getRecordLinkNote($field),
-            'value' => $title,
-            'link'  => $link
-        ];
+        return isset($link)
+            ? array('title' => 'note_' . $value, 'value' => $title, 'link'  => $link)
+            : false;
     }
 
     /**
@@ -957,7 +894,7 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
      *
      * @return mixed         XML, or false if format unsupported.
      */
-    public function getXML($format, $baseUrl = null, $recordLink = null)
+    public function getXML($format)
     {
         // Special case for MARC:
         if ($format == 'marc21') {
@@ -982,27 +919,10 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
             return $xml->record->asXML();
         }
 
-        // Try the parent method:
-        return parent::getXML($format);
+        return false;
     }
 
     /**
-     * Attach an ILS connection and related logic to the driver
-     *
-     * @param \VuFind\ILS\Connection       $ils            ILS connection
-     * @param \VuFind\ILS\Logic\Holds      $holdLogic      Hold logic handler
-     * @param \VuFind\ILS\Logic\TitleHolds $titleHoldLogic Title hold logic handler
-     *
-     * @return void
-     */
-    public function attachILS(\VuFind\ILS\Connection $ils,
-        \VuFind\ILS\Logic\Holds $holdLogic,
-        \VuFind\ILS\Logic\TitleHolds $titleHoldLogic
-    ) {
-        $this->ils = $ils;
-        $this->holdLogic = $holdLogic;
-        $this->titleHoldLogic = $titleHoldLogic;
-    }
 
     /**
      * Do we have an attached ILS connection?
@@ -1011,57 +931,6 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
      */
     protected function hasILS()
     {
-        return null !== $this->ils;
-    }
-
-    /**
-     * Get an array of information about record holdings, obtained in real-time
-     * from the ILS.
-     *
-     * @return array
-     */
-    public function getRealTimeHoldings()
-    {
-        return $this->hasILS()
-            ? $this->holdLogic->getHoldings($this->getUniqueID())
-            : array();
-    }
-
-    /**
-     * Get an array of information about record history, obtained in real-time
-     * from the ILS.
-     *
-     * @return array
-     */
-    public function getRealTimeHistory()
-    {
-        // Get Acquisitions Data
-        if (!$this->hasILS()) {
-            return array();
-        }
-        try {
-            return $this->ils->getPurchaseHistory($this->getUniqueID());
-        } catch (ILSException $e) {
-            return array();
-        }
-    }
-
-    /**
-     * Get a link for placing a title level hold.
-     *
-     * @return mixed A url if a hold is possible, boolean false if not
-     */
-    public function getRealTimeTitleHold()
-    {
-        if ($this->hasILS()) {
-            $biblioLevel = strtolower($this->getBibliographicLevel());
-            if ("monograph" == $biblioLevel || strstr("part", $biblioLevel)) {
-                if ($this->ils->getTitleHoldsMode() != "disabled") {
-                    return $this->titleHoldLogic->getHold($this->getUniqueID());
-                }
-            }
-        }
-
         return false;
     }
 
@@ -1098,33 +967,248 @@ class SolrMarc extends \VuFind\RecordDriver\SolrMarc
     }
 
     /**
-     * Get callnumber for the record.
+     * Return the unique identifier of this record within the Solr index;
+     * useful for retrieving additional information (like tags and user
+     * comments) from the external MySQL database.
      *
-     * @return String
+     * @return string Unique identifier.
      */
-    public function getCallnumber()
+    public function getUniqueID()
     {
-        return $this->getFirstFieldValue('852');
+        return $this->marcRecord->getField('001')->getData();
     }
 
     /**
-     * Get volyear for the record.
+     * Get text that can be displayed to represent this record in
+     * breadcrumbs.
      *
-     * @return String
+     * @return string Breadcrumb text to represent this record.
      */
-    public function getVolYear()
+    public function getBreadcrumb()
     {
-        $vol = $this->getFirstFieldValue('963');
-        $year = $this->getFirstFieldValue('963', array('i'));
-        $volyear = '';
-        if (null !== $vol) {
-            $volyear .= $vol;
+        return $this->getShortTitle();
+    }
+
+    /**
+     * Get the title statement of the record.
+     *
+     * @return string
+     */
+    public function getTitleStatement()
+    {
+        return $this->getFirstFieldValue('245', array('a', 'b', 'c', 'n', 'p'));
+    }
+
+    /**
+     * Get the full title of the record.
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->getFirstFieldValue('245', array('a', 'b'));
+    }
+
+    /**
+     * Get the full title of the record.
+     *
+     * @return string
+     */
+    public function getSubtitle()
+    {
+        return $this->getFirstFieldValue('245', array('b'));
+    }
+
+    /**
+     * Get the short title of the record.
+     *
+     * @return string
+     */
+    public function getShortTitle()
+    {
+        return $this->getFirstFieldValue('245', array('a', 'b'));
+    }
+
+    /**
+     * Get the main author of the record.
+     *
+     * @return string
+     */
+    public function getPrimaryAuthor()
+    {
+        $author = $this->getFirstFieldValue('100', array('a'));
+        if ($author === null) {
+            $author = $this->getFirstFieldValue('110', array('a'));
         }
-        if (null !== $year) {
-            $volyear .= '<'.$year.'>';
+        if ($author === null) {
+            $author = $this->getFirstFieldValue('111', array('a', 'c', 'd'));
+        }
+        if ($author === null) {
+            $author = $this->getFirstFieldValue('245', array('c'));
+        }
+        return $author;
+    }
+
+    /**
+     * Get the title of the item that contains this record (i.e. MARC 773s of a
+     * journal).
+     *
+     * @return string
+     */
+    public function getContainerTitle()
+    {
+        return $this->getFirstFieldValue('773', array('s'));
+    }
+
+    /**
+     * Get the volume of the item that contains this record (i.e. MARC 773v of a
+     * journal).
+     *
+     * @return string
+     */
+    public function getContainerVolume()
+    {
+        return $this->getFirstFieldValue('773', array('v'));
+    }
+
+    /**
+     * Get the issue of the item that contains this record (i.e. MARC 773l of a
+     * journal).
+     *
+     * @return string
+     */
+    public function getContainerIssue()
+    {
+        return $this->getFirstFieldValue('773', array('l'));
+    }
+
+    /**
+     * Get the start page of the item that contains this record (i.e. MARC 773q of a
+     * journal).
+     *
+     * @return string
+     */
+    public function getContainerStartPage()
+    {
+        return $this->getFirstFieldValue('773', array('q'));
+    }
+
+    /**
+     * Get the end page of the item that contains this record.
+     *
+     * @return string
+     */
+    public function getContainerEndPage()
+    {
+        // not currently supported by Solr index:
+        return '';
+    }
+
+    /**
+     * Get the publication dates of the record.  See also getDateSpan().
+     *
+     * @return array
+     */
+    public function getPublicationDates()
+    {
+        return $this->getFirstFieldValue('260', array('c'));
+    }
+
+    /**
+     * Get the publication year of the record.  See also getDateSpan().
+     *
+     * @return array
+     */
+    public function getPubYear()
+    {
+        return substr($this->marcRecord->getField('008')->getData(), 7, 4);
+    }
+
+    /**
+     * Get a full, free-form reference to the context of the item that contains this
+     * record (i.e. volume, year, issue, pages).
+     *
+     * @return string
+     */
+    public function getContainerReference()
+    {
+        return $this->getFirstFieldValue('260', array('g'));
+    }
+
+    /**
+     * Deduplicate author information into associative array with main/corporate/
+     * secondary keys.
+     *
+     * @return array
+     */
+    public function getDeduplicatedAuthors()
+    {
+        $authors = array(
+            'main' => $this->getFieldArray('100'),
+            'corporate' => $this->getFieldArray('110'),
+            'secondary' => $this->getFieldArray('700')
+        );
+
+        // The secondary author array may contain a corporate or primary author;
+        // let's be sure we filter out duplicate values.
+        $duplicates = array();
+        if (!empty($authors['main'])) {
+            $duplicates[] = $authors['main'];
+        }
+        if (!empty($authors['corporate'])) {
+            $duplicates[] = $authors['corporate'];
+        }
+        if (!empty($duplicates)) {
+            $authors['secondary'] = array_diff($authors['secondary'], $duplicates);
         }
 
-        return $volyear;
+        return $authors;
     }
+
+    /**
+     * Get an array of all the formats associated with the record.
+     *
+     * @return array
+     */
+    public function getFormats()
+    {
+        // FIXME
+        return "";
+    }
+
+    /**
+     * Get an array of all the languages associated with the record.
+     *
+     * @return array
+     */
+    public function getLanguages()
+    {
+        // FIXME
+        return "English";
+    }
+
+    /**
+     * Get an array of publication detail lines combining information from
+     * getPublicationDates(), getPublishers() and getPlacesOfPublication().
+     *
+     * @return array
+     */
+    public function getPublicationDetails()
+    {
+        // FIXME
+        return $this->getFirstFieldValue('260', array('a', 'b', 'c'));
+    }
+
+    /**
+     * Get the edition of the current record.
+     *
+     * @return string
+     */
+    public function getEdition()
+    {
+        // FIXME
+        return $this->getFirstFieldValue('250', array('a', 'b'));
+    }
+
 
 }

@@ -64,7 +64,7 @@ class SortFacetList extends AbstractHelper
                 ->addFacet($field, $value['value'])->getParams();
             $facets[$url] = $value['displayText'];
         }
-        natcasesort($facets);
+        natsort($facets); // for Callnumber facet on Search Home
         return $facets;
     }
 }

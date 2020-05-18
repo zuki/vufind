@@ -1,0 +1,38 @@
+<?php
+    // Set page title.
+    $this->headTitle($this->translate('VuFind Administration - View Record'));
+?>
+
+<div class="<?=$this->layoutClass('mainbody')?>">
+  <h2><?=$this->transEsc('View Record')?></h2>
+
+  <?php if ($this->record): ?>
+    <table class="citation table table-striped table-condensed">
+    <?php $keys = array_keys($this->record); ?>
+    <?php natsort($keys); ?>
+    <?php foreach ($keys as $key): ?>
+      <?php $value = $this->record[$key]; ?>
+      <?php if (is_array($value)): ?>
+        <?php foreach ($value as $val): ?>
+        <tr>
+          <th><?=$key?>: </th>
+          <td style="max-width: 500px;">
+            <div class="fieldValue"><?=$this->escapeHtml(preg_replace('/[\x1D\x1E\x1F]/', '', $val))?></div>
+          </td>
+        </tr>
+        <?php endforeach; ?>
+     <?php else: ?>
+        <tr>
+          <th><?=$key?>: </th>
+          <td style="max-width: 500px;">
+            <div class="fieldValue"><?=$this->escapeHtml(preg_replace('/[\x1D\x1E\x1F]/', '', $value))?></div>
+          </td>
+        </tr>
+     <?php endif; ?>
+   <?php endforeach; ?>
+    </table>
+  <?php endif; ?>
+</div>
+
+<div class="<?=$this->layoutClass('sidebar')?>">
+  <?=$this->render("admin/menu.phtml")?>

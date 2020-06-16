@@ -127,7 +127,7 @@ solr.indexer.properties = marc.properties, usmarc.properties
 
 https://github.com/zuki/vufind/commit/ee1dc56c04739493744b135b37f112f7d4cb2c14
 
-`Admin/Home`にレコード登録機能を追加した。これはISBNなどを使い、MARCデータを取得し、配下記号などの所蔵データを追加してVuFindに登録する機能である。
+`Admin/Home`にレコード登録機能を追加した。これはISBNなどを使い、MARCデータを取得し、配架記号などの所蔵データを追加してVuFindに登録する機能である。
 
 MARCデータの取得については、JPMARCは次の2工程
 

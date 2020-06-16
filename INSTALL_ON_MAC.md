@@ -106,7 +106,7 @@ https://github.com/zuki/vufind/commit/379d69157ab8c2263ba3c69b3be5733ec59a8090
   - VuFind v2.1とv6.1.1の違いを調整
 - JPMARC用translation_map
   - v2.1用に作成したファイルがそのまま使用可
-- 配置記号を表示するための独自`ILS/Driver/MyLibrary`
+- 配架記号を表示するための独自`ILS/Driver/MyLibrary`
   - ドライバをFactoryクラスで作成するようになった
   - module/Zuki/src/Zuki/ILS/Driver/(MyLibrary|MyLibraryFactory).java
 
@@ -140,7 +140,7 @@ USMARCは次の1工程
 
 で取得し、さらに以下の手順でレコードを登録する
 
-3. 配下記号や巻号などの所蔵データを入力
+3. 配架記号や巻号などの所蔵データを入力
 4. 取得したJPMARCに所蔵データをマージ
 5. importスクリプトを実行してレコードを登録
 
